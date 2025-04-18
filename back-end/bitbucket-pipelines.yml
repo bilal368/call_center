@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+    'development':
+      - step:
+          name: Build and push Docker image
+          image: node:20.6.0-bullseye
+          services:
+            - docker
+          caches:
+            - docker
+          size: 2x
+          script:
+            - docker build -t dgvoxbackend:development .
+            - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+            - docker tag dgvoxbackend:development $DOCKERHUB_USERNAME/dgvoxbackend:development
+            - docker push $DOCKERHUB_USERNAME/dgvoxbackend:development
