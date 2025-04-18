@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Audio Player</h1>
+@if (data.audioURLs) {
+<div mat-dialog-content>
+  @for (url of data.audioURLs; track $index) {
+  <div class="audio-container">
+    <h3>Audio {{ $index + 1 }}</h3>
+    <audio [src]="url" controls></audio>
+  </div>
+
+  <div mat-button (click)="feedbackOpen(data.recordingCallLogIds,data.supervisorFeedBacks,$index)">
+    <mat-icon>comment</mat-icon>
+  </div>
+}
+</div>
+}
+<div class="text-end" style="padding: 10px;" mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="onClose()">Close</button>
+</div>

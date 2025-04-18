@@ -1,0 +1,236 @@
+.background {
+    background: linear-gradient(283deg, rgba(255,255,255,1) 25%, rgba(12,45,72,1) 90%);
+    /* background: linear-gradient(283deg, rgba(255,255,255,1) 17%, var(--h1)  100%); */
+    height: 100vh;
+  }
+  
+  a{
+    cursor: pointer;
+  }
+  
+  .errDiv{
+    height: 15px;
+    color: red;
+    font-size: small;
+  }
+  .material-symbols-outlined{
+    opacity: 60%;
+  }
+  .mat-mdc-progress-spinner {
+    --mdc-circular-progress-active-indicator-color: var(--h3);
+  }
+  
+  
+  .iconDiv {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5vh;
+  }
+  
+  .googleIcon {
+    height: 60px;
+  }
+  
+  .appleIconOne {
+    display: inline-block;
+    overflow: hidden;
+    height: 45px;
+  }
+  
+
+  
+  .windowsIcon {
+    height: 45px
+  }
+  
+  .login-form {
+    width: 500px;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  .contentDiv {
+    min-height: 77vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card {
+    height: 350px;
+    width: 650px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: whitesmoke;
+  }
+  
+  .outerCard {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .innerCardOne {
+    width: 400px;
+    height: 400px;
+    background-color: var(--primary);
+    z-index: 0;
+  }
+  
+  .innerCardTwo {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+  }
+  
+  
+  .forgotPassword {
+    /* height: 250px; */
+    padding-left: 20px;
+    padding-right: 20px;
+    /* justify-content: center; */
+    width: 400px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .login {
+    height: 350px;
+    width: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .toolbar {
+    background-color: transparent;
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  
+  input.ng-invalid.ng-touched {
+    border: red 1px solid;
+  }
+  
+  
+  @media only screen and (max-width: 844px) {
+    .outerCard {
+      display: block;
+    }
+  
+    .innerCardOne {
+      width: 400px;
+      height: 100px;
+      background-color: var(--primary);
+      z-index: 0;
+    }
+  
+    .innerCardTwo {
+      width: 400px;
+      height: 300px;
+      display: flex;
+      /* justify-content: center; */
+      align-items: center;
+    }
+  
+    .card {
+      height: 350px;
+      width: 400px;
+      border-radius: 20px;
+      overflow: hidden
+    }
+  
+    .login-form {
+      width: 350px;
+    }
+  
+    .login {
+      padding-left: 20px;
+      padding-right: 20px;
+      width: 392px;
+    }
+  
+    .toolbar {
+      padding: 10px;
+    }
+  
+    .loginOuterCard {
+      height: 86vh;
+      padding: 50px;
+    }
+  
+    .iconDiv {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Set two columns for mobile screens */
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  
+ 
+  
+    .contactCenterSolution{
+     font-size: medium !important;
+    }
+  
+  }
+  
+  .contactCenterSolution{
+    color: var(--h1);font-size: larger;
+  }
+  
+  .download {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .submit-container{
+    width: 20%;
+    text-align: end;
+  }
+  #submit {
+    margin-right: 0;
+    height: 5vh;
+    padding: 5px 15px 5px 15px;
+    border-radius: 5px;
+    /* background-color:var(--headingBg1); */
+    color: #222222;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* margin-left: 155px; */
+    /* border: 1px solid #AAC1A7; */
+    box-shadow:
+    4px 4.5px 2.2px rgba(0, 0, 0, 0.084),
+    8.1px 9.3px 5.3px rgba(0, 0, 0, 0.104),
+    13.3px 15.3px 10px rgba(0, 0, 0, 0.108),
+    21.6px 24.8px 17.9px rgba(0, 0, 0, 0.101),
+    37.7px 43.1px 33.4px rgba(0, 0, 0, 0.088),
+    69px 79px 80px rgba(0, 0, 0, 0.07)
+  ;
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+#submit:hover {
+    background-color:var(--baseColor1);
+    color: aliceblue;
+}
+  
+  ::ng-deep .mat-mdc-snack-bar-container .mat-mdc-button.mat-mdc-snack-bar-action:not(:disabled) {
+    color: red !important;
+    background-color: transparent !important;
+  }
+  
+  ::ng-deep .mat-mdc-snack-bar-container {
+    --mdc-snackbar-container-color: whitesmoke !important;
+    --mdc-snackbar-supporting-text-color: black !important;
+  }
+  
+  

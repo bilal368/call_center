@@ -1,0 +1,381 @@
+.dialogueContainer {
+  background-color: var(--h3);
+  color: var(--textColor);
+}
+
+.okButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: var(--h3);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  background: none;
+  color: var(--textColor);
+  font-size: 13px;
+}
+
+.dialogueContainerHeader {
+  width: 100%;
+  height: 40px;
+  background-color: var(--h3);
+  color: var(--textColor);
+  padding-left: 10px;
+  padding-top: 11px;
+  padding-bottom: 30px;
+}
+.dialogueContainer1 {
+  height: 100%;
+  width: 100%;
+  /* background-color: var(--inputBg); */
+  color: #666666;
+}
+
+.okButton-confirmationMsg {
+  width: 80px;
+  height: 30px;
+  top: 449px;
+  left: 600px;
+  border-radius: 15px 15px 15px 15px;
+  margin-left: 129px;
+  background-color: var(--h3);
+  opacity: 0px;
+  color: white;
+}
+
+.dialogueContainer label {
+  padding: 10%;
+  font-size: 13px;
+  text-align: start;
+  align-items: start;
+  line-height: 20px;
+}
+
+.dialogueContainer1 label {
+  padding: 8%;
+  font-size: 13px;
+  text-align: start;
+  align-items: start;
+  line-height: 20px;
+}
+
+  .closeButton {
+    background: var(--textColor);
+    top: 351px;
+    left: 760px;
+    gap: 0px;
+    /* margin-left: 157px; */
+    margin-left: 270px;
+}
+
+.closeButton-hierarchy{
+  background:var(--textColor);
+  top: 351px;
+  left: 760px;
+  gap: 0px;
+  margin-left: 157px;
+}
+
+.dialogueContainer1 {
+  height: 100%;
+  width: 100%;
+  /* background-color: var(--inputBg); */
+  color: #666666;
+}
+
+.okButton-confirmationMsg {
+  width: 80px;
+  height: 30px;
+  top: 449px;
+  left: 600px;
+  border-radius: 15px 15px 15px 15px;
+  margin-left: 129px;
+  background-color: var(--h3);
+  opacity: 0px;
+}
+
+.dialogueContainer label {
+  padding: 10%;
+  font-size: 13px;
+  text-align: start;
+  align-items: start;
+  line-height: 20px;
+}
+
+.dialogueContainer1 label {
+  padding: 8%;
+  font-size: 13px;
+  text-align: start;
+  align-items: start;
+  line-height: 20px;
+}
+
+.importEmployeeDetailsText {
+  padding-top: 16px;
+  padding-left: 10px;
+}
+
+.okButton-delete {
+  width: 84px;
+  margin-top: 60px;
+  margin-left: 55px;
+  border-radius: 15px 15px 15px 15px;
+  background-color: var(--h3);
+  opacity: 0px;
+  margin-top: 45px;
+}
+
+.uploadButton {
+  width: 150px;
+  height: 40px;
+  background-color: var(--buttonColor);
+  color: var(--textColor);
+  display: flex;
+  justify-content: space-around;
+}
+
+.download-button {
+  background-color: var(--buttonColor);
+  color: var(--textColor);
+}
+
+.msg1 {
+  padding-left: 80px;
+  padding-top: 10px;
+  color: #15B500;
+  ;
+}
+
+.msg2 {
+  padding-left: 56px;
+  justify-content: space-around;
+  color: #FF0000;
+}
+
+.spinner {
+  margin-left: 150px;
+  margin-top: 80px;
+}
+
+.closeButton-delete {
+  margin-left: 170px;
+}
+
+
+/* File Upload  */
+
+
+.mainalertContainer {
+  height: 100%;
+  width: 100%;
+  background-color: white
+}
+
+
+.alertHeader {
+  height: 40px;
+  background-color: var(--h5);
+  display: flex;
+  align-items: center;
+  /* width: 515px; */
+}
+
+.alertHeaderlabel {
+  /* width: 22vw; */
+  width: 100%;
+  font-size: 16px;
+  color: white;
+  /* padding-left: 10px; */
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.selectlabel {
+  margin-top: 10px;
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+.closeIconstyle {
+  margin-right: 2%;
+  margin-left: 2%;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+}
+
+/* .selectlabel {
+  margin-top: 10px;
+  margin-left: 10px;
+} */
+
+.inputstyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: .5px solid gray;
+  margin: 10px;
+}
+
+
+
+
+.uploadbuttonstl {
+  background-color: var(--h3);
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  color: white !important;
+  /* width: 20%; */
+  height: 4vh !important;
+  border-radius: 5px;
+  /* padding: 0 10px; */
+  border: none;
+  margin-top: 8px;
+  cursor: pointer;
+  outline: none;
+  margin-right: 5px;
+}
+
+.Extuploadbuttonstl{
+  background-color: var(--headingBg);
+  color: white !important; 
+  height: 4vh !important;
+
+
+  margin-top: 9px;
+
+  outline: none;
+  /* margin-right: 10px; */
+  padding: 5px;
+}
+
+.uploadSpan {
+  padding-right: 1px;
+}
+
+
+
+.importedTextslt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ExtdownloadTemplatebutton{
+  background-color: #666666;
+  color: white !important;
+  margin-top: 20px;
+  
+  cursor: pointer;
+  outline: none;
+  height: 4vh !important;
+  border-radius: 5px;
+  padding: 0 10px;
+  border: none;
+  /* margin-top: 23px;
+  margin-left: 100px; */
+  /* margin-top: 30px; */
+  margin-top: 23px;
+}
+
+
+
+.closeDialoguebuttonstl {
+  /* background-color: var(--h3); */
+  background-color: var(--h3);
+
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  color: white !important;
+  /* width: 18%; */
+  height: 4vh !important;
+  border-radius: 5px;
+  padding: 0 10px;
+  border: none;
+  /* margin-top: 23px;
+  margin-left: 100px; */
+  /* margin-top: 30px; */
+  margin-top: 23px;
+  margin-left: 2%;
+  /* margin-right: 2%; */
+  margin-right: -1%;
+
+  cursor: pointer;
+  outline: none;
+}
+
+/* .downloadclosedialouge {
+  display: flex;
+  margin-left: 10px;
+} */
+
+.downloadclosedialouge {
+  display: flex;
+
+  margin-bottom: 3%;
+  justify-content: space-between;
+}
+
+/* IF DIRECTION IN RTL  */
+[dir='rtl'] .dialogueContainer label {
+  font-weight: bold;
+}
+
+
+
+
+.container {
+  display: flex;
+  /* Arranges items horizontally */
+  height: 100vh;
+  /* Full viewport height */
+}
+
+.left-section,
+.right-section {
+  flex: 1;
+  /* Equal width for both sections */
+  padding: 1%;
+  border: 1px solid #ccc;
+}
+
+.left-section {
+  background-color: #f0f0f0;
+  /* Light background for the left section */
+}
+
+.right-section {
+  background-color: #e0e0e0;
+  /* Slightly darker background for the right section */
+}
+
+
+.downloadTemplatebutton {
+  background-color: var(--h3);
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  color: white !important;
+  /* width: 55%; */
+  height: 4vh !important;
+  border-radius: 5px;
+  padding: 0 10px;
+  border: none;
+  margin-top: 23px;
+  margin-right: 5px;
+  cursor: pointer;
+  outline: none;
+  gap: 5px;
+}

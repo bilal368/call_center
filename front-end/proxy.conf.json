@@ -1,0 +1,14 @@
+{
+    "/api": {
+      "target": "http://localhost:5002",
+      "secure": false,
+      "logLevel": "debug",
+      "changeOrigin": true
+    },
+    "/SocketServer": {
+      "target": "http://192.168.2.95:3007",
+      "secure": false,
+      "logLevel": "debug",
+      "changeOrigin": true
+    }
+  }

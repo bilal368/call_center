@@ -1,0 +1,236 @@
+<div class="mainContainer">
+  <div class="filters">
+    <div class="container  ">
+      <div class="row">
+        <div class="col-9 d-flex p-0 justify-content-start">
+
+          <button class="custom-button-date btn" [matMenuTriggerFor]="filterDate">
+            <span class="material-symbols-outlined ">
+              schedule
+            </span>
+            <span style="font-size: small;">{{ selectedDateRange }}</span>
+          </button>
+          <mat-menu #filterDate="matMenu">
+            <button mat-menu-item (click)="setDateRange('Today')">
+              {{'Menu.REPORTS RECORDING.AGENTS.Today'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Week')">
+              {{'Menu.REPORTS RECORDING.AGENTS.This Week'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Month')">
+              {{'Menu.REPORTS RECORDING.AGENTS.This Month'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Quarter')">
+              {{'Menu.REPORTS RECORDING.AGENTS.This Quarter'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Year')">
+              {{'Menu.REPORTS RECORDING.AGENTS.This Year'| translate}}
+            </button>
+            <button mat-menu-item (click)="openCustomDateDialog(selectedDateRange)">
+              {{'Menu.REPORTS RECORDING.AGENTS.Custom'| translate}}
+            </button>
+          </mat-menu>
+
+
+          <button class="custom-button-date btn" [matMenuTriggerFor]="menu3">
+            <span class="material-symbols-outlined">
+              schedule
+            </span>
+            <span style="font-size: small;">{{reportBody.inTimelineCriteria}}</span>
+          </button>
+          <mat-menu #menu3="matMenu">
+            <button mat-menu-item (click)="timelineCriteriaChange('Hourly')">
+              Hourly
+              <!-- {{'Menu.CONFIGURE.EXTENSION MAPPING.Active'| translate}}           -->
+            </button>
+            <button mat-menu-item (click)="timelineCriteriaChange('Daily')">
+              Daily
+              <!-- {{'Menu.CONFIGURE.EXTENSION MAPPING.InActive'| translate}}           -->
+            </button>
+            <button mat-menu-item (click)="timelineCriteriaChange('Monthly')">
+              Monthly
+              <!-- {{'Menu.CONFIGURE.EXTENSION MAPPING.Active'| translate}}           -->
+            </button>
+          </mat-menu>
+
+          <button class="custom-apply-button btn" (click)="applyFilter()" [matTooltip]="toolTips.apply|translate">
+            {{'Menu.CONFIGURE.EXTENSION MAPPING.APPLY'| translate}}
+          </button>
+
+        </div>
+        <!-- @if(reportBody.inTimelineCriteria=='Hourly'){
+        
+          <input [value]="currentDate" matInput placeholder="Select date" (dateInput)="dateChange( $event)"
+            [matDatepicker]="picker" class="btn btn-dark datePicker">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          }@else if(reportBody.inTimelineCriteria=='Daily') {
+       
+          <mat-date-range-input [rangePicker]="picker" [formGroup]="range" class="btn btn-dark datePicker">
+            <input matStartDate placeholder="Start date" formControlName="start" (dateChange)="onDateRangeChange()">
+            <input matEndDate placeholder="End date" formControlName="end" (dateChange)="onDateRangeChange()">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          }@else{ 
+          <mat-date-range-input [rangePicker]="picker" class="btn btn-dark datePicker">
+            <input matStartDate placeholder="Start date">
+            <input matEndDate placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          } -->
+
+
+        <div class="col-3 d-flex justify-content-end p-0 ">
+          <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}" [matMenuTriggerFor]="menu4" 
+          [matTooltip]="toolTips.download|translate">
+            <mat-icon class="icon">download_2</mat-icon>
+            <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+          </div>
+          <!-- File Download -->
+          <mat-menu #menu4="matMenu">
+            <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+              <div style="justify-content: space-around;display: flex;">
+                <div>Excel</div>
+                <div>
+                  <span class="material-symbols-outlined">article</span>
+                </div>
+              </div>
+            </button>
+            <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+              <div style="justify-content: space-around;display: flex;">
+                <div>PDF</div>
+                <div>
+                  <span class="material-symbols-outlined">picture_as_pdf</span>
+                </div>
+              </div>
+            </button>
+            <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+              <span>TIFF</span>
+              <span class="material-symbols-outlined">perm_media</span>
+            </button>
+            <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+              <span>Web Archive</span>
+              <span class="material-symbols-outlined">install_desktop</span>
+            </button>
+          </mat-menu>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+  
+    <div class="table-container" style="overflow: auto;">
+      <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
+        <!-- Day Column -->
+        <ng-container matColumnDef="callDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+            <div class="header-content" style="padding-left: 10px;">
+              <!-- <div class="header-text-icon"> -->
+              @if(reportBody.inTimelineCriteria=='Hourly'){
+              {{'Menu.REPORTS RECORDING.TIME LINE.Hours' | translate}}
+              }@else if (reportBody.inTimelineCriteria=='Daily') {
+              {{'Menu.REPORTS RECORDING.TIME LINE.Days' | translate}}
+              }@else{
+              {{'Menu.REPORTS RECORDING.TIME LINE.Months' | translate}}
+              }
+              <!-- <span class="material-symbols-outlined" id="fitergroup">
+                switch_left
+              </span> -->
+              <br>
+              <!-- </div> -->
+            </div>
+          </th>
+
+          <td mat-cell *matCellDef="let element">
+            {{element.callDate}}</td>
+
+        </ng-container>
+
+
+        <!-- Maximum Concurrent Column -->
+        <ng-container matColumnDef="maxConcurrentCalls">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-content">
+              {{'Menu.REPORTS RECORDING.CONCURRENT CALLS.Maximum Concurrent Calls' | translate}}
+
+              <!-- <span class="material-symbols-outlined" id="fitergroup">
+                switch_left
+              </span> -->
+              <br>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element" class="columnCell">{{element.maxConcurrentCalls}}<br></td>
+        </ng-container>
+
+        <!-- Peak time Column -->
+        <ng-container matColumnDef="peakTime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-content">
+              {{'Menu.REPORTS RECORDING.CONCURRENT CALLS.Peak Time' | translate}}
+
+              <!-- <span class="material-symbols-outlined" id="fitergroup">
+                switch_left
+              </span> -->
+              <br>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element" class="columnCell">
+            {{ element.peakTime | date: 'dd-MM-yyyy hh:mm:ss a' }}
+            <br>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+
+
+  </div>
+
+
+  <mat-toolbar class="pagination-toolbar">
+    <div class="page-info">{{'Menu.CONFIGURE.EXTENSION MAPPING.TotalRecords' | translate}}: {{ totalRecord }}</div>
+    <span class="example-spacer"></span>
+    <div class="page-info">
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.RecordsPerPage' | translate}}
+    </div>
+    <mat-select class="form-control me-4" style="width:6vw" [(ngModel)]="recordsPerPage"
+      (selectionChange)="onItemsPerPageChange($event)">
+      <mat-option class="goto-check" [value]="10" selected>10</mat-option>
+      <mat-option class="goto-check" [value]="25">25</mat-option>
+      <mat-option class="goto-check" [value]="50">50</mat-option>
+      <mat-option class="goto-check" [value]="100">100</mat-option>
+    </mat-select>
+    <div class="page-info">
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.page' | translate}}
+      <mat-select class="form-control" style="width: 6vw;" [(value)]="pageNumber" (selectionChange)="goToPage($event)">
+        @for (page of getPagesArray(); track $index) {
+        <mat-option [value]="page" class="goto-check-pagination"> 
+          {{ page }}
+        </mat-option>
+        }
+        <!-- <mat-option *ngFor="let page of getPagesArray()" [value]="page">
+                      {{ page }}
+                  </mat-option> -->
+      </mat-select>
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.of' | translate}} {{ getTotalPages() }}
+    </div>
+    <div [dir]="'ltr'">
+      <button mat-mini-fab class="next-button me-2 " (click)="previousPage()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-mini-fab class="next-button me-2" (click)="nextPage()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+    </div>
+  </mat-toolbar>
+</div>

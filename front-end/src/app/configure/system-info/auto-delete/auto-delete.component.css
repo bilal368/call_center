@@ -1,0 +1,49 @@
+/* record-management.component.css */
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .card {
+    border-radius: 0.5rem; /* Optional: Adjust border radius */
+    height: 80vh;
+    max-height: 600px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  }
+  .card-header {
+    background-color: #4b4d4f;
+    color: white;
+    padding-top: 10px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+  }
+  .formOne {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+  }
+  .card-footer{
+    height: 80px;
+  }
+  button {
+    width: 100px;
+  }
+  
+  .list-group-item {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .autoDeleteForm{
+     text-align: center;
+     width:50%;
+  }
+
+  .mb-3{
+    text-align: left;
+    
+  }
+
+  
+  

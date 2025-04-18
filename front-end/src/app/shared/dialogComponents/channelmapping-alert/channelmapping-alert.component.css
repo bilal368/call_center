@@ -1,0 +1,222 @@
+.form-control-username {
+  width: 500px;
+  /* Adjust the width as needed */
+  /* color: #333;  */
+  border: 1px solid rgb(137, 132, 132);
+  border-radius: 5px;
+
+  padding: 8px;
+  /* Add padding for spacing inside the input */
+}
+
+.form-control-username:focus {
+  border-color: transparent;
+  border: 0cap solid white;
+  /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);  */
+}
+
+.usermangerSavebutton {
+  /* background-color: var(--headingBg); */
+  background-color: rgb(60, 156, 89);
+  align-items: center;
+  text-align: center;
+  color: white !important;
+  width: 18%;
+  height: 5vh !important;
+  /* border-radius: 1.5625vw; */
+  border-radius: 5px;
+  margin-top: 4vw;
+  margin-left: 27vw;
+  cursor: pointer;
+  outline: none;
+  border: none;
+
+}
+
+#usermangerSavebutton {
+  /* background-color: var(--headingBg); */
+  background-color: var(--h3);
+  align-items: center;
+  text-align: center;
+  color: white !important;
+  width: 15%;
+  height: 5vh !important;
+  /* border-radius: 1.5625vw; */
+  border-radius: 5px;
+  margin-top: 4%;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+  cursor: pointer;
+  outline: none;
+  border: none;
+
+}
+
+.fromMainContainer {
+  height: 550px;
+  width: 68vw;
+  /* border-radius: 20px; */
+  /* background-color: var(--employeeDbg); */
+
+}
+
+.headerContainer {
+  height: 40px;
+  background-color: var(--h5);
+  display: flex;
+  align-items: center;
+}
+
+.headerLabel {
+  width: 65vw;
+  font-size: 16px;
+  color: white;
+  padding-left: 10px;
+}
+
+.closeDialogIcon {
+  margin-left: 20px;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.leftFormstyle {
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+#waringText {
+  position: absolute;
+  bottom: -20px;
+}
+
+.mat-dialog-container {
+  border-radius: 20px;
+}
+
+.mainalertContainer {
+  height: 30h;
+  width: 25vw;
+  background-color: white
+}
+
+.alertHeader {
+  height: 40px;
+  background-color: var(--h5);
+  display: flex;
+  align-items: center;
+}
+
+.alertHeaderlabel {
+  width: 22vw;
+  font-size: 16px;
+  color: white;
+  padding-left: 10px;
+}
+
+.closeIconstyle {
+  margin-left: 20px;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.selectlabel {
+  margin-top: 10px;
+  margin-left: 10px;
+
+}
+
+.inputstyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: .5px solid gray;
+  margin: 10px;
+}
+
+.uploadbuttonstl {
+  background-color: var(--h3);
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  color: white !important;
+  width: 23%;
+  height: 4vh !important;
+  border-radius: 5px;
+  padding: 0 10px;
+  border: none;
+  margin-top: 8px;
+  cursor: pointer;
+  outline: none;
+}
+
+.importedTextslt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.downloadTemplatebutton {
+  background-color: var(--h3);
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  color: white !important;
+  width: 53%;
+  height: 4vh !important;
+  border-radius: 5px;
+  padding: 0 10px;
+  border: none;
+  margin-top: 23px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  outline: none;
+}
+
+.closeDialoguebuttonstl {
+  background-color: var(--h3);
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  color: white !important;
+  width: 18%;
+  height: 4vh !important;
+  border-radius: 5px;
+  padding: 0 10px;
+  border: none;
+  margin-top: 23px;
+  margin-left: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+.downloadclosedialouge {
+  display: flex;
+  justify-content: space-between;
+}
+
+.textFromfeild {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 70px;
+  margin-left: 35px;
+  margin-top: 10px;
+}

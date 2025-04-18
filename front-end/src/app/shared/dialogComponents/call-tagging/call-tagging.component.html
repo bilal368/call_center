@@ -1,0 +1,393 @@
+@if(isEditable){
+<div style="padding: 2px;">
+  <div style="display: flex; justify-content: space-between;">
+    <h1>{{'Menu.REPORTS RECORDING.CALLS.Call Transcription & Tagging'| translate}}</h1>
+      <button class="close-button"  (click)="close()">✖</button>
+  </div>
+  <!-- Audio -->
+  @if(audioDiv){
+  <mat-toolbar class="toolbar-3">
+    <span style="color: white;">{{ showTime }}</span>
+    <div class="center-content">
+      @if (playButton) {
+      <button  style="background-color: white; color: var(--h3); display: flex; justify-content: center; align-items: center;" 
+       mat-icon-button (click)="playAudio()"><mat-icon>play_arrow</mat-icon></button>
+      }
+      @if (pauseButton) {
+      <button  style="background-color: white; color: var(--h3); display: flex; justify-content: center; align-items: center;" 
+       mat-icon-button (click)="pauseAudio()"><mat-icon>pause</mat-icon></button>
+      }
+      <button  style="background-color: white; color: var(--h3); display: flex; justify-content: center; align-items: center;" 
+       mat-icon-button (click)="stopAudio()"><mat-icon>stop</mat-icon></button>
+      <span class="flex-spacer"></span>
+      <!-- <button style="background-color: white; color: var(--h3);" mat-icon-button
+        (click)="closeWavesurfer()"><mat-icon>clear</mat-icon></button> -->
+    </div>
+  </mat-toolbar>
+  }
+  @if (audioDiv && !loadingWave) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+  <div id="callTagging">
+  </div>
+
+</div>
+<div style="overflow:auto ; padding: 2px;">
+
+  <!-- Table -->
+  <div>
+    <table mat-table [dataSource]="callTaggingDetails" class="mat-elevation-z8" style="width: 100%;">
+
+      <!-- Tag Name Column -->
+      <ng-container matColumnDef="tagName">
+        <th mat-header-cell *matHeaderCellDef> Tag Name </th>
+        <td mat-cell *matCellDef="let element"> {{ element.selectedTag }} </td>
+      </ng-container>
+
+      <!-- Start Time Column -->
+      <ng-container matColumnDef="startTime">
+        <th mat-header-cell *matHeaderCellDef> Start Time </th>
+        <td mat-cell *matCellDef="let element"> {{ element.startPoint }} </td>
+      </ng-container>
+
+      <!-- End Time Column -->
+      <ng-container matColumnDef="endTime">
+        <th mat-header-cell *matHeaderCellDef> End Time </th>
+        <td mat-cell *matCellDef="let element"> {{ element.endPoint }} </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{ element.description || 'N/A' }} </td>
+      </ng-container>
+
+      <!-- Play Column -->
+      <ng-container matColumnDef="play">
+        <th mat-header-cell *matHeaderCellDef> Play </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="playTag(element)">
+            @if (element.playButton) {
+              <mat-icon>play_circle</mat-icon>
+
+            }
+            @if (element.pauseButton) {
+              <mat-icon>pause</mat-icon>
+            }
+            
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Delete Column -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="var(--h3)" (click)="deleteTag(element.callTaggingDetailsID)">
+            <mat-icon style="color: var(--h3);">delete</mat-icon></button>
+        </td>
+      </ng-container>
+
+      <!-- Table Header and Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    @if (!callTaggingDetails || callTaggingDetails.data.length === 0) {
+      <div  class="no-data">
+        <p>No data available</p>
+      </div>
+    }
+  </div>
+  @if (newTagStatus) {
+  <div class="tag-details-form">
+    <h1>Tag Details</h1>
+    <div style="text-align: end;">
+      <mat-icon style="cursor: pointer;" (click)="resetForm()">autorenew</mat-icon>
+    </div>
+    <form>
+      <div class="form-group">
+        <label for="tagName">Tag Name</label>
+
+        <!-- Dropdown for predefined tags -->
+        <select id="tagName" class="form-control" [(ngModel)]="selectedTag" name="tagName">
+          @for (tag of callTags; track $index) {
+          <option [value]="tag.tags">
+            {{ tag.tags }}
+          </option>
+          }
+
+          <option value="Other">Other (Add Custom Tag)</option>
+        </select>
+        <!-- Custom Input for Adding a New Tag -->
+        @if (selectedTag == 'Other') {
+        <div class="custom-tag-wrapper mt-2">
+          <input type="text" class="form-control" placeholder="Enter custom tag" [(ngModel)]="customTag"
+            [ngModelOptions]="{standalone: true}" />
+          <button class="btn btn-sm btn-success mt-2" (click)="saveCustomTag()">
+            <i class="fa fa-save"></i> Save
+          </button>
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="startPoint">Start Point</label>
+        <input
+          type="text"
+          id="startPoint"
+          class="form-control"
+          placeholder="Enter start point"
+          [(ngModel)]="startPoint"
+          [ngModelOptions]="{ standalone: true }"
+          #startPointInput="ngModel"
+          pattern="^([0-1]?[0-9]|2[0-3]):([0-5]?[0-9]):([0-5]?[0-9])$"
+          required
+        />
+        @if (startPointInput.invalid && startPointInput.touched) {
+          <div class="text-danger">
+            Start Point must be in hh:mm:ss format.
+          </div>
+        }
+        
+      </div>
+      
+      <div class="form-group">
+        <label for="endPoint">End Point</label>
+        <input
+          type="text"
+          id="endPoint"
+          class="form-control"
+          placeholder="Enter end point"
+          [(ngModel)]="endPoint"
+          [ngModelOptions]="{ standalone: true }"
+          #endPointInput="ngModel"
+          pattern="^([0-1]?[0-9]|2[0-3]):([0-5]?[0-9]):([0-5]?[0-9])$"
+          required
+        />
+        @if (endPointInput.invalid && endPointInput.touched) {
+          <div class="text-danger">
+            End Point must be in hh:mm:ss format.
+          </div>
+        }
+        
+      </div>
+      
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" [(ngModel)]="Description" class="form-control"  [ngModelOptions]="{standalone: true}"
+          placeholder="Enter description"></textarea>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn btn-warning" (click)="cancel()">Cancel</button>
+
+        <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="!canSave()"
+        (click)="markStartPoint()"
+      >
+        {{ !startPoint ? 'Mark Start Point' : (!endPoint ? 'Mark End Point' : 'Save') }}
+      </button>
+      </div>
+      
+     
+    </form>
+  </div>
+
+  }
+
+  @if (!newTagStatus) {
+  <button matTooltip="{{'Menu.REPORTS RECORDING.CALLS.Add Call Tagging'| translate}}" class="newTag btn" (click)="addTag()">New Tag</button>
+  }
+
+</div>
+}
+@else {
+  <div style="padding: 2px;">
+    <div style="display: flex; justify-content: space-between;">
+      <h1>{{'Menu.REPORTS RECORDING.CALLS.Call Transcription & Tagging'| translate}}</h1>
+        <button class="close-button"  (click)="close()">✖</button>
+    </div>
+    <!-- Audio -->
+    @if(audioDiv){
+    <mat-toolbar class="toolbar-3">
+      <span style="color: white;">{{ showTime }}</span>
+      <div class="center-content">
+        @if (playButton) {
+        <button  style="background-color: white; color: var(--h3); display: flex; justify-content: center; align-items: center;" 
+         mat-icon-button (click)="playAudio()"><mat-icon>play_arrow</mat-icon></button>
+        }
+        @if (pauseButton) {
+        <button  style="background-color: white; color: var(--h3); display: flex; justify-content: center; align-items: center;" 
+         mat-icon-button (click)="pauseAudio()"><mat-icon>pause</mat-icon></button>
+        }
+        <button  style="background-color: white; color: var(--h3); display: flex; justify-content: center; align-items: center;" 
+         mat-icon-button (click)="stopAudio()"><mat-icon>stop</mat-icon></button>
+        <span class="flex-spacer"></span>
+        <!-- <button style="background-color: white; color: var(--h3);" mat-icon-button
+          (click)="closeWavesurfer()"><mat-icon>clear</mat-icon></button> -->
+      </div>
+    </mat-toolbar>
+    }
+    @if (audioDiv && !loadingWave) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+    <div id="callTagging">
+    </div>
+  
+  </div>
+  <div style="overflow:auto ; padding: 2px;">
+  
+    <!-- Table -->
+    <div>
+      <table mat-table [dataSource]="callTaggingDetails" class="mat-elevation-z8" style="width: 100%;">
+  
+        <!-- Tag Name Column -->
+        <ng-container matColumnDef="tagName">
+          <th mat-header-cell *matHeaderCellDef> Tag Name </th>
+          <td mat-cell *matCellDef="let element"> {{ element.selectedTag }} </td>
+        </ng-container>
+  
+        <!-- Start Time Column -->
+        <ng-container matColumnDef="startTime">
+          <th mat-header-cell *matHeaderCellDef> Start Time </th>
+          <td mat-cell *matCellDef="let element"> {{ element.startPoint }} </td>
+        </ng-container>
+  
+        <!-- End Time Column -->
+        <ng-container matColumnDef="endTime">
+          <th mat-header-cell *matHeaderCellDef> End Time </th>
+          <td mat-cell *matCellDef="let element"> {{ element.endPoint }} </td>
+        </ng-container>
+  
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description || 'N/A' }} </td>
+        </ng-container>
+  
+        <!-- Play Column -->
+        <ng-container matColumnDef="play">
+          <th mat-header-cell *matHeaderCellDef> Play </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="playTag(element)">
+              @if (element.playButton) {
+                <mat-icon>play_circle</mat-icon>
+  
+              }
+              @if (element.pauseButton) {
+                <mat-icon>pause</mat-icon>
+              }
+              
+            </button>
+          </td>
+        </ng-container>
+  
+     
+  
+        <!-- Table Header and Row Definitions -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      @if (!callTaggingDetails || callTaggingDetails.data.length === 0) {
+        <div  class="no-data">
+          <p>No data available</p>
+        </div>
+      }
+    </div>
+    @if (newTagStatus) {
+    <div class="tag-details-form">
+      <h1>Tag Details</h1>
+     
+      <form>
+        <div class="form-group">
+          <label for="tagName">Tag Name</label>
+  
+          <!-- Dropdown for predefined tags -->
+          <select id="tagName" class="form-control" [(ngModel)]="selectedTag" name="tagName">
+            @for (tag of callTags; track $index) {
+            <option [value]="tag.tags">
+              {{ tag.tags }}
+            </option>
+            }
+  
+            <option value="Other">Other (Add Custom Tag)</option>
+          </select>
+          <!-- Custom Input for Adding a New Tag -->
+          @if (selectedTag == 'Other') {
+          <div class="custom-tag-wrapper mt-2">
+            <input type="text" class="form-control" placeholder="Enter custom tag" [(ngModel)]="customTag"
+              [ngModelOptions]="{standalone: true}" />
+            
+          </div>
+          }
+        </div>
+  
+        <div class="form-group">
+          <label for="startPoint">Start Point</label>
+          <input
+            type="text"
+            id="startPoint"
+            class="form-control"
+            placeholder="Enter start point"
+            [(ngModel)]="startPoint"
+            [ngModelOptions]="{ standalone: true }"
+            #startPointInput="ngModel"
+            pattern="^([0-1]?[0-9]|2[0-3]):([0-5]?[0-9]):([0-5]?[0-9])$"
+            required
+          />
+          @if (startPointInput.invalid && startPointInput.touched) {
+            <div class="text-danger">
+              Start Point must be in hh:mm:ss format.
+            </div>
+          }
+          
+        </div>
+        
+        <div class="form-group">
+          <label for="endPoint">End Point</label>
+          <input
+            type="text"
+            id="endPoint"
+            class="form-control"
+            placeholder="Enter end point"
+            [(ngModel)]="endPoint"
+            [ngModelOptions]="{ standalone: true }"
+            #endPointInput="ngModel"
+            pattern="^([0-1]?[0-9]|2[0-3]):([0-5]?[0-9]):([0-5]?[0-9])$"
+            required
+          />
+          @if (endPointInput.invalid && endPointInput.touched) {
+            <div class="text-danger">
+              End Point must be in hh:mm:ss format.
+            </div>
+          }
+          
+        </div>
+        
+  
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" [(ngModel)]="Description" class="form-control"  [ngModelOptions]="{standalone: true}"
+            placeholder="Enter description"></textarea>
+        </div>
+  
+        <div class="button-group">
+          <button type="button" class="btn btn-warning" (click)="cancel()">Cancel</button>
+  
+      
+        </div>
+        
+       
+      </form>
+    </div>
+  
+    }
+  
+    @if (!newTagStatus) {
+    }
+  
+  </div>
+}

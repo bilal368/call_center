@@ -1,0 +1,58 @@
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mt-2">Auto Delete Settings</h4>
+        </div>
+        <div class="card-body formOne">
+            <form class="autoDeleteForm" [formGroup]="autoDeleteForm" (ngSubmit)="submitAutoDelete()">
+                <!-- Auto Delete Type Selection -->
+                <div class="mb-3">
+                    <label class="form-label">Auto Delete Type</label>
+                    <select class="form-control" formControlName="autoDeleteType">
+                        <option value="">Select Type</option>
+                        <option value=0>Threshold</option>
+                        <option value=1>Time Based</option>
+                    </select>
+                </div>
+            
+                <!-- Threshold Points Limit (if selected) -->
+                @if (autoDeleteForm.get('autoDeleteType')?.value == 0) {
+                    <div class="mb-3">
+                        <label class="form-label">Threshold Limits (%)</label>
+                        <div class="d-flex">
+                            <input type="number" class="form-control me-2"
+                                placeholder="Cut-off Threshold" formControlName="thresholdMin" [min]="0" [max]="100" />
+                            <input type="number" class="form-control"
+                                placeholder="Upper Threshold" formControlName="thresholdMax" [min]="0" [max]="100" />
+                        </div>
+                        @if ( autoDeleteForm.get('thresholdMin')?.touched && autoDeleteForm.hasError('thresholdInvalid')) {
+                            <div class="text-danger mt-1">
+                                Cut-off threshold should be less than Upper threshold, and values must be between 0 and 100.
+                            </div>
+                        }
+                    </div>
+                }@else {
+                    <!-- Retention Period -->
+                    <div class="mb-3">
+                        <label class="form-label">Retention Period</label>
+                        <select class="form-control" formControlName="retentionPeriod">
+                            <option value="">Select Time</option>
+                            @for(time of timeOptions;track $index){
+                                <option [value]="time">{{ time }} Days</option>
+
+                            }
+                        </select>                    </div>
+                }
+            
+            
+                @if(errorMessage){
+                    <div class="text-danger mt-2">{{errorMessage}}</div>
+                    }
+                <button type="submit" class="btn btn-dark" matTooltip="Execute auto delete" >Submit</button>
+             
+            </form>
+            
+            
+        </div>
+    </div>
+</div>

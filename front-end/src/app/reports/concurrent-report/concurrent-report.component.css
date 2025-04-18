@@ -1,0 +1,175 @@
+.mainContainer {
+    height: 94vh;
+    padding-right: .2%;
+  }
+  
+  .container{
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  padding: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .row{
+    width: 100%;
+    margin: 0;
+  }
+  .excelDiv {
+    display: flex;
+    align-items: center;
+    background-color: #5A9158;
+    font-size: 15px;
+    color: #fbf3f3;
+    padding: 3px;
+    cursor: pointer;
+    width: 80px;
+    height: 40px;
+  }
+  
+
+  ng-container,th,td{
+    width: 50vw;
+  }
+  th.mat-sort-header-sorted {
+    color: var(--textColor);
+  }
+  
+  .mdc-data-table__header-row {
+    color: var(--textColor);
+    background-color: var(--h3) !important;
+  }
+  
+  #fitergroup {
+    transform: rotate(90deg);
+    color: var(--textIconColor);
+  }
+  .datePicker{
+    height: 5vh;
+    margin-top: .5vh;
+    background-color: var(--h5);
+  }
+ 
+ 
+ 
+  
+  .table-container {
+    height: 79vh;
+    overflow: auto;
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  
+  .expansionHeader {
+    width: 100%;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  
+  .custom-button {
+
+    align-items: center;
+    background-color: var(--h3) !important;
+    color: var(--textColor) !important;
+    padding: 2px;
+    margin-top: .5vh;
+    padding-top: 5px;
+    height: 5vh;
+    width: 10vw;
+  }
+  
+  .custom-apply-button {
+    /* border-radius: 25px; */
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #999999 0%, #CCCCCC 50%, #999999 100%);
+    color: #362f2f !important;
+    height: 5vh;
+    padding: 10px;
+    margin-top: .5vh;
+  }
+  
+  
+  .filters {
+    display: flex;
+    gap: 2%;
+    align-items: center;
+    height: 7vh;
+    /* margin-top: 6px; */
+  }
+  
+  
+  
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Adjust spacing if necessary */
+  }
+  
+  .pagination-toolbar {
+    background-color: var(--h3);
+    height: 8vh;
+    width: 100%;
+  
+  }
+  
+  .next-button {
+    background-color: white;
+    color: black;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  ::ng-deep .mat-sort-header-arrow {
+    color: white !important; 
+    opacity: 1 !important; 
+  }
+  
+  /*PAGINATION*/
+  /* for pagination update this css  */
+  .page-info {
+    font-size: 1rem;
+    margin-right: 16px;
+    /* color: var(--textColor) !important; */
+    color: white;
+  
+  }
+  
+  .text-pagination {
+    font-size: 1rem;
+  }
+
+  .custom-button-date {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    background-color: var(--h3) !important;
+    color: var(--textColor) !important;
+    height: 5vh;
+  }
+  button{
+    margin-right: 4px;
+    font-size: small;
+  }
+  th {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    z-index: 10;
+  }
+  /* Pagination un tick css */
+
+::ng-deep .goto-check .mat-pseudo-checkbox {
+  display: none !important;
+}
+::ng-deep .goto-check-pagination .mat-pseudo-checkbox {
+  display: none !important;
+}

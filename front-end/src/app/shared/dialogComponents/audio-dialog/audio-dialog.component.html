@@ -1,0 +1,79 @@
+<div style="justify-content: space-between;display: flex;">
+  <div>
+    <h1 mat-dialog-title>Audio Player</h1>
+  </div>
+
+
+
+  <div mat-dialog-actions style="padding: 2%;">
+    <button mat-button mat-dialog-close (click)="onClose()">Close</button>
+  </div>
+</div>
+
+<div style="padding: 5%;">
+  @if (data.multiaudio) {
+  <div mat-dialog-content>
+    <!-- Merged Audio Control -->
+    <div class="merged-audio-container">
+      <div style="display: flex; justify-content: space-between;">
+        <span class="merged-audio-title">Merged Audio</span>
+        <div mat-button (click)="downloadMergedAudio()" style="cursor: pointer;">
+          <mat-icon>download</mat-icon>
+        </div>
+      </div>
+
+      <mat-toolbar color="primary" class="toolbar-3">
+
+        <div class="center-content">
+          <span class="show-time">{{ showTime }}</span>
+          @if (playMergeButton) {
+          <button mat-icon-button (click)="playAllAudio()">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          }
+          @if (pauseMergeButton) {
+          <button mat-icon-button (click)="pauseAllAudio()">
+            <mat-icon>pause</mat-icon>
+          </button>
+          }
+
+          <button mat-icon-button (click)="stopAllAudio()">
+            <mat-icon>stop</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+      <div id="mergedWaveSurferContainer" class="wavesurfer-container"></div>
+    </div>
+    @for (blob of data.audioBlobs; track $index) {
+
+
+    <div class="audio-item">
+
+      <mat-toolbar color="primary" class="toolbar-3">
+
+        <div class="center-content">
+          <span class="audio-title">Audio {{$index + 1}} </span>
+          @if (playButton[$index]) {
+
+          <button mat-icon-button (click)="playAudio($index)">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          }
+          @if (pauseButton[$index]) {
+          <button mat-icon-button (click)="pauseAudio($index)">
+            <mat-icon>pause</mat-icon>
+          </button>
+          }
+          <button mat-icon-button (click)="stopAudio($index)">
+            <mat-icon>stop</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+      <div id="wavesurferContainer{{ $index }}" class="wavesurfer-container"></div>
+    </div>
+    }
+
+  </div>
+  }
+
+</div>

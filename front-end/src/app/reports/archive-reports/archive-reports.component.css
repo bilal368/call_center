@@ -1,0 +1,368 @@
+.mainContainer {
+    height: 94vh;
+    padding-right: .2%;
+  }
+  
+  .container{
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  padding: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .row{
+    width: 100%;
+      padding: 0;
+  }
+  .col-12{
+    margin: 0;
+  }
+  .col-3{
+    margin: 0;
+  }
+  .excelDiv {
+    display: flex;
+    align-items: center;
+    background-color: #5A9158;
+    font-size: 15px;
+    color: #fbf3f3;
+    padding: 3px;
+    cursor: pointer;
+    width: 80px;
+    height: 40px;
+  }
+  
+
+  ng-container,th,td{
+    width: 50vw;
+    height: min-content;
+  }
+  th.mat-sort-header-sorted {
+    color: var(--textColor);
+  }
+  
+  .mdc-data-table__header-row {
+    color: var(--textColor);
+    background-color: var(--h3) !important;
+  }
+  
+  #fitergroup {
+    transform: rotate(90deg);
+    color: var(--textIconColor);
+  }
+  .datePicker{
+    height: 5vh;
+    margin-top: .5vh;
+    background-color: var(--h5);
+  }
+ 
+ 
+ 
+  
+  .table-container {
+    height: 79vh;
+    overflow: auto;
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  
+  .expansionHeader {
+    width: 100%;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  .filter-container {
+    display: flex;
+    max-height: 25px;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  
+  .filter-selectiom-container {
+    justify-content: space-between;
+    display: flex;
+    height: 25px;
+    margin-top: 5px;
+  }
+  .filter-button {
+    font-size: 15px;
+    color: #000;
+    cursor: pointer;
+    background-color: var(--h2);
+    border-radius: 15px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    margin-top: 5px;
+    margin-right: 5px;
+    height: 25px;
+  }
+  
+  .custom-button {
+
+    align-items: center;
+    background-color: var(--h3) !important;
+    color: var(--textColor) !important;
+    padding: 2px;
+    margin-top: .5vh;
+    padding-top: 5px;
+    height: 5vh;
+    width: 10vw;
+  }
+  .custom-button-archive-type {
+    width: 22vw;
+    margin-top: 5px;
+
+  }
+  
+  .custom-apply-button {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #999999 0%, #CCCCCC 50%, #999999 100%);
+    color: #362f2f !important;
+  }
+  
+  
+  .filters {
+    display: flex;
+    gap: 2%;
+    align-items: center;
+    height: 7vh;
+    /* margin-top: 6px; */
+  }
+  .goto-check {
+    position: sticky;   
+    top: 0;             
+    background: white; 
+    z-index: 1;         
+  }
+  ::ng-deep .goto-check-pagination .mat-pseudo-checkbox {
+    display: none !important;
+  }
+  ::ng-deep .goto-check .mat-pseudo-checkbox {
+    display: none !important;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Adjust spacing if necessary */
+  }
+  
+  .pagination-toolbar {
+    background-color: var(--h3);
+    height: 8vh;
+    width: 100%;
+  
+  }
+  
+  .next-button {
+    background-color: white;
+    color: black;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  /*PAGINATION*/
+  /* for pagination update this css  */
+  .page-info {
+    font-size: 1rem;
+    margin-right: 16px;
+    /* color: var(--textColor) !important; */
+    color: white;
+  
+  }
+  
+  .text-pagination {
+    font-size: 1rem;
+  }
+  .custom-add-button {
+    cursor: pointer;
+    margin-top: 5px;
+    background: linear-gradient(180deg, var(--h3) 0%, var(--h3) 50%, var(--h3) 100%);
+    color: white;
+    border-radius: 5%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  }
+  .custom-button-date {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    background-color: var(--h3) !important;
+    color: var(--textColor) !important;
+    height: 5vh;
+  }
+  button{
+    margin-right: 4px;
+    font-size: small;
+  }
+  th {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    z-index: 10;
+  }
+  .typeStatus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    border-radius: 50%;
+    font-weight: bold;
+    align-items: center;
+    font-size: 14px;
+    border: 2px solid green; /* Change color as needed */
+    color: green;
+    background-color: white;
+}
+
+  /* Pagination un tick css */
+
+::ng-deep .goto-check .mat-pseudo-checkbox {
+  display: none !important;
+}
+::ng-deep .goto-check-pagination .mat-pseudo-checkbox {
+  display: none !important;
+}
+
+
+.extensionChangeBTN {
+  min-width: 100px !important;
+  border: none;
+}
+
+/* loader */
+.loader {
+  width: 100px;
+  top: 45%;
+  left: 45%;
+  position: absolute;
+  aspect-ratio: 1;
+  display: grid;
+  border: 10px solid #0000;
+  border-radius: 50%;
+  border-right-color: var(--headingBg);
+  animation: l15 1s infinite linear;
+}
+.loader::before,
+.loader::after {    
+  content: "";
+  grid-area: 1/1;
+  margin: 2px;
+  border: inherit;
+  border-radius: 50%;
+  animation: l15 2s infinite;
+}
+.loader::after {
+  margin: 8px;
+  animation-duration: 3s;
+}
+@keyframes l15{ 
+  100%{transform: rotate(1turn)}
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.value-label-Date{
+  margin-top: 4%;
+  background-color: gray;
+  color: white;
+  border-radius: 3px;
+  font-weight: bold;
+  width: 188px;
+  min-height: 24px;
+}
+.value-label {
+  padding: 2px;
+    margin-top: 4%;
+    background-color: gray;
+    color: white;
+    border-radius: 3px;
+    font-weight: bold;
+    width: 140px;
+    min-height: 24px;
+}
+.bold-black-icon {
+  color: black; 
+  font-weight: bold; 
+}
+
+.bold-black-text {
+  color: black; 
+  font-weight: bold; 
+}
+
+.attribute-label{
+  background-color: white;
+  color: var(--h3);
+  font-weight: bold;
+  border-radius: 3px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.duration{
+  width: 10vw;
+}
+th.header-cell {
+  background-color: var(--h3);
+  border: 1px solid var(--h3);
+  color: white;
+}
+.rotated-icon {
+  transform: rotate(180deg);
+  color: #000;
+}
+#actionTd {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+  
+}
+#directionTd{
+  width: 2vw !important;
+}
+.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 9999;
+}
+.toolbar-3 {
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  background-color: var(--h3);
+}
+#wavesurferContainer{
+  background-color: var(--h3);
+}
+::ng-deep .mat-sort-header-arrow {
+  color: white !important; 
+  opacity: 1 !important; 
+}
+
+/* test */

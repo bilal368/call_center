@@ -1,0 +1,314 @@
+<div class="mainContainer">
+  <div class="filters">
+    <div class="container">
+      <div class="row ">
+        <div class="col-9 d-flex p-0">
+
+          <button class="custom-button-date btn" [matMenuTriggerFor]="filterDate">
+            <span class="material-symbols-outlined">schedule</span>
+            <span>{{ selectedDateRange }}</span>
+          </button>
+          <mat-menu #filterDate="matMenu">
+            <button mat-menu-item (click)="setDateRange('Today')">
+              {{ 'Menu.REPORTS RECORDING.AGENTS.Today' | translate }}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Week')">
+              {{ 'Menu.REPORTS RECORDING.AGENTS.This Week' | translate }}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Month')">
+              {{ 'Menu.REPORTS RECORDING.AGENTS.This Month' | translate }}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Quarter')">
+              {{ 'Menu.REPORTS RECORDING.AGENTS.This Quarter' | translate }}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Year')">
+              {{ 'Menu.REPORTS RECORDING.AGENTS.This Year' | translate }}
+            </button>
+            <button mat-menu-item (click)="openCustomDateDialog(selectedDateRange)">
+              {{ 'Menu.REPORTS RECORDING.AGENTS.Custom' | translate }}
+            </button>
+          </mat-menu>
+
+          <!-- Extension filter -->
+          <button mat-flat-button class="custom-button btn" [matMenuTriggerFor]="filterExtension">
+            {{ 'Menu.REPORTS RECORDING.DELETED CALLS.Extension' | translate }}:
+            {{ getExtensionFilterText() | translate }}
+          </button>
+
+      <mat-menu #filterExtension="matMenu" class="agent-menu" style="padding-left: 1vw;">
+        
+        <div style="padding: 3px;">
+        <input class="border w-80" placeholder="{{'Menu.REPORTS RECORDING.AGENTS.Search Extension' | translate}}"
+            (input)="onExtensionSearchChange($event)" (click)="$event.stopPropagation()">
+         </div>
+
+        <div class="d-flex me-1">
+          <mat-checkbox color="primary" [(ngModel)]="selectAllExtensions"
+            (change)="toggleSelectAllExtensions($event.checked)" (click)="$event.stopPropagation()">
+            {{ 'All' | translate }}
+          </mat-checkbox>
+        </div>
+        
+        <div class="itemsDiv">
+          @for(extension of filteredExtensions;track $index){
+          <div>
+            <mat-checkbox color="primary" [checked]="isExtensionSelected(extension.uniqueValue)"
+              (change)="toggleExtension(extension.uniqueValue, $event)" (click)="$event.stopPropagation()">
+              {{ extension.uniqueValue }}
+            </mat-checkbox>
+          </div>
+          }
+
+        </div>
+      </mat-menu>
+
+       <!-- DialedNumber AND  CallerID Filter -->
+
+       <button mat-button [matMenuTriggerFor]="callerIdMenu" class="custom-button-date btn">
+        {{'Menu.REPORTS RECORDING.CALLS.Dialed/CallerId Numbers'| translate}}
+      </button>
+
+      <mat-menu #callerIdMenu="matMenu" [hasBackdrop]="true">
+        <mat-option class="goto-check" (click)="$event.stopPropagation()">
+          <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchdialNumber"
+            placeholder="{{'Menu.REPORTS RECORDING.CALLS.Dialed/CallerId Numbers'| translate}} "
+            (keypress)="allowOnlyDigits($event)">
+        </mat-option>
+        <div class="text-end" style="margin-right: 16px;">
+          <button style="background-color: var(--h3); color: var(--button-text-color);">Confirm</button>
+        </div>
+      </mat-menu>
+      <div class="filter-item">
+    <button mat-flat-button class="custom-button btn" [matMenuTriggerFor]="filterDeletedUsername">
+      {{ 'Menu.REPORTS RECORDING.DELETED CALLS.DeletedUser' | translate }}:
+      {{ getDeletedUsernameFilterText() | translate }}
+    </button>
+    
+    <mat-menu #filterDeletedUsername="matMenu" class="agent-menu" style="padding-left: 1vw;">
+      <!-- Search Input -->
+      <input
+        class="ms-2 border w-80"
+        placeholder="{{ 'Menu.REPORTS RECORDING.DELETED CALLS.SearchDeletedUser' | translate }}"
+        (input)="onDeletedUsernameSearchChange($event)"
+        (click)="$event.stopPropagation()"
+      />
+    
+      <!-- Select All Checkbox -->
+      <div class="d-flex me-1">
+        <mat-checkbox
+          color="primary"
+          [checked]="selectAllDeletedUsernames" 
+          (change)="toggleSelectAllDeletedUsernames($event.checked)"
+          (click)="$event.stopPropagation()"
+        >
+          {{ 'All' | translate }}
+        </mat-checkbox>
+      </div>
+      <!-- List of Usernames -->
+      <div class="itemsDiv">
+        <ng-container
+          *ngFor="let deletedUser of filteredDeletedUsernames; trackBy: trackByDeletedUser"
+        >
+          <div>
+            <mat-checkbox
+              color="primary"
+              [checked]="isDeletedUsernameSelected(deletedUser.uniqueValue)"
+              (change)="toggleDeletedUsername(deletedUser, $event)"
+              (click)="$event.stopPropagation()"
+            >
+              {{ deletedUser.uniqueValue }}
+            </mat-checkbox>
+          </div>
+        </ng-container>
+      </div>
+    </mat-menu>
+    </div>
+
+      <button  class="custom-apply-button btn" (click)="applyFilters()" [matTooltip]="toolTips.apply|translate">
+            {{'Menu.CONFIGURE.EXTENSION MAPPING.APPLY'| translate}}
+      </button>
+
+   </div>
+
+    <!-- File Download -->
+    <div class="col-3 d-flex justify-content-end p-0">
+
+    <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}" matTooltip=""
+      [matMenuTriggerFor]="menu4">
+      <mat-icon class="icon">download_2</mat-icon>
+      <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+    </div>
+    <!-- File Download -->
+    <mat-menu #menu4="matMenu">
+      <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+        <div style="justify-content: space-around;display: flex;">
+          <div>Excel</div>
+          <div>
+            <span class="material-symbols-outlined">article</span>
+          </div>
+        </div>
+      </button>
+      <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+        <div style="justify-content: space-around;display: flex;">
+          <div>PDF</div>
+          <div>
+            <span class="material-symbols-outlined">picture_as_pdf</span>
+          </div>
+        </div>
+      </button>
+      <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+        <span>TIFF</span>
+        <span class="material-symbols-outlined">perm_media</span>
+      </button>
+      <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+        <span>Web Archive</span>
+        <span class="material-symbols-outlined">install_desktop</span>
+      </button>
+    </mat-menu>
+
+
+      </div>
+
+    </div>
+
+    </div>
+</div>
+    <!-- Table Data-->
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <!-- ExtensionNumber Column -->
+        <ng-container matColumnDef="extensionNumber">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+            <div class="header-content">
+              <div class="header-text-icon">
+                {{'Menu.REPORTS RECORDING.DELETED CALLS.ExtensionNumber' | translate}}
+                
+              </div>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element" class="columnCell">{{element.extensionNumber}}<br></td>
+        </ng-container>
+  
+  
+        <!-- Dialed Number Column -->
+        <ng-container matColumnDef="dialledNumber">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+            <div class="header-content">
+              <div class="header-text-icon">
+                {{'Menu.REPORTS RECORDING.DELETED CALLS.DialedNumber' | translate}}<br>
+               
+               <label class="header-2row">{{'Menu.REPORTS RECORDING.DELETED CALLS.Caller ID' | translate}}</label> 
+  
+              </div>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element" class="columnCell">{{element.dialledNumber}}<br>
+         
+            <label class="data-2row">{{element.callerId}}</label>
+          </td>
+        </ng-container>
+  
+       
+      <!-- CallStartTime Column -->
+      <ng-container matColumnDef="CallStartTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-content">
+            <div class="header-text-icon">
+              {{'Menu.REPORTS RECORDING.DELETED CALLS.CallStartTime' | translate}}
+             
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">
+          {{ element.CallStartTime | date:'dd-MM-yyyy HH:mm:ss a' }}
+          <br>
+        </td>
+      </ng-container>
+
+      <!-- Duration Column -->
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div class="header-content">
+            {{'Menu.REPORTS RECORDING.DELETED CALLS.Duration' | translate}}
+           
+            <br>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.duration}}<br></td>
+      </ng-container>
+
+      <!-- Notes Column -->
+      <ng-container matColumnDef="notes">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-content">
+            <div class="header-text-icon">
+              {{'Menu.REPORTS RECORDING.DELETED CALLS.Notes' | translate}}
+             
+
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell ellipsis-text" [matTooltip]="element.notes"
+          matTooltipShowDelay="500">
+          {{ element.notes }}
+        </td>
+      </ng-container>
+
+      <!-- deletedUsername Column -->
+      <ng-container matColumnDef="deletedUsername">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-content">
+            <div class="header-text-icon">
+              {{'Menu.REPORTS RECORDING.DELETED CALLS.Deleted Username' | translate}}
+             
+
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">
+          <span>{{element.deletedUsername}}</span>
+          @if(element.deletedUserID==0){
+            <span class="typeStatus" matTooltip="Auto Deleted">A</span>
+          }
+          
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      </div>
+
+  <mat-toolbar class="pagination-toolbar">
+    <div class="page-info">{{'Menu.CONFIGURE.EXTENSION MAPPING.TotalRecords' | translate}}: {{ totalRecord }}</div>
+    <span class="example-spacer"></span>
+    <div class="page-info">
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.RecordsPerPage' | translate}}
+    </div>
+    <mat-select class="form-control me-4" style="width:6vw" [(ngModel)]="recordsPerPage"
+      (selectionChange)="onItemsPerPageChange($event)">
+      <mat-option class="goto-check" [value]="10" selected>10</mat-option>
+      <mat-option class="goto-check" [value]="25">25</mat-option>
+      <mat-option class="goto-check" [value]="50">50</mat-option>
+      <mat-option class="goto-check" [value]="100">100</mat-option>
+    </mat-select>
+    <div class="page-info">
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.page' | translate}}
+      <mat-select class="form-control" style="width: 6vw;" [(value)]="pageNumber" (selectionChange)="goToPage($event)">
+        <mat-option class="goto-check-pagination" *ngFor="let page of getPagesArray()" [value]="page">
+          {{ page }}
+        </mat-option>
+      </mat-select>
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.of' | translate}} {{ getTotalPages() }}
+    </div>
+    <div [dir]="'ltr'">
+      <button mat-mini-fab class="next-button me-2 " (click)="previousPage()"
+        [matTooltip]="toolTips.Previous|translate">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-mini-fab class="next-button me-2" (click)="nextPage()" [matTooltip]="toolTips.Next|translate">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+    </div>
+  </mat-toolbar>
+</div>

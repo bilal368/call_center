@@ -1,0 +1,15 @@
+<div>
+    <div class="control-buttons">
+        <!-- Toggle play and pause buttons based on `isPaused` -->
+         @if (isPaused ) {
+            <button  class="btn" (click)="startAudioFork(this.uuids)">
+                <i class="fas fa-play"></i> <!-- Show play icon when paused -->
+            </button>
+         }
+        @if(!isPaused ){
+            <button  class="btn" (click)="stopAudio(this.uuids)">
+                <i class="fas fa-pause"></i> <!-- Show pause icon when playing -->
+            </button>
+        }
+    </div>
+</div>

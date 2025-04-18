@@ -1,0 +1,31 @@
+@if(connectionStatus===false){
+<div class="dialogueContainer">
+    <label for=""> </label>
+    <div class="loader">
+        <div class="linePreloader" [class.active]="showPreloader"></div>
+    </div>
+
+</div>
+}
+
+@if(connectionStatus===true){
+<div class="dialogueContainer">
+    <label for="">{{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.ConnectionTrue'| translate}}</label>
+    <button mat-button class="continuButton" type="submit" (click)="closedialogue()"> Continue </button>
+</div>
+}
+@if(authenticationError===false){
+<div class="errorContainer">
+    <mat-dialog-content>{{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.Failstatus'| translate}}</mat-dialog-content>
+    <mat-dialog-actions>
+        <label mat-button mat-dialog-close>Ok</label>
+    </mat-dialog-actions>
+</div> -->
+<div mat-dialog-content class="dialog-container">
+    <p class="dialog-message">Authentication failed. Please check your LDAP credentials and try again</p>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button class="ok-button" (click)="closedialogue()">OK</button>
+  </div>
+
+}

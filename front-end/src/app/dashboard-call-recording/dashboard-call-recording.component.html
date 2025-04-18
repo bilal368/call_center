@@ -1,0 +1,31 @@
+<div class="head-container">
+    <div class="sidenav-options">
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('live')"
+                [ngStyle]="{'background-color': buildDiv === 'live' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'live' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">
+                    {{'Menu.CALL RECORDING.DASHBOARD.Live'| translate}}
+                </label>
+            </div>
+        </ng-container>
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('report')"
+                [ngStyle]="{'background-color': buildDiv === 'report' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'report' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">
+                    {{'Menu.CALL RECORDING.DASHBOARD.Reports'| translate}}
+                </label>
+            </div>
+        </ng-container>
+    </div>
+    @if (buildDiv=='live') {
+    <app-dashboard-live></app-dashboard-live>
+
+    }@else {
+
+    <!-- <app-reportdashboard></app-reportdashboard> -->
+    <app-newdasbord></app-newdasbord>
+
+
+
+
+    }

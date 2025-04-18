@@ -1,0 +1,94 @@
+<!-- list all admin Users -->
+@if (data.type=='usersForAdd') {
+<div id="listAdminUsers" class="container-fluid bg-light">
+
+
+  <div class="headingEditProfile d-flex w-100 justify-content-between">
+    <!-- <mat-icon>group</mat-icon> \ -->
+    <h2 >{{'Menu.ALERTS MANAGEMENT.Common.DG Users'| translate}}</h2>
+    <button class="btn "  (click)="closeDialog()">
+      <span class="material-symbols-outlined">
+        close
+      </span>
+      
+      </button>
+  </div>
+ 
+  <div class="container ">
+    <div class="d-flex justify-content-end">
+      <div class="form-group mb-3 w-100 d-flex justify-content-between">
+        <button class="btn btn-dark ms-2 me-2" (click)="addUserToList()"
+          [disabled]="arrayforAdd.length==0">
+          @if(saveClicked){
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          }@else {
+            {{'Menu.ALERTS MANAGEMENT.Common.Save'| translate}}
+
+          }
+        </button>
+        <input placeholder="{{'Menu.ALERTS MANAGEMENT.Common.Search name here'| translate}}" class="form-control w-50" type="text" name="" id=""
+          [(ngModel)]="searchKey">
+      </div>
+    </div>
+    <div class="mat-elevation-z8 mb-1">
+      <div class="table-container">
+        <table class="table table-hover">
+          <thead id="firstRow">
+            <tr>
+              <th style="width: 25vw;">{{'Menu.ALERTS MANAGEMENT.Common.Name'| translate}}</th>
+              <th id="alignCenterTd" style="width: 20vw;"></th>
+              <th>
+                <mat-checkbox color="primary" (change)="selectAll($event)"></mat-checkbox>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider"> 
+            <!-- Add your ngFor loop here for data binding -->
+            <tr *ngFor="let user of userList  |search:searchKey:'firstname'">
+              <td id="userName">{{user.firstname| titlecase}} {{user.lastname| titlecase}}
+                <br>
+                <p style="opacity: 65%;">from {{ getRoleName(user.roleId) }}
+            </td>
+              <td style="text-align: center;">
+                <div class="menu-container">
+                  <!-- <div style="width: 8vw;" class="btn btn-dark " name="">
+                    {{ user.role }}
+                  </div> -->
+                </div>
+              </td>
+              <td>
+                <mat-checkbox color="primary" [checked]="selectAllChecked"
+                  (change)="addToarray(user.userId,$event)"></mat-checkbox>
+  
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+     
+    </div>
+
+  </div>
+</div>
+}
+<!-- popup messages -->
+@if(data.type=='popupMsg'){
+<!-- for conform time interval entering -->
+<div class="alertTimeInterval" [style.color]='popupColor'>
+  <div class="d-flex w-80 p-2 m-2 justify-content-around">
+      <h2>{{data.message|translate}}</h2> &nbsp;
+      <span class="material-symbols-outlined">
+          error
+          </span>
+          
+  </div>
+ <div class="text-center">
+          <button class="btn btn-dark" (click)="closeDialog()">
+              <span class="material-symbols-outlined mt-1">
+                  check_circle
+                  </span>
+          </button>
+  
+ </div>
+</div>
+}

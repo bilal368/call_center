@@ -1,0 +1,96 @@
+/* You can add global styles to this file, and also import other style files */
+@import "customStyle.css";
+@import 'material-icons/iconfont/material-icons.css';
+@import 'material-symbols';
+
+:root {
+    --baseColor: #033A6C;
+    --headingBg: #033A6C;
+    --selectedNav: #778F74;
+    --currentwindow: #EFF8FF;
+    --textColor: #FFFFFF;
+    --textColorblack: #000000;
+    --tabColor: #CCCCCC;
+    --tabNameColor: #999999;
+    --buttonColor: #676E5E;
+    --employeeDbg: #C9E1F5;
+    --inputBg: #EEF5ED;
+    --textIconColor: #E0ECDE
+}
+
+:root {
+    --baseColor1: #89AECF;
+    --headingBg1: #145DA0;
+    --selectedNav1: #778F74;
+    --currentwindow1: #CEDFCC;
+    --textColor1: #FFFFFF;
+    --tabColor1: #CCCCCC;
+    --tabNameColor1: #999999;
+    --newbaseColor: #52674F;
+    --newtabcolor1: #C9E1F5
+}
+
+:root {
+    --h1: #0C2D48;
+    --h2: #ededed;
+    --h3: #3c3c3b;
+    --h4: #c0c0c0;
+    --h5: #a9a9a9;
+    --h6: #696969;
+    --h7: #DB8D6A;
+    --dialog-header-bg-color: #2a2a2a;
+    --dialog-header-text-color: white;
+    --button-bg-color: #607d8b;
+    --button-text-color: white;
+    --button-hover-bg-color: #455a64;
+}
+input.ng-invalid.ng-touched {
+    border: red 1px solid;
+  }
+
+
+/* This will be applied to the entire body when the dialog is open */
+.dialog-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    z-index: 1;
+}
+
+/* Make sure the dialog content appears above the blurred background */
+.license-dialog-overlay .cdk-overlay-pane {
+    z-index: 1000 !important;
+    position: relative;
+}
+
+
+  ::ng-deep .mat-sort-header-arrow {
+    color: white !important;
+  }
+  ::ng-deep .custom-apply-button {
+    /* border-radius: 25px; */
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #999999 0%, #CCCCCC 50%, #999999 100%);
+    color: #362f2f !important;
+    height: 5vh;
+    padding: 10px;
+    margin-top: .5vh;
+  }
+  ::ng-deep .excelDiv {
+    display: flex;
+    align-items: center;
+    background-color: #5A9158;
+    font-size: 15px;
+    color: #fbf3f3;
+    padding: 3px;
+    cursor: pointer;
+    max-width: 80px;
+    max-height: 40px;
+    margin-top: 2px;
+  }

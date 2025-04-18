@@ -1,0 +1,509 @@
+<!-- showing toolbar if cliked view button -->
+@if(clickedName==='view'){
+    <!-- <mat-toolbar> -->
+    <div class="example-spacer">
+        <span>
+            {{'Menu.CONFIGURE.EMPLOYEE MANAGER.VIEW EMPLOYEE DETAILS'| translate}}
+        </span>
+        <div>
+            <button mat-button [mat-dialog-close] [matTooltip]="toolTips.Close|translate"
+            class="closeButtonHover">
+                <mat-icon>close</mat-icon>
+            </button>
+    
+        </div>
+    </div>
+    
+    <div class="container">
+        <form class="viewEmployeeDetails" [formGroup]="viewEmployeeDetails">
+    
+            <div class="row">
+    
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.First Name'|
+                            translate}}</label>
+                        <input type="text" class="form-control" formControlName="firstname">
+                    </div>
+                </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Middle Name'|
+                            translate}}</label>
+                        <input type="text" class="form-control" formControlName="middlename">
+                    </div>
+                </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Last Name'| translate}}
+                        </label>
+                        <input type="text" class="form-control" formControlName="lastname">
+                    </div>
+    
+                </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Email'|
+                            translate}}</label>
+                        <input type="text" class="form-control" formControlName="primaryEmail">
+                    </div>
+                </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Phone Number'|
+                            translate}}</label>
+                        <input type="text" class="form-control" id="phonenumber" formControlName="phone">
+                    </div>
+                </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Designation'|
+                            translate}}</label>
+                        <input type="text" class="form-control" formControlName="designation">
+                    </div>
+                </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Employee ID'|
+                            translate}}</label>
+                        <input type="text" class="form-control" formControlName="employeeID">
+                    </div>
+                </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.AgentCode'|
+                            translate}}</label>
+                        <input type="text" class="form-control" formControlName="agentcode">
+                    </div>
+                </div>
+    
+                <div class="hierarchymain">
+                    <div class="line"></div>
+                    <div class="hierarchy">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.HIERARCHY'| translate}}</div>
+                    <div class="line"></div>
+                </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                      <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Location' | translate}}</label>
+                      <div>
+                        <select formControlName="locationId" class="form-control">
+                          <option value="null">{{ 'Unassigned' | translate }}</option>
+                          <option *ngFor="let location of items1" [value]="location.locationId" [selected]="location.locationId === viewEmployeeDetails.get('locationId')?.value">
+                            {{ location.locationName }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Department' | translate}}</label>
+                      <div>
+                        <select formControlName="departmentId" class="form-control">
+                          <option value="null">{{ 'Unassigned' | translate }}</option>
+                          <option *ngFor="let department of departmentItems" [value]="department.departmentId" [selected]="department.departmentId === viewEmployeeDetails.get('departmentId')?.value">
+                            {{ department.departmentName }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+    
+                <div class="col-6">
+                    <div class="form-group">
+                      <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Division' | translate}}</label>
+                      <div>
+                        <select formControlName="divisionId" class="form-control">
+                          <option value="0">{{ 'Unassigned' | translate }}</option>
+                          <option *ngFor="let division of divisionItems" [value]="division.divisionId" [selected]="division.divisionId === viewEmployeeDetails.get('divisionId')?.value">
+                            {{ division.divisionName }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+    
+            <div class="saveButtonDiv">
+                
+            </div>
+    
+        </form>
+    </div>
+    
+    
+    }
+        <!-- showing toolbar if cliked edit button -->
+        @if(clickedName==='edit'){
+            <div class="example-spacer">
+                <span style="padding-left: 20px;font-size: 20px;">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.EDIT'| translate}}</span>
+                <div>
+                    <button mat-button [mat-dialog-close] class="closeButtonHover" [matTooltip]="toolTips.Close|translate">
+                        <mat-icon>close</mat-icon>
+                    </button>
+            
+                </div>
+            </div>
+            
+            <div class="container">
+                <form class="userUpdateForm" [formGroup]="userUpdateForm" (ngSubmit)="UpdateEmployeesDetails()">
+            
+                    <div class="row">
+            
+                        <div class="col-6">
+                            <div class="form-group" style="width: 100%;">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.First Name'|
+                                    translate}}</label>
+                                <input type="text" class="form-control" formControlName="firstname">
+                            </div>
+                            <!-- Perform null check before accessing properties of addEmployees -->
+                            <div *ngIf="userUpdateForm && userUpdateForm.get('firstname')?.errors && userUpdateForm.get('firstname')?.touched"
+                                class="text-danger">
+                                {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Firstname is required'| translate}}
+                            </div>
+                        </div>
+            
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Middle Name'| translate}}</label>
+                                <input type="text" class="form-control" id="name" formControlName="middlename">
+                            </div>
+                        </div>
+            
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Last Name'| translate}}
+                                </label>
+                                <input type="text" class="form-control" id="name" formControlName="lastname">
+                            </div>
+            
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Email'| translate}}</label>
+                                <input type="text" class="form-control" id="name" formControlName="primaryEmail">
+                            </div>
+                        
+                            <!-- Show error message if the email is invalid immediately -->
+                            <div *ngIf="userUpdateForm.get('primaryEmail')?.invalid && userUpdateForm.get('primaryEmail')?.dirty" class="text-danger">
+                                {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Please enter a valid email address' | translate}}
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="phone" class="labelName">
+                                    {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Phone Number' | translate}}
+                                </label>
+                                <input type="text" class="form-control" id="phone" formControlName="phone"
+                                       inputmode="numeric" pattern="[0-9]*"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
+                        
+                            <div *ngIf="userUpdateForm.get('phone')?.invalid 
+                                        && (userUpdateForm.get('phone')?.dirty || userUpdateForm.get('phone')?.touched)" 
+                                 class="text-danger">
+                                <span *ngIf="userUpdateForm.get('phone')?.hasError('pattern')">
+                                    {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Please enter a valid phone number' | translate}}
+                                </span>
+                            </div>
+                        </div>
+                        
+            
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Designation'|
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="name" formControlName="designation">
+                            </div>
+                        </div>
+                        
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="employeeID" class="labelName">
+                                    {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Employee ID' | translate }}
+                                </label>
+                                <input type="text" class="form-control" id="employeeID" formControlName="employeeID">
+                            </div>
+                        
+                            <div *ngIf="userUpdateForm.get('employeeID')?.invalid 
+                                        && (userUpdateForm.get('employeeID')?.dirty || userUpdateForm.get('employeeID')?.touched)" 
+                                 class="text-danger">
+                                <!-- Required error -->
+                                <span *ngIf="userUpdateForm.get('employeeID')?.hasError('required')">
+                                    {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Employeeidvalidation' | translate }}
+                                </span>
+                        
+                                <!-- Pattern error (non-numeric) -->
+                                <span *ngIf="userUpdateForm.get('employeeID')?.hasError('pattern')">
+                                    {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Employeeidvalidation' | translate }}
+                                </span>
+                        
+                                <!-- Min length error -->
+                                <span *ngIf="userUpdateForm.get('employeeID')?.hasError('minlength')">
+                                    {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Employeeidvalidation' | translate }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Agent Code'| translate}}</label>
+                                <input type="text" class="form-control" id="name" formControlName="agentcode">
+                            </div>
+                        </div>
+            
+                        <div
+                            style="display: flex;background-color:white;padding-top: 10px; padding-left:10px; padding-right: 13px;">
+                            <div class="line" style=" border-top: 1px solid black;
+                            width: 100%;
+                            margin: 10px 0;"></div>
+                            <div style="padding-left: 35px; padding-right: 35px;">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.HIERARCHY'|
+                                translate}}</div>
+                            <div class="line" style=" border-top: 1px solid black;
+                        width: 100%;
+                        margin: 10px 0;"></div>
+            
+                        </div>
+            
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Location'| translate}}</label>
+            
+                                <div>
+                                    <select class="form-control" formControlName="locationId"
+                                        (change)="onLocationSelectionChange($event)">
+                                        <option value="null">{{ 'Unassigned' | translate }}</option>
+                                        <option value="" disabled>{{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Select Location' | translate
+                                            }}</option>
+                                        <option *ngFor="let location of resultLocDepDivi.Location" [value]="location.locationId">
+                                            {{ location.locationName }}
+                                        </option>
+                                    </select>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Department'| translate}}</label>
+                                <div>
+                                    <select class="form-control" formControlName="departmentId"
+                                        (change)="onDepartmentSelectionChange($event)">
+                                        <option value="null">{{ 'Unassigned' | translate }}</option>
+                                        <option value="" disabled>{{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Select Department' | translate
+                                            }}</option>
+                                        <option *ngFor="let department of departmentItems" [value]="department.departmentId">
+                                            {{ department.departmentName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Division'| translate}}</label>
+                                <div>
+                                    <select class="form-control" formControlName="divisionId" >
+                                        <option value="0">{{ 'Unassigned' | translate }}</option>
+                                        <option *ngFor="let division of divisionItems" [value]="division.divisionId">
+                                            {{ division.divisionName }} 
+                                        </option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="saveButtonDiv">
+                        <button class="usergroupSavebuttton" mat-button type="submit" [matTooltip]="toolTips.Update | translate"
+                            [disabled]="!userUpdateForm.valid"
+                            [ngClass]="{'disabled-button': !userUpdateForm.valid, 'enabled-button': userUpdateForm.valid}">
+                            {{ 'Update' | translate}}
+                        </button>
+                      </div>
+                      
+                </form>
+            </div>
+            
+            
+            }
+                <!-- showing toolbar if cliked add button -->
+    @if(clickedName==='add'){
+        <div class="example-spacer">
+            <span style="padding-left: 20px;font-size: 20px;">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.ADD'| translate}}</span>
+            <div>
+                <button mat-button [mat-dialog-close] class="closeButtonHover" [matTooltip]="toolTips.Close|translate">
+                    <mat-icon>close</mat-icon>
+                </button>
+        
+            </div>
+        </div>
+        
+        
+        <div class="container">
+            <form [formGroup]="addEmployees" (ngSubmit)="addEmployeesData()">
+        
+                <div class="row">
+        
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.First Name'| translate}}</label>
+                            <input type="text" class="form-control" formControlName="firstname">
+                        </div>
+        
+                        <!-- Perform null check before accessing properties of addEmployees -->
+                        <div *ngIf="addEmployees.get('firstname')?.errors && addEmployees.get('firstname')?.touched" class="text-danger" id="addValidation">
+                            {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Firstname is required' | translate }}
+                        </div>
+                    </div>
+        
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName"> {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Middle Name'| translate}}</label>
+                            <input type="text" class="form-control" formControlName="middlename" >
+                        </div>
+                    </div>
+        
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName"> {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Last Name'| translate}}
+                            </label>
+                            <input type="text" class="form-control" formControlName="lastname">
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Email'|translate}}</label>
+                            <input type="text" class="form-control" formControlName="primaryEmail" required="required"
+                                   [ngClass]="{'is-invalid': addEmployees.get('primaryEmail')?.invalid && (addEmployees.get('primaryEmail')?.dirty || addEmployees.get('primaryEmail')?.touched)}">
+                        </div>
+                    
+                        <div *ngIf="addEmployees.get('primaryEmail')?.invalid && (addEmployees.get('primaryEmail')?.dirty || addEmployees.get('primaryEmail')?.touched)" 
+                             class="text-danger">
+                            {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Please enter a valid email address' | translate }}
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="phonenumber" class="labelName">
+                                {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Phone Number' | translate }}
+                            </label>
+                            <input type="text" class="form-control" id="phonenumber" formControlName="phone" 
+                                pattern="[0-9]*" inputmode="numeric" (input)="onPhoneInput($event)" maxlength="15" />
+                        </div>
+                    
+                        <!-- Show error message only when the field is touched -->
+                        <div *ngIf="addEmployees.get('phone')?.invalid && (addEmployees.get('phone')?.dirty || addEmployees.get('phone')?.touched)">
+                            <div *ngIf="addEmployees.get('phone')?.errors?.['required']" class="text-danger">
+                                {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.phoneNumber required' | translate }}
+                            </div>
+                            <div *ngIf="addEmployees.get('phone')?.errors?.['pattern']" class="text-danger">
+                                {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Please enter a valid phone number' | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Designation'|translate}}</label>
+                            <input type="text" class="form-control" id="designation" formControlName="designation"
+                                >
+                        </div>
+                        <div *ngIf="addEmployees && addEmployees.get('designation')?.errors && addEmployees.get('designation')?.touched"
+                            class="text-danger">
+                            {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Designation is required'| translate}}
+                        </div>
+                    </div>
+        
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.EmployeeID'|translate}}</label>
+                            <input type="text" class="form-control" formControlName="employeeID"
+                                [ngClass]="{'is-invalid': addEmployees.get('employeeID')?.invalid && addEmployees.get('employeeID')?.touched}">
+                        </div>
+                        <div *ngIf="addEmployees.get('employeeID')?.invalid && (addEmployees.get('employeeID')?.dirty || addEmployees.get('employeeID')?.touched)" class="text-danger" id="addValidation">
+                            {{ 'Menu.CONFIGURE.EMPLOYEE MANAGER.Employeeidvalidation' | translate }}
+                        </div>
+                    </div>
+        
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.AgentCode'| translate}}</label>
+                            <input type="text" class="form-control" id="name" formControlName="agentcode">
+                        </div>
+                    </div>
+        
+                    <div
+                        style="display: flex;background-color: white;padding-top: 10px; padding-left:10px;padding-right: 20px;">
+                        <div class="line" style=" border-top: 1px solid black;width: 100%;margin: 10px 0;"></div>
+                        <div style="padding-left: 35px; padding-right: 35px;">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.HIERARCHY'|
+                            translate}}</div>
+                        <div class="line" style=" border-top: 1px solid black; width: 100%;margin: 10px 0;"></div>
+                    </div>
+        
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Location'| translate}}</label>
+                            <div>
+                                <select formControlName="locationId" class="form-control" (change)="onLocationSelectionChange($event)">
+                                    <option value="" disabled selected>{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Select Location'|
+                                        translate}}</option>
+                                    @for (location of items1; track location) {
+                                    <option [value]="location.locationId">{{location.locationName}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Department'| translate}}</label>
+                            <div>
+                                <div>
+                                    <select formControlName="departmentId" class="form-control" (change)="onDepartmentSelectionChange($event)">
+                                        <option value="" disabled selected>{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Select Department'|
+                                            translate}}</option>
+                                        @for (department of departmentItems; track department) {
+                                        <option [value]="department.departmentId">{{department.departmentName}}</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name" class="labelName">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Division'| translate}}</label>
+                            <div>
+                                <select formControlName="divisionId" class="form-control">
+                                    <option value="" disabled selected>{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Select Division'| translate}}</option>
+                                    <option *ngFor="let division of divisionItems" [value]="division.divisionId">
+                                        {{ division.divisionName }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="saveButtonDiv">
+                    <button class="usergroupSavebuttton btn" mat-button type="submit" [disabled]="addEmployees.invalid"
+                        [matTooltip]="toolTips.Saveemployee | translate"> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        }

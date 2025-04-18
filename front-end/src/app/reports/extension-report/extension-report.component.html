@@ -1,0 +1,291 @@
+<div class="mainContainer">
+  <div class="filters ">
+    <div class="container  ">
+      <div class="row">
+        <div class="col-9 d-flex  p-0 justify-content-start">
+          <div mat-flat-button class="custom-button-date btn" [matMenuTriggerFor]="filterDate">
+            <span class="material-symbols-outlined">
+              schedule
+            </span>
+            {{ selectedDate }}
+          </div>
+          <mat-menu #filterDate="matMenu">
+            <button mat-menu-item (click)="setDateRange('Today')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.Today'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Week')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.This Week'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Month')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.This Month'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Quarter')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.This Quarter'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Year')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.This Year'| translate}}
+            </button>
+            <button mat-menu-item (click)="openCustomDateDialog(selectedDate)">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.Custom'| translate}}
+            </button>
+          </mat-menu>
+
+          <button  class="custom-button-date btn" [matMenuTriggerFor]="filterExt">
+            {{'Menu.REPORTS RECORDING.EXTENSIONS.Extension' | translate}}:
+            {{ selectedExtensionNumbers.length ? selectedExtension : 'All' }}
+          </button>
+          <mat-menu #filterExt="matMenu">
+            <!-- Input Field -->
+            <div style="position: sticky; top: 0; background: white; z-index: 1; padding: 8px;">
+              <input
+                class="ms-2 border w-80"
+                placeholder="{{'Menu.REPORTS RECORDING.EXTENSIONS.Search Extension' | translate}}"
+                (input)="onSearchChange($event)"
+                (click)="$event.stopPropagation()"
+              />
+            </div>
+          
+            <!-- Select All Checkbox -->
+            <div class="d-flex me-1" style="padding: 8px;">
+              <mat-checkbox
+                color="primary"
+                (click)="$event.stopPropagation()"
+                [checked]="selectedExtensionNumbers.length > 0 && selectedExtensionNumbers.length === extensionList.length"
+                (change)="onExtensionChange('All', $event.checked)">
+                All
+              </mat-checkbox>
+            </div>
+          
+            <!-- Scrollable List of Items -->
+            <div class="itemsDiv" style="overflow: auto; padding: 8px;">
+              @for(item of extensionList; track $index) {
+                <ng-container>
+                  <div>
+                    <mat-checkbox
+                      color="primary"
+                      (click)="$event.stopPropagation()"
+                      [checked]="selectedExtensionNumbers.includes(item.extensionNumber)"
+                      (change)="onExtensionChange(item.extensionNumber, $event.checked)">
+                      {{ item.extensionNumber }}
+                    </mat-checkbox>
+                  </div>
+                </ng-container>
+              }
+            </div>
+          </mat-menu>
+          
+          <button  class="custom-button-date btn" [matMenuTriggerFor]="filterDur">
+            {{'Menu.REPORTS RECORDING.EXTENSIONS.Direction'| translate}}
+            : {{ selectedDirection }}
+          </button>
+          <mat-menu #filterDur="matMenu">
+            <button mat-menu-item (click)="setDirection('All')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.All'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDirection('Incoming')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.incoming'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDirection('Outgoing')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.outgoing'| translate}}
+            </button>
+          </mat-menu>
+          <button  matTooltip="{{'Menu.Apply Changes'| translate}}" class="custom-apply-button btn" (click)="btnClick()"> 
+            {{'Menu.REPORTS RECORDING.EXTENSIONS.APPLY'| translate}} </button>
+
+        </div>
+        <div class="col-3 d-flex p-0 justify-content-end">
+          <div>
+            <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}" matTooltip="Download"
+              [matMenuTriggerFor]="menu4">
+              <mat-icon class="icon">download_2</mat-icon>
+              <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+            </div>
+
+            <!-- File Download -->
+            <mat-menu #menu4="matMenu">
+              <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+                <div style="justify-content: space-around;display: flex;">
+                  <div>Excel</div>
+                  <div>
+                    <span class="material-symbols-outlined">article</span>
+                  </div>
+                </div>
+              </button>
+              <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+                <div style="justify-content: space-around;display: flex;">
+                  <div>PDF</div>
+                  <div>
+                    <span class="material-symbols-outlined">picture_as_pdf</span>
+                  </div>
+                </div>
+              </button>
+              <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+                <span>TIFF</span>
+                <span class="material-symbols-outlined">perm_media</span>
+              </button>
+              <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+                <span>Web Archive</span>
+                <span class="material-symbols-outlined">install_desktop</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="table-container" style="overflow: auto;">
+  <table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource" >
+      <!-- Date Column -->
+      <ng-container matColumnDef="extensionNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+                <!-- Extension Label <br> -->
+                <div class="header-cell-container" style="padding-left: 10px;" >
+            <div style="display: flex;">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.Extension'| translate}}
+              <br>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> {{element.extensionNumber}}</td>
+        <td mat-cell *matCellDef="let element">{{element.extensionLabel}} <br>
+          <label class="value-label"> {{element.extensionNumber}}</label>
+        </td>
+      </ng-container>
+      <!-- Extension Label Column -->
+      <ng-container matColumnDef="callCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-cell-container" class="tableHeader">
+            <div style="display: flex;">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.Call Count'| translate}}
+              <br>
+            </div>
+          </div>
+
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.callCount}}<br>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="totalIncomingCalls">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-cell-container" class="tableHeader">
+            <div style="display: flex;">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.incoming'| translate}}
+              <br>
+            </div>
+          </div>
+
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.totalIncomingCalls}}<br>
+
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="totalOutgoingCalls">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+    
+          <div class="header-cell-container" class="tableHeader">
+            <div style="display: flex;">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.outgoing'| translate}}
+              <br>
+            </div>
+          </div>
+
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.totalOutgoingCalls}}<br>
+
+        </td>
+      </ng-container>
+      <!-- Dialed Column -->
+      <ng-container matColumnDef="totalDuration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <!-- Dialed <br> -->
+          <div class="header-cell-container" class="tableHeader">
+            <div style="display: flex;">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.Duration(hr)'| translate}}
+              <br>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.totalDuration}}<br>
+
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="averageDuration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <!-- Dialed <br> -->
+          <div class="header-cell-container" class="tableHeader">
+            <div style="display: flex;">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.Avg.Duration'| translate}}
+              <br>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.averageDuration}}</td>
+      </ng-container>
+      <!-- Extension Label Column -->
+      <ng-container matColumnDef="totalDaysCallsMade">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <!-- Extension Label <br> -->
+          <div class="header-cell-container" class="tableHeader">
+            <div style="display: flex;width:150px;">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.Total Working Days'| translate}}
+              <br>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.totalDaysCallsMade}}</td>
+      </ng-container>
+      <ng-container matColumnDef="avgCallsPerDay">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <!-- Extension Label <br> -->
+          <div class="header-cell-container" style="padding: 10px;">
+            <div style="display: flex;width:152px;">{{'Menu.REPORTS RECORDING.EXTENSIONS.Avg Working Days'|translate}}
+              <br>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{ element.avgCallsPerDay | number:'1.2-2' }}</td>
+
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    @if (noDataFound) {
+    <div class="no-data-found">
+      {{'Menu.REPORTS RECORDING.EXTENSIONS.No data found'| translate}}
+    </div>
+    }
+  </div>
+  <mat-toolbar class="pagination-toolbar">
+    <div class="page-info">Total Records: {{ totalLength }}</div>
+    <span class="example-spacer"></span>
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.EXTENSIONS.Records Per Page'| translate}}
+    </div>
+    <mat-select class="form-control me-4" style="width:75px" [(ngModel)]="recordsPerPage"
+      (selectionChange)="onItemsPerPageChange($event)">
+      <mat-option class="goto-check" [value]="10">10</mat-option>
+      <mat-option class="goto-check" value="25">25</mat-option>
+      <mat-option class="goto-check" value="50">50</mat-option>
+      <mat-option class="goto-check" value="100">100</mat-option>
+    </mat-select>
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.EXTENSIONS.Page'| translate}}
+      <mat-select class="form-control" style="width: 72px;" [(value)]="pageNumber" (selectionChange)="goToPage($event)">
+        <mat-option *ngFor="let page of getPagesArray()" [value]="page">
+          {{ page }}
+        </mat-option>
+      </mat-select>
+      of {{ getTotalPages() }}
+    </div>
+    <div [dir]="'ltr'">
+      <button mat-mini-fab class="next-button me-2" (click)="previousPage()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-mini-fab class="next-button me-2" (click)="nextPage()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+    </div>
+  </mat-toolbar>
+</div>

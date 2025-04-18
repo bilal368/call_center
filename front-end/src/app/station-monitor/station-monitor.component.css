@@ -1,0 +1,316 @@
+#excelDivButton {
+    margin-top: 3px;
+    margin-left: 5px;
+    height: 5%;
+    align-items: center;
+    display: flex;
+
+
+    background-color: #5A9158;
+    color: aliceblue;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+}
+
+.mainStationmonitor {
+    /* display: flex;
+    flex-direction: column; */
+    height: 85%;
+    overflow-y: auto;
+    /* overflow: hidden; */
+}
+
+
+
+.filters {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filtersrigth {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.custom-button {
+    padding: 6px 8px !important;
+    display: flex;
+    align-items: center;
+    background-color: var(--h3) !important;
+    color: white !important;
+  
+}
+.extensionbutton{
+    background-color: var(--h3) !important;
+    color: white !important;
+    padding: 6px 8px !important;
+    min-width: 100px;
+    text-align: center;
+}
+
+
+
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 250px;
+
+    border: 1px solid #97A884;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 25%;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.custom-input {
+    flex: 1;
+    /* height: 25px; */
+    border: none;
+    padding: 8px;
+    margin: 0;
+    border-radius: 0;
+    outline: none;
+}
+
+.search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--h3);
+    border: none;
+    padding: 9px;
+    cursor: pointer;
+    border-radius: 2px 2px 2px 2px;
+}
+
+.search-button .material-icons {
+    color: white;
+    font-size: 18px;
+}
+
+.demo-table {
+    width: 100%;
+
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+
+}
+
+
+.header-cell-container {
+    display: flex;
+    align-items: center;
+
+}
+
+.label-column {
+    display: flex;
+    flex-direction: column;
+
+    /* padding: 20px; */
+
+    /* margin-left: 10px; */
+    /* Space between checkbox and labels */
+}
+
+/* #nameFilterUsergroup {
+    
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 20px !important;
+
+    color: var(--textIconColor);
+} */
+
+.recordPage {
+    width: 15vw;
+    /* margin-top: 3px; */
+    margin-left: 3px;
+    display: flex;
+    align-items: center;
+    height: 4vh;
+    /* background-color: var(--selectedNav); */
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+}
+
+#recordPagecount {
+    height: 4vh;
+    background-color: var(--h3);
+    border: none;
+    color: white;
+}
+
+.pageList {
+    width: 15vw;
+    /* margin-top: 3px; */
+    margin-left: 40.5vw;
+    display: flex;
+    align-items: center;
+    height: 4vh;
+    /* background-color: var(--selectedNav); */
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+}
+
+#pageListCount {
+    height: 4vh;
+    background-color: var(--h3);
+    color: white;
+    border: none;
+}
+
+.listpageiconsleft {
+    width: 2vw;
+    height: 4vh;
+    border: 1px solid grey;
+    /* margin-left: 20px; */
+    align-items: center;
+    justify-content: center;
+    /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); */
+    border: none;
+    padding-top: 3px;
+}
+
+.listpageiconsright {
+    width: 2vw;
+    height: 4vh;
+    border: 1px solid grey;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); */
+    padding-top: 3px;
+}
+
+.recodepagelabel {
+    padding-left: 10px;
+    color: white;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.custom-toggle .mat-slide-toggle-thumb {
+    width: 16px;
+    /* Adjust the width of the thumb */
+    height: 16px;
+    /* Adjust the height of the thumb */
+
+}
+
+.custom-toggle .mat-slide-toggle-bar {
+    height: 12px;
+    /* Adjust the height of the bar */
+    width: 28px;
+    /* Adjust the width of the bar */
+}
+
+.custom-toggle .mat-slide-toggle-content {
+    font-size: 12px;
+    /* Adjust the font size of the label */
+}
+
+.custom-toggle {
+    transform: scale(0.8);
+    /* Adjust the overall scale of the toggle */
+    margin-right: 8px;
+    /* Adjust the margin if necessary */
+}
+
+.selected-row {
+    background-color: var(--h5);
+    /* Set the background color for the selected row */
+    color: #000000;
+    /* Set the text color for the selected row */
+    /* Set the desired background color or any other styling */
+}
+
+.page-info {
+    font-size: 14px;
+    margin-right: 16px;
+    color: var(--textColor) !important;
+}
+
+.pagination-toolbar {
+    background-color: var(--h3);
+    height: 7vh;
+    position: absolute;
+    bottom: 0
+        /* margin-bottom: -100px; */
+        /* margin-top: 33px; */
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.next-button {
+    background-color: var(--textColor) !important;
+    color: var(--textColorblack) !important;
+}
+
+.excelDiv {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    background-color: #5A9158;
+    font-size: 15px;
+    color: #fbf3f3;
+    padding: 3px;
+    cursor: pointer;
+    width: 80px;
+}
+
+#nameFilterUsergroup {
+    transform: rotate(90deg);
+    color: var(--textIconColor);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.button {
+
+    border: none;
+    cursor: pointer;
+
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+
+.control-buttons button {
+    width: 5vw;
+    height: 5vh;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+img {
+    width: 30px;
+    aspect-ratio: 3 / 2;
+    /* 3:2 aspect ratio */
+}
+
+::ng-deep .goto-check-pagination .mat-pseudo-checkbox {
+    display: none !important;
+}

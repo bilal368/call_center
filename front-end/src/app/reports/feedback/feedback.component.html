@@ -1,0 +1,35 @@
+@if(isEditable){
+    <mat-toolbar>
+        <p class="mt-2">Feedback</p>
+        <span class="spacer"></span>
+        <button class="btn blueGreyButton" matTooltip="Close" matDialogClose>X</button>
+    </mat-toolbar>
+    <div class="m-3" style="max-height:300px;overflow-y: auto;">
+        <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="htmlContent" [config]="editorConfig"></angular-editor>
+    </div>
+    <div style="display: flex; justify-content: space-between;" class="m-3">
+        <div>
+            <button class="blueGreyButton" matTooltip="Clear" [matTooltipPosition]="'after'"
+             (click)="clearHtml()" mat-button>Clear</button>
+        </div>
+        <div>
+            <button class="blueGreyButton" matTooltip="Save feedback" [matTooltipPosition]="'before'"
+             (click)="saveHtml()" mat-button matDialogClose>Save</button>
+        </div>
+    </div>
+    
+}@else{
+    <mat-toolbar>
+        <p class="mt-2">Feedback</p>
+        <span class="spacer"></span>
+        <button class="btn blueGreyButton" matTooltip="Close" matDialogClose>X</button>
+    </mat-toolbar>
+    <div class="m-3" style="max-height:300px;overflow-y: auto;">
+        <angular-editor [placeholder]="'No Data found'" [(ngModel)]="htmlContent" [config]="editorConfig"></angular-editor>
+    </div>
+    <div style="display: flex; justify-content: space-between;" class="m-3">
+       
+    </div>
+}
+
+

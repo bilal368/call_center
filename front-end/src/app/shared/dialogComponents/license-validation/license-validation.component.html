@@ -1,0 +1,34 @@
+<form [formGroup]="validationForm" (ngSubmit)="validateKey()" class="validation-form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>License Key</mat-label>
+    <input matInput formControlName="licenseKey" placeholder="Enter your license key">
+    @if(validationForm.get('licenseKey')?.invalid && validationForm.get('licenseKey')?.touched){
+    <mat-error>
+      License key is required
+    </mat-error>
+    }
+  </mat-form-field>
+
+  <div style="display: flex; justify-content: space-between;">
+
+    <div>
+      @if (userHierarchyId == 2) {
+      <button class="cancel-button" mat-raised-button (click)="closeDialog()">
+        Cancel
+      </button>
+      }
+    </div>
+
+    <div>
+      <button mat-raised-button color="primary" type="submit" [disabled]="validationForm.invalid" class="submit-button">
+        Validate
+      </button>
+    </div>
+
+  </div>
+  @if(errorMessage){
+  <div class="error-message">
+    {{ errorMessage }}
+  </div>
+  }
+</form>

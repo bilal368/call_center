@@ -1,0 +1,13 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+  
+  .div{
+    overflow: auto;
+  }
+  
+
+  .blueGreyButton {
+    background-color: var(--h3) !important;
+    color:var(--h2)  !important;
+  }

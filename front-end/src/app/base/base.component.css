@@ -1,0 +1,314 @@
+/* ----------------------------------------------------------------------- */
+
+.mat-sidenav-container {
+    height: 100vh;
+    padding: 0 ;
+  }
+  
+  ::ng-deep .mat-drawer-inner-container {
+    -radius: 10px !important;
+    margin: 0px 0px 0px 1px !important;
+    padding: 5px !important;
+    /* background-color: var(--h1) !important; */
+    background-color: #0C2D48 !important;
+    width: 99% !important ;
+    height: 100% !important;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: small !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px !important;
+    display: block !important;
+    justify-content: space-between !important;
+  }
+  
+  .mat-sidenav {
+    /* background-color: antiquewhite; */
+    width: 18%;
+  }
+  
+  .mat-sidenav-content {
+    flex: 1; /* Allow content area to expand */
+    overflow-y: none !important; 
+  }
+  
+  mat-expansion-panel-header {
+    background-color: var(--c6);
+    padding: 0 10px !important;
+  }
+  a{
+    font-size: smaller;
+  }
+  
+  .header {
+    background: linear-gradient(to right, var(--h1), var(--h1));
+    display: flex;
+    justify-content: space-between;
+    height: 71px;
+  }
+  
+  .header2 {
+    height: 6vh;
+    background-color: var(--h2);
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+  
+  .matItem {
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--c1);
+  }
+  mat-panel-title{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    /* justify-content:space-between; */
+  }
+  mat-panel-title span{
+    width: 2vw;
+  }
+  .logout {
+    color: var(--c4);
+    cursor: pointer;
+  }
+  
+  ::ng-deep .mat-drawer-inner-container {
+    background-color: var(--c3);
+    border-radius: 5px;
+  }
+  
+  .tenantName {
+    color: var(--c1) !important;
+    text-decoration: none;
+  }
+  
+
+  
+  .custom-panel {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  
+  .mdc-list-item {
+    padding-left: 30px;
+  }
+  
+  ::ng-deep div.mat-expansion-panel-body {
+    padding: 0 !important;
+  }
+  
+  .mat-expansion-panel-header:not([aria-disabled=true]) {
+    cursor: pointer;
+    /* color: white; */
+  }
+  
+  .mat-mdc-list-item:not(.mat-mdc-list-item-interactive),
+  .mat-mdc-list-option:not(.mat-mdc-list-item-interactive) {
+    cursor: default;
+    border-bottom: 0.3px solid grey;
+    padding-left: 30px;
+  }
+  
+  .listhover:hover {
+    font-weight: bolder !important;
+    /* background: var(--c7) !important; */
+    transition: font-size 0.3s ease !important;
+  }
+  
+  ::ng-deep.mat-expansion-panel-header.mat-expanded,
+  .mat-expansion-panel-header.mat-expanded:hover {
+    background: var(--c6) !important;
+  }
+  
+
+  .is-active {
+    background-color: #3c3c3b;
+  }
+  
+  .is-active a {
+    color: rgb(255, 255, 255);
+  }
+  
+  .mdc-list {
+    padding: 0px;
+  }
+  
+  .tenantlist {
+    max-width: auto;
+    border-radius: 5px;
+    display: flex;
+    min-width: 20vh;
+    padding: 5px;
+  }
+  
+  .tenantName {
+    color: var(--c4);
+  }
+
+  
+  .nameDiv {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .closeButtonDiv{
+    cursor: pointer;
+    padding: 2px;
+  }
+  
+  .logoDiv {
+    /* padding: 10px; */
+    padding-top: .5%;
+    padding-bottom: 0;
+    bottom: 0;
+    height: 7%;
+    
+    align-items: end;
+  }
+  .logoDiv img {
+    max-width: 100%;
+    max-height: 90%;
+    object-fit: contain; /* Ensures the logo fits inside without distortion */
+  }
+  .supervisor-extension {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  
+
+  .selected-button {
+    background-color:var(--h1);
+    /* Change this to the desired selected color */
+    color: white;
+    /* Change this to the desired text color for selected buttons */
+   
+  }
+  .selected-button a{
+    color: white;
+  }
+  .licenseKey{
+    border: none;
+    margin-top: -5px;
+  }
+
+
+  
+  .progress {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  /* copyright */
+  .animated-footer {
+    animation: slideInCenter 2s ease-out forwards; /* Animation name, duration, easing */
+    transform: translateX(-100%); /* Start position (completely left) */
+    opacity: 0; /* Hide initially */
+  }
+  
+  @keyframes slideInCenter {
+    0% {
+      transform: translateX(-100%); /* Start off-screen to the left */
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0); /* End at the center */
+      opacity: 1;
+    }
+  }
+  /* Flip Container */
+.flip-container {
+  overflow-x: hidden;
+  perspective: 1000px;
+  width: 100%;
+  display: flex;
+  padding: 0;
+
+  justify-content: center;
+  flex-direction: column;
+
+}
+
+/* Flip Card */
+.flip-card {
+  margin: 0;
+  position: relative;
+  width: 100%;
+  height: 100px; 
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Flip Effect */
+.flip-card.flipped {
+  transform: rotateX(180deg);
+}
+
+/* Card and Details Div */
+
+.card,
+.detail-div {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Match the flip card height */
+}
+
+/* Back Face (User Details) */
+.detail-div {
+  width: 100%;
+  transform: rotateX(180deg);
+  background-color: #7f8182;
+  color: white;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  align-items: center;
+}
+
+
+/* new */
+.detail-div {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.icon-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.icon-img {
+  width: 70%;
+  height: auto;
+}
+
+.text-container h6 {
+  margin: 0;
+  font-size: 16px;
+  color: #fff; /* White text */
+  font-weight: bold;
+}
+
+.text-container small {
+  color: #fff; /* White text */
+  font-size: 12px;
+}
+@-webkit-keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
+.blink{
+	text-decoration: blink;
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+  color: red;
+}

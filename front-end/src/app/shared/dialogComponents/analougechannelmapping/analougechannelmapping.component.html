@@ -1,0 +1,300 @@
+<div class="mainalertContainer">
+    <div class="alertHeader">
+        <label class="alertHeaderlabel" for="">Channel Mapping</label>
+        <!-- <div class="closeIconstyle" (click)="closeDialog()">
+            <span   matTooltip="Close" style="color:var(--headingBg) ;" class="material-symbols-outlined">
+                close
+            </span>
+        </div> -->
+    </div>
+    @if(data.excel==true){
+        <div class="form-container">
+    <form action="" [formGroup]="mappingForm" (ngSubmit)="savebutton()">
+
+        <div class="form-row">
+
+
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Channel</label>
+                <input type="number" class="form-control-username" required="required" name="channels" id="channels"
+                    formControlName="channels" placeholder="Channel"
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (mappingForm.controls['channels'].invalid && mappingForm.controls['channels'].touched)
+                {
+                <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                    <small class="text-danger">Channel is required</small>
+                </div>
+                }
+
+            </div>
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Gain</label>
+                <input type="number" class="form-control-username" required="required" name="Gain" id="Gain"
+                    formControlName="Gain" placeholder="Gain"
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (mappingForm.controls['Gain'].invalid && mappingForm.controls['Gain'].touched)
+                {
+                <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                    <small class="text-danger">Gain is required</small>
+                </div>
+                }
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="textFromfeild">
+                <label class="headLable" style="font-weight: bold;color: black;font-size: 16px;">Control</label>
+                <mat-select formControlName="Control"  (selectionChange)="onSelectionChange($event)"
+                    style="border-color:#89AECF; border-style: solid;width: 300px;height: 40px;border-width: 2px;padding-right: 10px;padding-top: 5px;
+                   padding-left: 6px; border-radius: 5px;">
+                    <mat-option value="VOLTAGE">VOLTAGE
+                    </mat-option>
+                    <mat-option value="SLIENCE">SLIENCE
+                    </mat-option>
+                    <!-- <mat-option value="10">GENERAL-ERROR
+                    </mat-option>
+                    <mat-option value="20">Warning
+                    </mat-option>
+                    <mat-option value="30">Information
+                    </mat-option>
+                    <mat-option value="40">Debug
+                    </mat-option> -->
+                </mat-select>
+            </div>
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Voltage</label>
+                <input type="number" class="form-control-username" required="required" name="Voltage" id="Voltage"
+                    formControlName="Voltage" placeholder="Voltage"
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (mappingForm.controls['Voltage'].invalid && mappingForm.controls['Voltage'].touched)
+                {
+                <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                    <small class="text-danger">Voltage is required</small>
+                </div>
+                }
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Voice energy</label>
+                <input type="number" class="form-control-username" required="required" name="Voice" id="Voice"
+                    formControlName="Voice" placeholder="Voice energy"
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;"  [disabled]="disable">
+                @if (mappingForm.controls['Voice'].invalid && mappingForm.controls['Voice'].touched)
+                {
+                <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                    <small class="text-danger">Voice energy is required</small>
+                </div>
+                }
+
+            </div>
+            <div class="textFromfeild">
+                <label class="headLable" style="font-weight: bold;color: black;font-size: 16px;">Storage</label>
+                <mat-select formControlName="Storage"
+                    style="border-color:#89AECF; border-style: solid;width: 300px;height: 40px;border-width: 2px;padding-right: 10px;padding-top: 5px;
+                   padding-left: 6px; border-radius: 5px;">
+                    <mat-option value="WAV">WAV
+                    </mat-option>
+                    <mat-option value="MP3">MP3
+                    </mat-option>
+                    <!-- <mat-option value="10">GENERAL-ERROR
+                    </mat-option>
+                    <mat-option value="20">Warning
+                    </mat-option>
+                    <mat-option value="30">Information
+                    </mat-option>
+                    <mat-option value="40">Debug
+                    </mat-option> -->
+                </mat-select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Bargein</label>
+                <input type="number" class="form-control-username" required="required" name="Bargein" id="Bargein"
+                    formControlName="Bargein" placeholder="Bargein"
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (mappingForm.controls['Bargein'].invalid && mappingForm.controls['Bargein'].touched)
+                {
+                <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                    <small class="text-danger">Bargein is required</small>
+                </div>
+                }
+
+            </div>
+            <div class="textFromfeild">
+                <label class="headLable" style="font-weight: bold;color: black;font-size: 16px;">Codec</label>
+                <mat-select formControlName="Codec"
+                    style="border-color:#89AECF; border-style: solid;width: 300px;height: 40px;border-width: 2px;padding-right: 10px;padding-top: 5px;
+                   padding-left: 6px; border-radius: 5px;">
+                    <mat-option value="GSM">GSM
+                    </mat-option>
+                    <mat-option value="PCM">PCM
+                    </mat-option>
+                    <mat-option value="ADPCM">ADPCM
+                    </mat-option>
+                    <mat-option value="A-LAW">A-LAW
+                    </mat-option>
+                    <mat-option value="U-LAW">U-LAW
+                    </mat-option>
+                    <!-- <mat-option value="10">GENERAL-ERROR
+                    </mat-option>
+                    <mat-option value="20">Warning
+                    </mat-option>
+                    <mat-option value="30">Information
+                    </mat-option>
+                    <mat-option value="40">Debug
+                    </mat-option> -->
+                </mat-select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Delay</label>
+                <input type="number" class="form-control-username" required="required" name="Delay" id="Delay"
+                    formControlName="Delay" placeholder="Delay"
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (mappingForm.controls['Delay'].invalid && mappingForm.controls['Delay'].touched)
+                {
+                <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                    <small class="text-danger">Delay is required</small>
+                </div>
+                }
+
+            </div>
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Ring count</label>
+                <input type="number" class="form-control-username" required="required" name="Ring" id="Ring"
+                    formControlName="Ring" placeholder="Ring count"
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (mappingForm.controls['Ring'].invalid && mappingForm.controls['Ring'].touched)
+                {
+                <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                    <small class="text-danger">Ring count is required</small>
+                </div>
+                }
+
+            </div>
+        </div>
+        <!-- @if (data.extension=='EXT') {
+        <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Extension</label>
+            <input type="number" class="form-control-username" required="required" name="Extension" id="Extension"
+                formControlName="Extension" placeholder="Enter Extension"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+            @if (mappingForm.controls['Extension'].invalid && mappingForm.controls['Extension'].touched)
+            {
+            <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                <small class="text-danger">Extension is required</small>
+            </div>
+            }
+        </div>
+        }
+        @if (data.extension=='MAC') {
+        <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Enter MAC Address</label>
+            <input type="text" class="form-control-username" required="required" name="Extension" id="Extension"
+                formControlName="Extension" placeholder="Enter mac"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+            @if (mappingForm.controls['Extension'].invalid && mappingForm.controls['Extension'].touched)
+            {
+            <div style=" min-height: 5px; display: flex;
+                        align-items: center;">
+                <small class="text-danger">Mac Address is required</small>
+            </div>
+            }
+        </div>
+        }
+     -->
+
+        <!-- <button  style="background-color: var(--headingBg);
+            align-items: center;
+            color: white !important;
+            width: 95%;
+            border-radius: 5px; margin: 2% !important;" mat-button type="submit">
+            <span matTooltip="Save channel mapping">Save</span>
+        </button> -->
+        <div style="justify-content: space-between;display: flex;">
+            <button id="usermangerSavebutton" mat-button type="submit" (click)="closeDialog()">
+                <span>Cancel</span>
+            </button>
+            @if (data.excel==true&&data.element==null) {
+            <button id="usermangerSavebutton" mat-button type="submit" matTooltip="Save channel mapping">
+                Save
+            </button>
+            }@else{
+            <button id="usermangerSavebutton" mat-button type="submit" matTooltip="Update channel mapping">
+                Update
+            </button>
+            }
+        </div>
+
+
+    </form>
+    </div>
+
+    }
+
+
+
+
+    @if (data.excel==false) {
+    <div>
+        <!-- 
+        <div>
+            <label
+                style="justify-content: center;align-items: center;font-weight: bold;font-size: 18px;margin-left: 10px;"
+                for="">Map By ExcelSheet</label>
+        </div> -->
+
+
+
+        <label class="selectlabel" for="">Select the file to upload</label>
+        <div style="display:  flex;">
+
+            <!-- <input class="inputstyle" type="file" (change)="onFileChange($event)"> -->
+            <button class="uploadbuttonstl" mat-button type="submit" (click)="insertdatamappinmutiple()">
+                <div>
+                    <span matTooltip="Upload channel mapping">Upload</span> <!-- Text content -->
+                </div>
+                <div style="padding-left: 5px;padding-top: 2px;">
+                    <span matTooltip="Upload channel mapping" class="material-symbols-outlined">
+                        cloud_upload
+                    </span>
+                </div>
+
+            </button>
+
+
+        </div>
+        <div class="importedTextslt">
+
+
+            <!-- <label style="padding-top: 5px;height: 20px;" for="">Started importing users</label> -->
+        </div>
+        <div class="downloadclosedialouge">
+            <button class="closeDialoguebuttonstl" mat-button type="submit" (click)="closeDialog()">
+                <span>Cancel</span>
+            </button>
+
+            <!-- <button class="downloadTemplatebutton" mat-button type="submit" (click)="generateTemplate()">
+                <span matTooltip="Download channel mapping template">DOWNLOAD TEMPLATE</span>
+                <span class="material-symbols-outlined">
+                    system_update_alt
+                </span>
+            </button> -->
+
+        </div>
+
+    </div>
+
+    }

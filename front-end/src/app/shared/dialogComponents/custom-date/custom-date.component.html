@@ -1,0 +1,42 @@
+<!-- <div class="custom-date">
+    <h1 >
+        {{'Menu.ALERTS MANAGEMENT.Common.Custom Date'| translate}}
+    </h1>
+    <div>
+        <div class="from">
+            <label>{{'Menu.ALERTS MANAGEMENT.Common.From'| translate}}</label>
+            <input [(ngModel)]="data.fromDate" type="date" class="form-control ng-untouched ng-pristine ng-valid"
+                max="undefined">
+        </div>
+        <div class="to">
+            <label>{{'Menu.ALERTS MANAGEMENT.Common.To'| translate}} From</label>
+            <input [(ngModel)]="data.toDate" type="date" class="form-control ng-untouched ng-pristine ng-valid"
+                max="undefined">
+        </div>
+    </div>
+    <div class="dialog-buttons">
+        <button class="cancel-button btn" (click)="onCancel()">{{'Menu.ALERTS MANAGEMENT.Common.Cancel'| translate}}</button>
+        <button class="done-button btn" (click)="onDone()">{{'Menu.ALERTS MANAGEMENT.Common.Done'| translate}}</button>
+    </div>
+</div> -->
+
+<div class="custom-date">
+  <h1>{{'Menu.ALERTS MANAGEMENT.Common.Custom Date' | translate}}</h1>
+
+  <div>
+      <div class="from">
+          <label>{{'Menu.ALERTS MANAGEMENT.Common.From' | translate}}</label>
+          <input [(ngModel)]="data.fromDate" type="date" class="form-control" [min]="minDate" (change)="onDateRangeChange()" placeholder="Select start date">
+      </div>
+      <div class="to">
+          <label>{{'Menu.ALERTS MANAGEMENT.Common.To' | translate}}</label>
+          <input [(ngModel)]="data.toDate" type="date" class="form-control" [min]="data.fromDate" (change)="onDateRangeChange()" placeholder="Select end date">
+      </div>
+  </div>
+
+  <!-- Dialog Buttons -->
+  <div class="dialog-buttons">
+      <button class="cancel-button btn" (click)="onCancel()">{{'Menu.ALERTS MANAGEMENT.Common.Cancel' | translate}}</button>
+      <button class="done-button btn" (click)="onDone()">{{'Menu.ALERTS MANAGEMENT.Common.Done' | translate}}</button>
+  </div>
+</div>

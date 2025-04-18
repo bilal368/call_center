@@ -1,0 +1,26 @@
+<div [dir]="'align'|translate">
+    <mat-toolbar>
+      <p class="mt-2">
+        {{'Menu.ALERT'|translate}}
+      </p>
+      <span class="spacer"></span>
+      <button class="btn blueGreyButton" matTooltip="Close" (click)= "onClose()" matDialogClose>X</button>
+    </mat-toolbar>
+    <div class="container">
+      <div class="row p-5 mt-2 text-center">
+        <div class="col">
+          <h6 style="font-size: 15px;">{{message|translate}}</h6>
+        </div>
+      </div>
+      <div class="row">
+        <!-- <div class="col"></div> -->
+        <div class="col text-center">
+          <button class="blueGreyButton mb-2" mat-button (click)= "onClose()">
+            {{'Menu.OK'|translate}} 
+          </button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  

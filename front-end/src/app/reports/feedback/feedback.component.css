@@ -1,0 +1,12 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+  
+  .textarea {
+    height: 200px;
+  }
+  
+  .blueGreyButton {
+    background-color: var(--h3) !important;
+    color:var(--h2)  !important;
+  }

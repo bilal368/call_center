@@ -1,0 +1,235 @@
+<div style="display: flex; justify-content: space-between;">
+    <div style="padding: 10px;">
+        <button class="add-button" (click)="openDialog()">
+            <mat-icon class="icon">add_circle</mat-icon>
+            {{'Menu.CALL RECORDING.DASHBOARD.Add Dashboard'| translate}}
+        </button>
+    </div>
+    <div style="display: flex;padding: 10px;">
+        <mat-select [(ngModel)]="selectedFilter" placeholder="{{'Menu.CALL RECORDING.DASHBOARD.Today'| translate}}"
+            style="margin-right: 5%;width:280px;height: 40px;" class="form-control" id="form-select"
+            aria-label="Default select example" (selectionChange)="dropDownChange($event.value)">
+            <div class="custom-options">
+
+
+                <mat-option value="1">
+                    {{'Menu.CALL RECORDING.DASHBOARD.Today'| translate}}
+                </mat-option>
+                <mat-option value="2">
+                    {{'Menu.CALL RECORDING.DASHBOARD.This Week'| translate}}
+                </mat-option>
+                <mat-option value="3">
+                    {{'Menu.CALL RECORDING.DASHBOARD.This Month'| translate}}
+                </mat-option>
+                <mat-option value="4">
+                    {{'Menu.CALL RECORDING.DASHBOARD.This Year'| translate}}
+                </mat-option>
+            </div>
+        </mat-select>
+
+    </div>
+</div>
+
+<div class="chart-grid">
+    @for (item of commonValues; track $index) {
+
+    @if (item.name==='agentCallActivity') {
+
+    <div class="chart-container" *ngFor="let data of agentCallActivity">
+        <div class="chart-header">
+            <h1>Agent Call Activity</h1>
+            <div>
+                <mat-button-toggle-group>
+                    <mat-button-toggle *ngFor="let type of data.type" (click)="chartChange(data,type)" [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+    </div>
+    }
+
+    <!-- Repeat for all other chart sections -->
+    @if (item.name==='agentTimeActivity') {
+    <div class="chart-container" *ngFor="let data of agenttimeActivity">
+        <div class="chart-header">
+            <h1>Agent Time Activity</h1>
+            <div>
+                <mat-button-toggle-group>
+                    @for(type of data.type; track $index){
+                    <mat-button-toggle [value]="type" (change)="chartChangeagenttime(data,type)">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                    }
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+    </div>
+    }
+    <!-- Add stationtimeActivity -->
+    @if (item.name==='stationTime') {
+    <div class="chart-container" *ngFor="let data of stationtimeActivity">
+        <div class="chart-header">
+            <h1>Station Time Activity</h1>
+            <div>
+                <mat-button-toggle-group>
+                    <mat-button-toggle *ngFor="let type of data.type" (click)="chartChangestationtime(data,type)"
+                        [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <!-- @if (!data.chart) { -->
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+        <!-- } -->
+
+    </div>
+    }
+
+    <!-- Add stationcallActivity -->
+    @if (item.name==='stationcallActivity') {
+    <div class="chart-container" *ngFor="let data of stationcallActivty">
+        <div class="chart-header">
+            <h1>Station Call Activity</h1>
+            <div>
+                <mat-button-toggle-group>
+                    <mat-button-toggle *ngFor="let type of data.type" (click)="chartstationCallactivity(data,type)"
+                        [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+    </div>
+    }
+    @if (item.name==='callTypeTraffic') {
+    <div class="chart-container" *ngFor="let data of calltypetraffic">
+        <div class="chart-header">
+            <h1>Call Type Traffic</h1>
+            <div>
+                <mat-button-toggle-group>
+                    <mat-button-toggle *ngFor="let type of data.type" (click)="calltypetrafficchartChange(data,type)"
+                        [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+    </div>
+    }
+    @if (item.name==='frequentCall') {
+    <div class="chart-container" *ngFor="let data of frequantCall">
+        <div class="chart-header">
+            <h1>Frequent Call</h1>
+            <div>
+                <mat-button-toggle-group>
+                    <mat-button-toggle *ngFor="let type of data.type" (click)="frequantCartChange(data,type)"
+                        [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+    </div>
+    }
+    @if (item.name==='dailyCallTraffic') {
+    <div class="chart-container" *ngFor="let data of dailytrafficData">
+        <div class="chart-header">
+            <h1>Daily Call Traffic</h1>
+            <div>
+                <mat-button-toggle-group>
+                    <mat-button-toggle *ngFor="let type of data.type" (click)="dailytrafficChartChange(data,type)"
+                        [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+    </div>
+    }
+    @if (item.name==='concurrentCallData') {
+    <div class="chart-container" *ngFor="let data of currentData">
+        <div class="chart-header">
+            <h1>Concurrent Call</h1>
+            <div>
+                <mat-button-toggle-group>
+                    <mat-button-toggle *ngFor="let type of data.type" (click)="concurrentChartChange(data,type)"
+                        [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+    </div>
+    }
+    }
+    @if (ziptrunRecorderDashbord==true||eventRecorderDashboard==true) {
+    <div class="chart-container" *ngFor="let data of siptrunkEoneData">
+        <div class="chart-header">
+            <h1>Call Count</h1>
+            <div>
+                <mat-button-toggle-group>
+                    <mat-button-toggle *ngFor="let type of data.type" (click)="siptrunkChartChange(data,type)"
+                        [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas class="graphDiv" [id]="data.variable"></canvas>
+    </div>
+    }
+</div>

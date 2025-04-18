@@ -1,0 +1,137 @@
+<div >
+    <div class="alertHeader">
+        <label class="alertHeaderlabel" for="">Channel Mapping</label>
+        <!-- <div class="closeIconstyle" (click)="closeDialog()">
+            <span   matTooltip="Close" style="color:var(--headingBg) ;" class="material-symbols-outlined">
+                close
+            </span>
+        </div> -->
+    </div>
+    @if(data.excel==true){
+    <form action="" [formGroup]="mappingForm" (ngSubmit)="savebutton()">
+        <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Channel</label>
+            <input type="text" class="form-control-username" required="required" name="channels" id="channels"
+                formControlName="channels" placeholder="Channel"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+            @if (mappingForm.controls['channels'].invalid && mappingForm.controls['channels'].touched)
+            {
+            <div style="min-height: 5px; display: flex; align-items: center;">
+                @if (mappingForm.controls['channels'].errors['required'])
+                {
+                <small class="text-danger">Channel is required</small>
+                }
+                @if (mappingForm.controls['channels'].errors['pattern'])
+                {
+                <small class="text-danger">Only numbers are allowed</small>
+                }
+            </div>
+            }
+
+
+        </div>
+        @if (data.extension=='EXT') {
+        <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Extension</label>
+            <input type="text" class="form-control-username" required="required" name="Extension" id="Extension"
+                formControlName="Extension" placeholder="Enter Extension"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+            @if (mappingForm.controls['Extension'].invalid && mappingForm.controls['Extension'].touched)
+            {
+                @if (mappingForm.controls['Extension'].invalid && mappingForm.controls['Extension'].touched)
+                {
+                <div style="min-height: 5px; display: flex; align-items: center;">
+                    @if (mappingForm.controls['Extension'].errors['required'])
+                    {
+                    <small class="text-danger">Extension is required</small>
+                    }
+                    @if (mappingForm.controls['Extension'].errors['pattern'])
+                    {
+                    <small class="text-danger">Only numbers are allowed</small>
+                    }
+                </div>
+                }
+            }
+        </div>
+        }
+        @if (data.extension=='MAC') {
+        <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Enter MAC Address</label>
+            <input type="text" class="form-control-username" required="required" name="Extension" id="Extension"
+                formControlName="Extension" placeholder="Enter mac"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+            @if (mappingForm.controls['Extension'].invalid && mappingForm.controls['Extension'].touched)
+            {
+            <div style=" min-height: 5px; display: flex;
+                        align-items: center;">
+                <small class="text-danger">Mac Address is required</small>
+            </div>
+            }
+        </div>
+        }
+        @if (data.extension=='ip') {
+        <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Enter Ip Address</label>
+            <input type="text" class="form-control-username" required="required" name="Extension" id="Extension"
+                formControlName="Extension" placeholder="Enter mac"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+            @if (mappingForm.controls['Extension'].invalid && mappingForm.controls['Extension'].touched)
+            {
+            <div style=" min-height: 5px; display: flex;
+                        align-items: center;">
+                <small class="text-danger">Ip <Address></Address> is required</small>
+            </div>
+            }
+        </div>
+        }
+        <div style="justify-content: space-between;display: flex;">
+            <button id="usermangerSavebutton" mat-button type="submit" (click)="closeDialog()">
+                <span>Cancel</span>
+            </button>
+            @if (data.excel==true&&data.element==null) {
+            <button id="usermangerSavebutton" mat-button type="submit" matTooltip="Save channel mapping">
+                Save
+            </button>
+            }@else{
+            <button id="usermangerSavebutton" mat-button type="submit" matTooltip="Update channel mapping">
+                Update
+            </button>
+            }
+        </div>
+    </form>
+    }
+
+
+
+
+    @if (data.excel==false) {
+    <div style="height: auto;  width: 25vw;">
+        <label class="selectlabel" for="">Select the file to upload</label>
+        <div style="display:  flex;">
+            <input class="inputstyle" type="file" (change)="onFileChange($event)">
+            <button class="uploadbuttonstl" mat-button type="submit" (click)="insertdatamappinmutiple()">
+                <div>
+                    <span matTooltip="Upload channel mapping">Upload</span> <!-- Text content -->
+                </div>
+                <div style="padding-left: 5px;padding-top: 2px;">
+                    <span matTooltip="Upload channel mapping" class="material-symbols-outlined">
+                        cloud_upload
+                    </span>
+                </div>
+            </button>
+        </div>
+        <div class="importedTextslt">
+        </div>
+        <div class="downloadclosedialouge">
+            <button class="closeDialoguebuttonstl" mat-button type="submit" (click)="closeDialog()">
+                <span>Cancel</span>
+            </button>
+            <button class="downloadTemplatebutton" mat-button type="submit" (click)="generateTemplate()">
+                <span matTooltip="Download channel mapping template">DOWNLOAD TEMPLATE</span>
+                <span class="material-symbols-outlined">
+                    system_update_alt
+                </span>
+            </button>
+        </div>
+    </div>
+    }

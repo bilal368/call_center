@@ -1,0 +1,363 @@
+<div class="head-container">
+    <div class="sidenav-options">
+
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('Not Recording')"
+                [ngStyle]="{'background-color': buildDiv === 'Not Recording' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'Not Recording' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">
+                    {{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.NAME'| translate}}
+                </label>
+            </div>
+        </ng-container>
+
+
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('Network Failure')"
+                [ngStyle]="{'background-color': buildDiv === 'Network Failure' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'Network Failure' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">
+                    {{'Menu.ALERTS MANAGEMENT.RECORDING.Network Failure.NAME'| translate}}
+                </label>
+            </div>
+        </ng-container>
+
+    </div>
+    @if (buildDiv=='Not Recording') {
+    <div class="mainContainer">
+        <div class="timeContainer">
+            <div class="header">
+                @if(!isVisibleAlert){
+                <div class="form-group" style="width: 12vw;">
+                    <mat-select (selectionChange)="recorderChanged($event)"
+                        placeholder="{{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.Select Recorder' | translate}}"
+                        class="form-control" [formControl]="selectFormControl">
+                        @for(recorder of recorders;track $index;){
+
+                        <mat-option [value]="recorder.recorderTypeId">{{recorder.recorderTypeName}}</mat-option>
+
+                        }
+
+                    </mat-select>
+                </div>
+                }
+
+            </div>
+            <div class="content2 ">
+                <table class="  table table-striped ">
+                    <thead>
+                        <tr>
+                            <th>{{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.Days'| translate}}</th>
+                            <th>{{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.Start Time'| translate}}</th>
+                            <th>{{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.End Time'| translate}}</th>
+                            <th>{{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.Interval'| translate}}</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <form action="" [formGroup]="form"> -->
+                        @for (weekday of weekdays; track $index) {
+
+                        <tr style="margin-top: 20vh;">
+                            <td>{{weekday.label|translate}}</td>
+                            <td><input type="time" [(ngModel)]="weekday.alertStartTime"></td>
+                            <td><input type="time" [(ngModel)]="weekday.alertEndTime">
+                            </td>
+                            <td id="intervalTd">
+                                <input min="10" value="10" type="number" step="5" [(ngModel)]="weekday.alertInterval">
+                            </td>
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="userContainer">
+            <div class="header headerUser">
+                <div class="form-group" style="width: 10vw;">
+                    <div mat-button [matMenuTriggerFor]="roleMenu" class="searchText btn bg-light">
+                        <span>{{'Menu.ALERTS MANAGEMENT.Common.Select Role' | translate}} </span>
+                        <span class="material-symbols-outlined">
+                            arrow_drop_down
+                        </span>
+                    </div>
+
+                    <mat-menu #roleMenu="matMenu" style="padding-right: 2%;">
+                        <div style="display: flex;margin-right: 5px;">
+                            <mat-checkbox color="primary" [(ngModel)]="selectAll"
+                                (change)="toggleSelectAll($event.checked)" (click)="$event.stopPropagation()">
+                            </mat-checkbox>
+                            <input placeholder="{{'Menu.ALERTS MANAGEMENT.Common.Search Role' | translate}}"
+                                (input)="onSearchChange($event)" (click)="$event.stopPropagation()">
+                        </div>
+                        <div class="itemsDiv">
+                            @for( item of roles;track $index){
+                            <div>
+                                <mat-checkbox color="primary" [checked]="isRoleSelected(item.roleId)"
+                                    (change)="toggleRoleSelection(item.roleId, $event.checked)"
+                                    (click)="$event.stopPropagation()">
+                                    {{item.roleName}}
+                                </mat-checkbox>
+                            </div>
+
+                            }
+
+                        </div>
+                        <button mat-menu-item (click)="closeMenu()">
+                            {{'Menu.Close'| translate}}
+                        </button>
+                    </mat-menu>
+                </div>
+                <div class="searchUser pt-0 bg-light ">
+                    <input placeholder="{{'Menu.ALERTS MANAGEMENT.Common.Search User' | translate}}"
+                        (click)="$event.stopPropagation()" [(ngModel)]="searchKey">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                </div>
+                <button matTooltip="{{'Menu.ALERTS MANAGEMENT.Common.Set users' | translate}}" class="btn"
+                    (click)="usersForAdd()">
+                    <span class="material-symbols-outlined">
+                        group_add
+                    </span>
+                </button>
+
+            </div>
+            <div class="content mt-0">
+                <table class="userTable table  table-striped-columns table-hover">
+                    <thead>
+                        <tr>
+                            <th id="userName" style="width: 50%;">{{'Menu.ALERTS MANAGEMENT.RECORDING.Not
+                                Recording.Users'| translate}}</th>
+                            <th>
+                                <span class="material-symbols-outlined">
+                                    mail
+                                </span>
+                            </th>
+                            <th>
+                                <span class="material-symbols-outlined">
+                                    notifications_active
+                                </span>
+                            </th>
+                            <th>
+                                <mat-icon>delete</mat-icon>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    @if(userList){
+                    <tbody>
+                        @if(getFilteredUsers().length !=0){
+                            @for( user of getFilteredUsers()|search:searchKey:'fullName';track $index){
+
+                        <tr>
+                            <td id="userName">{{user.fullName| titlecase}} <br>
+                                <p style="opacity: 65%;">from {{ getRoleName(user.roleId) }}</p>
+                            </td>
+                            <td>
+                                <mat-checkbox color="primary" class="example-margin" [checked]="user.isEmailAlert===1"
+                                    (change)="changeCheckBox($event,user.alertUserId,'isEmailAlert'
+                                    )">
+                                </mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-checkbox color="primary" class="example-margin"
+                                    [checked]="user.isShowPopUpAlert===1"
+                                    (change)="changeCheckBox($event,user.alertUserId,'isShowPopUpAlert')">
+                                </mat-checkbox>
+                            </td>
+                            <td>
+                                <button matTooltip="{{'Menu.ALERTS MANAGEMENT.Common.Delete user' | translate}}"
+                                    class="btn">
+                                    <span (click)="removeUserFromList(user.alertUserId)"
+                                        class="material-symbols-outlined mt-2">
+                                        delete_forever
+                                    </span>
+                                </button>
+                            </td>
+
+                        </tr>
+
+                        }
+                        }
+
+                        <!-- <label for="">{{weekdays|json}}</label> -->
+                    </tbody>
+                    }
+
+                </table>
+                @if(userList.length==0){
+                <h2 style="width: 100%;background-color: rgb(83, 86, 86);color:white;text-align:  center;">
+                    {{'Menu.ALERTS MANAGEMENT.Common.No user added yet'| translate}}</h2>
+
+
+                }
+            </div>
+
+
+        </div>
+    </div>
+    <div class="mainButtons">
+     
+        <div class="buttonDiv2">
+            <button class="btn btn-dark"
+                matTooltip="{{'Menu.ALERTS MANAGEMENT.Common.Reset alert settings' | translate}}"
+                (click)="resetTimePicker()" (click)="resetSelection()">
+                {{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.Reset'| translate}}
+                </button>
+            <button class="btn btn-dark ms-2 me-2"
+                matTooltip="{{'Menu.ALERTS MANAGEMENT.Common.Save alert settings' | translate}}" 
+                (click)="saveAlerts()" >
+                {{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.Save'| translate}}
+                </button>
+
+        </div>
+        
+    </div>
+
+
+    }
+    <!-- network failure tab -->
+    @if (buildDiv=='Network Failure') {
+    <div class="mainContainer2">
+        <div class="userContainer2">
+            <div class="headerNetwork header">
+                <div class="subDiv">
+                    <div class="form-group" style="width: 10vw;">
+                        <div mat-button [matMenuTriggerFor]="roleMenu" class="searchText btn bg-light">
+                            <span>{{'Menu.ALERTS MANAGEMENT.Common.Select Role' | translate}} </span>
+                            <span class="material-symbols-outlined">
+                                arrow_drop_down
+                            </span>
+                        </div>
+
+                        <mat-menu #roleMenu="matMenu" style="padding-left: 1vw;">
+                            <div>
+
+                                <input class="ms-2"
+                                    placeholder="{{'Menu.ALERTS MANAGEMENT.Common.Search Role' | translate}}"
+                                    (input)="onSearchChange($event)" (click)="$event.stopPropagation()">
+                                <div class="d-flex">
+                                    <mat-checkbox color="primary" [(ngModel)]="selectAll"
+                                        (change)="toggleSelectAll($event.checked)" (click)="$event.stopPropagation()">
+                                        {{'Menu.Select All'| translate}}
+                                    </mat-checkbox>
+
+                                </div>
+                            </div>
+                            <div class="itemsDiv">
+                                @for( item of roles;track $index){
+                                <div>
+                                    <mat-checkbox color="primary" [checked]="isRoleSelected(item.roleId)"
+                                        (change)="toggleRoleSelection(item.roleId, $event.checked)"
+                                        (click)="$event.stopPropagation()">
+                                        {{item.roleName}}
+                                    </mat-checkbox>
+                                </div>
+
+                                }
+
+                            </div>
+                            <button mat-menu-item (click)="closeMenu()">
+                                Close
+                            </button>
+                        </mat-menu>
+                    </div>
+                    <div class="searchUserNet  bg-light ">
+                        <input placeholder="{{'Menu.ALERTS MANAGEMENT.Common.Search User' | translate}}"
+                            (click)="$event.stopPropagation()" [(ngModel)]="searchKey">
+                        <span class="material-symbols-outlined">
+                            search
+                        </span>
+                    </div>
+
+                </div>
+                <button class="btn" (click)="usersForAdd()">
+                    <span class="material-symbols-outlined">
+                        group_add
+                    </span>
+                </button>
+
+            </div>
+            <div class="content mt-0">
+                <table class="userTable table  table-striped-columns table-hover">
+                    <thead>
+                        <tr>
+                            <th id="userName" style="width: 50%;">
+                                {{'Menu.ALERTS MANAGEMENT.RECORDING.Not Recording.Users'| translate}}</th>
+                            <th>
+                                <span class="material-symbols-outlined">
+                                    mail
+                                </span>
+                            </th>
+                            <th>
+                                <span class="material-symbols-outlined">
+                                    notifications_active
+                                </span>
+                            </th>
+                            <th>
+                                <mat-icon>delete</mat-icon>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    @if(getFilteredUsers().length !=0){
+                    <tbody>
+                        @for( user of getFilteredUsers()|search:searchKey:'firstname';track $index){
+
+                        <tr>
+                            <td id="userName">{{user.firstname| titlecase}} {{user.lastname| titlecase}}
+                                <br>
+                                <p style="opacity: 65%;">
+                                    {{'Menu.from'| translate}}
+                                    {{ getRoleName(user.roleId) }}
+                            </td>
+                            <td>
+                                <mat-checkbox color="primary" class="example-margin" [checked]="user.isEmailAlert===1"
+                                    (change)="changeCheckBox($event,user.alertUserId,'isEmailAlert')">
+                                </mat-checkbox>
+                            </td>
+                            <td>
+                                <mat-checkbox color="primary" class="example-margin"
+                                    [checked]="user.isShowPopUpAlert===1"
+                                    (change)="changeCheckBox($event,user.alertUserId,'isShowPopUpAlert')">
+                                </mat-checkbox>
+                            </td>
+                            <td>
+                                <button class="btn">
+                                    <span (click)="removeUserFromList(user.alertUserId)"
+                                        class="material-symbols-outlined mt-2">
+                                        delete_forever
+                                    </span>
+                                </button>
+                            </td>
+
+                        </tr>
+
+                        }
+
+                        <!-- <label for="">{{weekdays|json}}</label> -->
+                    </tbody>
+                    }
+
+                </table>
+                @if(userList.length==0){
+                <h2 style="width: 100%;background-color: rgb(83, 86, 86);color:white;text-align:  center;">
+                    {{'Menu.ALERTS MANAGEMENT.Common.No user added yet'| translate}}</h2>
+
+
+                }
+            </div>
+            <div class="buttonDiv">
+                <button class="btn btn-dark" (click)="resetSelection()">{{'Menu.ALERTS MANAGEMENT.RECORDING.Not
+                    Recording.Reset'| translate}}
+                    </button>
+                <button class="btn btn-dark ms-2 me-2" (click)="saveAlerts()">{{'Menu.ALERTS MANAGEMENT.RECORDING.Not
+                    Recording.Save'| translate}}
+                    </button>
+
+            </div>
+
+        </div>
+    </div>
+    }

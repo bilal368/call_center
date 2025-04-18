@@ -1,0 +1,416 @@
+<div class="head-container">
+    <div class="sidenav-options">
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('avayarecorder')"
+                [ngStyle]="{'background-color': buildDiv === 'avayarecorder' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'avayarecorder' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">{{'RecorderSetting.AvayaRecorderSettings'|translate}}</label>
+            </div>
+        </ng-container>
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('recorderchannel')"
+                [ngStyle]="{'background-color': buildDiv === 'recorderchannel' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'recorderchannel' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">{{'RecorderSetting.AvayaRecorderChannelMapping'|translate}}</label>
+            </div>
+        </ng-container>
+    </div>
+    @if (buildDiv=='avayarecorder') {
+    <div style="color: var(--tabColor);">
+        <form [formGroup]="myForm" (ngSubmit)="savebutton()">
+            <div style=" display: flex;">
+
+                <div class="leftFormstyle">
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.DataPath'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="DataPath"
+                            id="DataPath" formControlName="DataPath"
+                            placeholder="{{'RecorderSetting.DataPath'|translate}}" id="placeholderstyle">
+                        @if (myForm.controls['DataPath'].invalid && myForm.controls['DataPath'].touched) {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Datapath is required</small>
+                        </div>
+                        }
+
+
+
+                    </div>
+                    <div style="display: flex;justify-content: space-between;">
+                        <div class="textFromfeild">
+                            <label class="headtext">{{'RecorderSetting.LOCALIPADDRESS'|translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="localipaddress"
+                                id="localipaddress" formControlName="localipaddress"
+                                placeholder="{{'RecorderSetting.LOCALIPADDRESS'|translate}}" id="placeholderstyle">
+                            @if (myForm.controls['localipaddress'].invalid && myForm.controls['localipaddress'].touched)
+                            {
+                            <div class="validtionstyle">
+                                <small class="text-danger">Local IP address is required</small>
+                            </div>
+                            }
+                        </div>
+                        <div class="headpadding">
+                            <label class="headtext">{{'RecorderSetting.LOCALPORT'|translate}}</label>
+                            <input type="number" class="form-control-username" required="required" name="localport"
+                                id="localport" formControlName="localport"
+                                placeholder="{{'RecorderSetting.LOCALPORT'|translate}}" id="placeholderstyle">
+                            @if (myForm.controls['localport'].invalid && myForm.controls['localport'].touched)
+                            {
+                            <div class="validtionstyle">
+                                <small class="text-danger">Local port is required</small>
+                            </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;">
+                        <div class="textFromfeild">
+                            <label class="headtext">{{'RecorderSetting.AESServerIP'|translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="aesserver"
+                                id="aesserver" formControlName="aesserver"
+                                placeholder="{{'RecorderSetting.AESServerIP'|translate}}" id="placeholderstyle">
+                            @if (myForm.controls['aesserver'].invalid && myForm.controls['aesserver'].touched)
+                            {
+                            <div class="validtionstyle">
+                                <small class="text-danger">AES Server IP is required</small>
+                            </div>
+                            }
+
+                        </div>
+                        <div class="headpadding">
+                            <label class="headtext">{{'RecorderSetting.AESPort'|translate}}</label>
+                            <input type="number" class="form-control-username" required="required" name="aesport"
+                                id="aesport" formControlName="aesport"
+                                placeholder="{{'RecorderSetting.AESPort'|translate}}" id="placeholderstyle">
+
+                            <label style="color: grey;display: block; width: 120px;">Secure DMCC service port</label>
+                            @if (myForm.controls['aesport'].invalid && myForm.controls['aesport'].touched)
+                            {
+                            <div style=" min-height: 20px; display: flex;
+                                    align-items: center;">
+                                <small class="text-danger">AES Port required</small>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.AESUserName'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="aesusername"
+                            id="aesusername" formControlName="aesusername"
+                            placeholder="{{'RecorderSetting.AESUserName'|translate}}" id="placeholderstyle">
+                        @if (myForm.controls['aesusername'].invalid && myForm.controls['aesusername'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">AES Username is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.SwitchConnectionName'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="switchconnection"
+                            id="switchconnection" formControlName="switchconnection"
+                            placeholder="{{'RecorderSetting.SwitchConnectionName'|translate}}" id="placeholderstyle">
+
+
+                        <label class="subtext">{{'RecorderSetting.switchconnecttext'|translate}}
+                        </label>
+                        @if (myForm.controls['switchconnection'].invalid && myForm.controls['switchconnection'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Switch connection name is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.IPCH'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="rtpip" id="ipch"
+                            formControlName="ipch" placeholder="{{'RecorderSetting.IPCH'|translate}}"
+                            id="placeholderstyle" [disabled]="true">
+                        @if (myForm.controls['ipch'].invalid && myForm.controls['ipch'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Number of Channels is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.RTPIP'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="rtpip" id="rtpip"
+                            formControlName="rtpip" placeholder="{{'RecorderSetting.RTPIP'|translate}}"
+                            id="placeholderstyle">
+                        @if (myForm.controls['rtpip'].invalid && myForm.controls['rtpip'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">RTP IP is required</small>
+                        </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="rightForm">
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.LogStatus'|translate}}</label>
+                        <mat-select formControlName="logstatus" class="dropdowntext">
+                            <mat-option value="Off">OFF
+                            </mat-option>
+                            <mat-option value="0">FatalError
+                            </mat-option>
+                            <mat-option value="10">GENERAL-ERROR
+                            </mat-option>
+                            <mat-option value="20">Warning
+                            </mat-option>
+                            <mat-option value="30">Information
+                            </mat-option>
+                            <mat-option value="40">Debug
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.CHINDEX'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="chindex" id="chindex"
+                            formControlName="chindex" placeholder="{{'RecorderSetting.CHINDEX'|translate}}"
+                            id="placeholderstyle">
+                        @if (myForm.controls['chindex'].invalid && myForm.controls['chindex'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">CH Index is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.Codec'|translate}}</label>
+                        <mat-select formControlName="codec" class="dropdowntext">
+                            <mat-option value="A-Law">A-Law
+                            </mat-option>
+                            <mat-option value="U-Law">U-Law
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div style=" display: flex;
+                    flex-direction: column;
+                    height: 90px;
+                    position: relative;">
+                        <label class="headtext">{{'RecorderSetting.AESPassword'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="aespassword"
+                            id="aespassword" formControlName="aespassword"
+                            placeholder="{{'RecorderSetting.AESPassword'|translate}}" id="placeholderstyle"
+                            [type]="'password'">
+                        @if (myForm.controls['aespassword'].invalid && myForm.controls['aespassword'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">AES password is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.SwitchIPAddress'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="switchipaddres"
+                            id="switchipaddres" formControlName="switchipaddres"
+                            placeholder="{{'RecorderSetting.SwitchIPAddress'|translate}}" id="placeholderstyle">
+                        <label class="subtext">{{'RecorderSetting.switchiptext'|translate}}
+                        </label>
+                        @if (myForm.controls['switchipaddres'].invalid && myForm.controls['switchipaddres'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Switch IP address is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div style=" display: flex;
+                    flex-direction: column;
+                 height: 90px;
+                    position: relative;">
+                        <label class="headtext">{{'RecorderSetting.ProtocolVersion'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="protocalversion"
+                            id="protocalversion" formControlName="protocalversion"
+                            placeholder="{{'RecorderSetting.ProtocolVersion'|translate}}" id="placeholderstyle">
+                        @if (myForm.controls['protocalversion'].invalid && myForm.controls['protocalversion'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Protocol Version is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">{{'RecorderSetting.SOCKETRECONNECTIONTIME'|translate}}</label>
+                        <input type="text" class="form-control-username" required="required" name="switchipaddres"
+                            id="switchipaddres" formControlName="socketreconnection"
+                            placeholder="{{'RecorderSetting.SOCKETRECONNECTIONTIME'|translate}}" id="placeholderstyle">
+                        <label class="subtext">{{'RecorderSetting.reconnectiontext'|translate}}
+                        </label>
+                        @if (myForm.controls['socketreconnection'].invalid &&
+                        myForm.controls['socketreconnection'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">socket reconnection time is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="example-button-row">
+
+                        <button [matTooltip]="toolTips.SaveSettings|translate" mat-button class="custom-button">
+                            {{'RecorderSetting.Save'|translate}}
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    }
+    @if (buildDiv=='recorderchannel') {
+    <div style="color: var(--tabColor);height: 600px;">
+        <mat-toolbar style="justify-content: flex-end;">
+            <div style="display: flex; gap: 10px;justify-content: flex-end;margin-right: 10px;">
+                <button mat-button mat-button class="map-channel-btn" (click)="openDialog(true,null)">
+                    <mat-icon>add_call</mat-icon>
+                    Map Channel</button>
+            
+                <button mat-button mat-button class="map-channel-btn" (click)="openDialog(false,null)">
+                    <mat-icon>upload_file</mat-icon>
+                    {{'Menu.CONFIGURE.EXTENSION MAPPING.Import' | translate}}</button>
+                <button mat-button mat-button class="map-channel-btn"
+                    (click)="deleteFuntion('Are you sure you want to delete channel mapping?',selectedRoleIds)">
+                    <mat-icon>delete</mat-icon>
+                    Delete</button>
+
+
+    
+                <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}" [matMenuTriggerFor]="menu4">
+                    @if (isLoading) {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    }@else {
+                    <mat-icon class="icon">download_2</mat-icon>
+                    <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+                    }
+                  </div>
+
+                <mat-menu #menu4="matMenu">
+                    <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+                        <div style="justify-content: space-around;display: flex;">
+                            <div>Excel</div>
+                            <div>
+                                <span class="material-symbols-outlined">article</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+                        <div style="justify-content: space-around;display: flex;">
+                            <div>PDF</div>
+                            <div>
+                                <span class="material-symbols-outlined">picture_as_pdf</span>
+                            </div>
+                        </div>
+                    </button>
+                   
+                </mat-menu>
+                <!-- </div> -->
+
+            </div>
+        </mat-toolbar>
+
+
+        <div class="mat-elevation-z8" style="top: 10%;overflow-y: auto;">
+
+
+
+
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox  class="custom-white-checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll($event.checked)"
+                            (click)="$event.stopPropagation()">
+                        </mat-checkbox>
+                       
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox color="primary" [checked]="isRoleSelected(element.recorderChannelMappingId)"
+                            (change)="toggleRoleSelection(element.recorderChannelMappingId, $event.checked)"
+                            (click)="$event.stopPropagation()">
+
+                        </mat-checkbox>
+                      
+                    </td>
+                </ng-container>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>Sl.No</th>
+                    <td mat-cell *matCellDef="let element">{{element.recorderChannelMappingId}}</td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="Channel">
+                    <th mat-header-cell *matHeaderCellDef>Channel</th>
+                    <td mat-cell *matCellDef="let element">{{element.channel}}</td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="extension">
+                    <th mat-header-cell *matHeaderCellDef>Extension</th>
+                    <td mat-cell *matCellDef="let element">{{element.mappedExtensionMacIP}}</td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon color="var(--h3)" style="cursor: pointer;"
+                            (click)="openDialog(true,element)">edit</mat-icon>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-toolbar class="pagination-toolbar">
+                <div class="page-info">
+                    {{'Menu.REPORTS RECORDING.AGENTS.Total Records'| translate}}
+                    :
+                    {{ TotalRecords }}
+                </div>
+                <span class="example-spacer"></span>
+                <div class="page-info">
+                    {{'Menu.REPORTS RECORDING.AGENTS.Records Per Page'| translate}}
+                </div>
+                <mat-select class="form-control me-4" style="width:100px" [(ngModel)]="limit"
+                    (selectionChange)="onItemsPerPageChange($event)">
+
+                    <mat-option class="goto-check" [value]="10">10</mat-option>
+                    <mat-option class="goto-check" value="25">25</mat-option>
+                    <mat-option class="goto-check" value="50">50</mat-option>
+                    <mat-option class="goto-check" value="100">100</mat-option>
+                </mat-select>
+
+                <div class="page-info">
+                    Page
+                    <mat-select class="form-control" style="width: 72px;" [(ngModel)]="currentPage"
+                        (selectionChange)="goToPage($event)">
+                        @for (page of getPagesArray(); track $index) {
+                        <mat-option style="width: 80px;" [value]="page">
+                            {{ page }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                    of {{ totalPages }}
+                </div>
+
+
+                <div [dir]="'ltr'">
+                    <button mat-mini-fab class="next-button me-2" (click)="previousPage()">
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
+                    <button mat-mini-fab class="next-button me-2" (click)=" nextPage()">
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+
+                </div>
+            </mat-toolbar>
+        </div>
+    </div>
+
+
+
+    }
+
+
+</div>

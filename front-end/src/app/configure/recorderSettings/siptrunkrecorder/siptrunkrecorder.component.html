@@ -1,0 +1,571 @@
+<div class="head-container">
+    <div class="sidenav-options">
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('siptrunk')"
+                [ngStyle]="{'background-color': buildDiv === 'siptrunk' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'siptrunk' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">SIP Trunk Recorder Settings </label>
+            </div>
+        </ng-container>
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('siptrunkrecorderchannel')"
+                [ngStyle]="{'background-color': buildDiv === 'siptrunkrecorderchannel' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'siptrunkrecorderchannel' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">SIP Trunk Recorder Channel Mapping</label>
+            </div>
+        </ng-container>
+    </div>
+    @if (buildDiv=='siptrunk') {
+    <div style="color: var(--tabColor);overflow-y: auto;">
+        <form [formGroup]="myForm" (ngSubmit)="savebutton()">
+            <div style=" display: flex;">
+
+                <div class="leftFormstyle">
+                    <div class="textFromfeild">
+                        <label class="headLable">Data Driver</label>
+                        <input type="text" class="form-control-username" required="required" name="DataPath"
+                            id="DataPath" formControlName="DataPath" placeholder="Data Driver"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['DataPath'].invalid && myForm.controls['DataPath'].touched) {
+                        <div style=" min-height: 5px; display: flex;
+                            align-items: center;">
+                            <small class="text-danger">Data Driver is required</small>
+                        </div>
+                        }
+
+
+
+                    </div>
+                    <div style="display: flex;justify-content: space-between;">
+                        <div class="textFromfeild">
+                            <label class="headLable">Media Forward IP</label>
+                            <input type="text" class="form-control-username" required="required" name="localipaddress"
+                                id="localipaddress" formControlName="mediafwdip" placeholder="Media Forward IP"
+                                style="border-color:#89AECF; border-style: solid;">
+                            @if (myForm.controls['mediafwdip'].invalid && myForm.controls['mediafwdip'].touched)
+                            {
+                            <div style=" min-height: 5px; display: flex;
+                                align-items: center;">
+                                <small class="text-danger">Media Forward IP is required</small>
+                            </div>
+                            }
+                        </div>
+                        <div style=" height: 90px; position: relative;  display: flex;
+                        flex-direction: column;margin-left: 25px; width: 100px;">
+                            <label class="headLable">Gateway IP</label>
+                            <input type="text" class="form-control-username" required="required" name="localport"
+                                id="localport" formControlName="gatewayip" placeholder="Gateway IP"
+                                style="border-color:#89AECF; border-style: solid;">
+                            @if (myForm.controls['gatewayip'].invalid && myForm.controls['gatewayip'].touched)
+                            {
+                            <div style=" min-height: 5px; display: flex;
+                                    align-items: center;">
+                                <small class="text-danger">Gateway IP is required</small>
+                            </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;">
+                        <div class="textFromfeild">
+                            <label class="headLable">Device</label>
+
+                            <mat-select formControlName="device"
+                                style="border-color:#89AECF; border-style: solid;width: 300px;height: 26px;border-width: 2px;padding-right: 10px;">
+                                @for (item of deviceList; track $index) {
+                                <mat-option value={{item.device}}
+                                    (onSelectionChange)="onDeviceSelect(item,$index)">{{item.device}}
+                                </mat-option>
+                                }
+                            </mat-select>
+
+
+
+
+                        </div>
+
+
+
+                        <div style=" height: 90px; position: relative;  display: flex;
+                          flex-direction: column;margin-left: 25px; width: 100px;">
+                            <label class="headLable">RTP Timeout</label>
+                            <input type="number" class="form-control-username" required="required" name="aesport"
+                                id="aesport" formControlName="rtptimeout" placeholder="RTP Timeout"
+                                style="border-color:#89AECF; border-style: solid;">
+
+                            <!-- <label style="color: black;display: block; width: 120px;">Secure DMCC service´s port
+                                #</label> -->
+                            @if (myForm.controls['rtptimeout'].invalid && myForm.controls['rtptimeout'].touched)
+                            {
+                            <div style=" min-height: 20px; display: flex;
+                                        align-items: center;">
+                                <small class="text-danger">RTP Timeout required</small>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">Description</label>
+
+
+                        <div
+                            style="border-color:#89AECF; border-style: solid;width: auto;height: 30px;border-width: 2px;align-items: center;justify-content: center;color: black">
+                            {{ selectedDevice?.description}}
+                        </div>
+
+
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">IP Address</label>
+
+
+                        <div
+                            style="border-color:#89AECF; border-style: solid;width: auto;height: 30px;border-width: 2px;align-items: center;justify-content: center;color: black;padding: 5px;">
+                            {{ selectedDevice?.ipaddress}}
+                        </div>
+
+
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">Dynamic Channels</label>
+                        <!-- <input type="text" class="form-control-username" required="required" name="aesusername"
+                            id="aesusername" formControlName="dynamicchannels" placeholder="Dynamic Channels"
+                            style="border-color:#89AECF; border-style: solid;"> -->
+                        <div style="justify-content: space-around;font-weight: 500;color: black;font-size: 16px;">
+                            <label>
+                                <input type="radio" name="dynamicchannels" formControlName="dynamicchannels" value="1"
+                                    (change)="onDynamicChannelsChange()" checked>
+                                <span style="padding-left: 5px;">Yes</span>
+                            </label>
+                            <label style="padding-left: 10px;padding-right: 10px;">
+                                <input type="radio" name="dynamicchannels" formControlName="dynamicchannels" value="0"
+                                    (change)="onDynamicChannelsChange()">
+                                <span style="padding-left: 5px;">No</span>
+                            </label>
+                            <!-- <label>
+                                    <input type="radio" name="extension" formControlName="extension" value="ip">IP Address
+                                </label> -->
+
+                        </div>
+                        @if (myForm.controls['dynamicchannels'].invalid && myForm.controls['dynamicchannels'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                    align-items: center;">
+                            <small class="text-danger">Dynamic chnannels is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">PCAP Dump</label>
+                        <input type="text" class="form-control-username" required="required" name="switchconnection"
+                            id="switchconnection" formControlName="pcapdump" placeholder="PCAP Dump"
+                            style="border-color:#89AECF; border-style: solid;">
+
+
+
+                        @if (myForm.controls['pcapdump'].invalid && myForm.controls['pcapdump'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                align-items: center;">
+                            <small class="text-danger">PCAP Dump is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">Number of Channels</label>
+                        <input type="text" class="form-control-username" required="required" name="rtpip" id="ipch"
+                            formControlName="ipch" placeholder="Number of Channels"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['ipch'].invalid && myForm.controls['ipch'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                        align-items: center;">
+                            <small class="text-danger">Number of channels is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">SIP Port</label>
+                        <input type="text" class="form-control-username" required="required" name="rtpip" id="rtpip"
+                            formControlName="sipport" placeholder="SIP Port"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['sipport'].invalid && myForm.controls['sipport'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                        align-items: center;">
+                            <small class="text-danger">SIP Port is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">Remote Party ID</label>
+                        <input type="text" class="form-control-username" required="required" name="rtpip" id="rtpip"
+                            formControlName="remotepartyid" placeholder="Remote Party ID"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['remotepartyid'].invalid && myForm.controls['remotepartyid'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                        align-items: center;">
+                            <small class="text-danger">Remote Party ID is required</small>
+                        </div>
+                        }
+
+                    </div>
+                </div>
+                <div class="rightForm">
+                    <div class="textFromfeild">
+                        <label class="headLable">Log Status</label>
+                        <mat-select formControlName="logstatus"
+                            style="border-color:#89AECF; border-style: solid;width: 300px;height: 26px;border-width: 2px;padding-right: 10px;">
+                            <mat-option value="Off">OFF
+                            </mat-option>
+                            <mat-option value="0">FatalError
+                            </mat-option>
+                            <mat-option value="10">GENERAL-ERROR
+                            </mat-option>
+                            <mat-option value="20">Warning
+                            </mat-option>
+                            <mat-option value="30">Information
+                            </mat-option>
+                            <mat-option value="40">Debug
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">Channel Index</label>
+                        <input type="text" class="form-control-username" required="required" name="chindex" id="chindex"
+                            formControlName="chindex" placeholder="CH Index"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['chindex'].invalid && myForm.controls['chindex'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                            align-items: center;">
+                            <small class="text-danger">Channel Index is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">TCP SIP</label>
+                        <!-- <label style="font-weight: bold;color: black;font-size: 16px;">RTP_LOG</label> -->
+                        <input type="text" class="form-control-username" required="required" name="switchipaddres"
+                            id="switchipaddres" formControlName="TCP_SIP" placeholder="TCP SIP"
+                            style="border-color:#89AECF; border-style: solid;">
+                        <!-- <label style="color: black;display: block; width: 500px;">IP address or FQDN of the CM server
+                        </label> -->
+                        @if (myForm.controls['TCP_SIP'].invalid && myForm.controls['TCP_SIP'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                            align-items: center;">
+                            <small class="text-danger">TCP SIP is required</small>
+                        </div>
+                        }
+                        <!-- <mat-select formControlName="codec"
+                            style="border-color:#89AECF; border-style: solid;width: 300px;height: 26px;border-width: 2px;padding-right: 10px;">
+                            <mat-option value="A-Law">A-Law
+                            </mat-option>
+                            <mat-option value="U-Law">U-Law
+                            </mat-option>
+                        </mat-select> -->
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">MAC Address</label>
+
+
+                        <div
+                            style="border-color:#89AECF; border-style: solid;width: auto;height: 30px;border-width: 2px;align-items: center;justify-content: center;color: black;padding: 5px;">
+                            {{ selectedDevice?.macaddress}}
+                        </div>
+
+
+
+                    </div>
+                    <div style=" display: flex;
+                        flex-direction: column;
+                        height: 90px;
+                        position: relative;">
+                        <label class="headLable">Recording Mode</label>
+
+                        <div style="justify-content: space-around;font-weight: 500;color: black;font-size: 16px;">
+                            <label>
+                                <input type="radio" name="extension" formControlName="extension" value="EXT"
+                                    [disabled]="isExtensionDisabled" checked>
+                                <span style="padding-left: 5px;">Extension</span>
+                            </label>
+                            <label style="padding-left: 10px;padding-right: 10px;">
+                                <input type="radio" name="extension" formControlName="extension" value="MAC"
+                                    [disabled]="isExtensionDisabled">
+                                <span style="padding-left: 5px;">Mac Address</span>
+                            </label>
+                            <!-- <label>
+                                <input type="radio" name="extension" formControlName="extension" value="ip">IP Address
+                            </label> -->
+
+                        </div>
+
+                        <!-- @if (myForm.controls['aespassword'].invalid && myForm.controls['aespassword'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                                align-items: center;">
+                            <small class="text-danger">AES Password is required</small>
+                        </div>
+                        } -->
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">RTP Proxy</label>
+                        <input type="text" class="form-control-username" required="required" name="switchipaddres"
+                            id="switchipaddres" formControlName="rtplog" placeholder="RTP Proxy"
+                            style="border-color:#89AECF; border-style: solid;">
+                        <label style="color: black;display: block; width: 500px;">IP address or FQDN of the CM server
+                        </label>
+                        @if (myForm.controls['rtplog'].invalid && myForm.controls['rtplog'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                            align-items: center;">
+                            <small class="text-danger">RTP Proxy is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div style=" display: flex;
+                        flex-direction: column;
+                     height: 90px;
+                        position: relative;">
+                        <label class="headLable">Media Proxy IP</label>
+                        <input type="text" class="form-control-username" required="required" name="MEDIA_PROXY_IP"
+                            id="MEDIA_PROXY_IP" formControlName="MEDIA_PROXY_IP" placeholder="Media Proxy IP"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['MEDIA_PROXY_IP'].invalid && myForm.controls['MEDIA_PROXY_IP'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                                align-items: center;">
+                            <small class="text-danger">Media proxy IP is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div style=" display: flex;
+                    flex-direction: column;
+                 height: 90px;
+                    position: relative;">
+                        <label class="headLable">Remote Party ID Digits</label>
+                        <input type="text" class="form-control-username" required="required" name="protocalversion"
+                            id="protocalversion" formControlName="remotepartyiddigits"
+                            placeholder="Remote Party Id Digits" style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['remotepartyiddigits'].invalid &&
+                        myForm.controls['remotepartyiddigits'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                            align-items: center;">
+                            <small class="text-danger">Remote party id digits is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div style=" display: flex;
+                flex-direction: column;
+             height: 90px;
+                position: relative;">
+                        <label class="headLable">GRE</label>
+                        <input type="text" class="form-control-username" required="required" name="protocalversion"
+                            id="protocalversion" formControlName="gre" placeholder="GRE"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['gre'].invalid && myForm.controls['gre'].touched)
+                        {
+                        <div style="min-height: 5px; display: flex;
+                                        align-items: center;">
+                            <small class="text-danger">GRE is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="example-button-row">
+                        <button mat-button class="custom-button"  matTooltip="Save settings">
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    }
+    @if (buildDiv=='siptrunkrecorderchannel') {
+    <div style="color: var(--tabColor);height: 600px;">
+        <mat-toolbar style="justify-content: flex-end;">
+            <div style="display: flex; gap: 10px;justify-content: flex-end;margin-right: 10px;">
+
+                <button mat-button mat-button class="map-channel-btn" (click)="openDialog(true,null)">
+                    <mat-icon>add_call</mat-icon>
+                    Map Channel</button>
+
+                <button mat-button mat-button class="map-channel-btn" (click)="openDialog(false,null)">
+                    <mat-icon>upload_file</mat-icon>
+                    {{'Menu.CONFIGURE.EXTENSION MAPPING.Import' | translate}}</button>
+                <button mat-button mat-button class="map-channel-btn"
+                    (click)="deleteFuntion('Are you sure you want to delete channel mapping?',selectedRoleIds)">
+                    <mat-icon>delete</mat-icon>
+                    Delete</button>
+
+                <!-- <div class="excelDiv btn" matTooltip="{{'Menu.REPORTS RECORDING.CALLS.Download records' | translate}}"
+                    [matMenuTriggerFor]="menu4">
+                    <mat-icon class="icon">download_2</mat-icon>
+                    <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+                </div> -->
+                <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}" [matMenuTriggerFor]="menu4">
+                    @if (isLoading) {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    }@else {
+                    <mat-icon class="icon">download_2</mat-icon>
+                    <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+                    }
+                  </div>
+
+                <mat-menu #menu4="matMenu">
+                    <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+                        <div style="justify-content: space-around;display: flex;">
+                            <div>Excel</div>
+                            <div>
+                                <span class="material-symbols-outlined">article</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+                        <div style="justify-content: space-around;display: flex;">
+                            <div>PDF</div>
+                            <div>
+                                <span class="material-symbols-outlined">picture_as_pdf</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+                        <span>TIFF</span>
+                        <span class="material-symbols-outlined">perm_media</span>
+                    </button>
+                    <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+                        <span>Web Archive</span>
+                        <span class="material-symbols-outlined">install_desktop</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-toolbar>
+
+        <div class="mat-elevation-z8" style="top: 10%;overflow-y: auto;">
+
+
+
+
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- <mat-checkbox class="custom-white-checkbox" color="primary" [(ngModel)]="selectAll"
+                    (change)="toggleSelectAll($event.checked)" (click)="$event.stopPropagation()">
+                </mat-checkbox> -->
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox  class="custom-white-checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll($event.checked)"
+                            (click)="$event.stopPropagation()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox color="primary" [checked]="isRoleSelected(element.recorderChannelMappingId)"
+                            (change)="toggleRoleSelection(element.recorderChannelMappingId, $event.checked)"
+                            (click)="$event.stopPropagation()">
+
+                        </mat-checkbox>
+
+                    </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>Sl.No</th>
+                    <td mat-cell *matCellDef="let element">{{element.recorderChannelMappingId}}</td>
+                </ng-container> -->
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="Channel">
+                    <th mat-header-cell *matHeaderCellDef>Channel</th>
+                    <td mat-cell *matCellDef="let element">{{element.channel}}</td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="extension">
+                    <th mat-header-cell *matHeaderCellDef>Extension/Mac/IP
+                    <th>
+                    <td mat-cell *matCellDef="let element">{{element.mappedExtensionMacIP}}</td>
+                </ng-container>
+
+                <!-- Color Column -->
+                <!-- <ng-container matColumnDef="password">
+                    <th mat-header-cell *matHeaderCellDef>Password</th>
+                    <td mat-cell *matCellDef="let element">{{element.password}}</td>
+                </ng-container> -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon (click)="openDialog(true,element)" color="var(--h3)"
+                            style="cursor: pointer;">edit</mat-icon>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <!-- <div>
+                <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page">
+                </mat-paginator>
+            </div> -->
+            <mat-toolbar class="pagination-toolbar">
+                <div class="page-info">
+                    {{'Menu.REPORTS RECORDING.AGENTS.Total Records'| translate}}
+                    :
+                    {{ TotalRecords }}
+                </div>
+                <span class="example-spacer"></span>
+                <div class="page-info">
+                    {{'Menu.REPORTS RECORDING.AGENTS.Records Per Page'| translate}}
+                </div>
+                <mat-select class="form-control me-4" style="width:100px" [(ngModel)]="limit"
+                    (selectionChange)="onItemsPerPageChange($event)">
+
+                    <mat-option class="goto-check" [value]="10">10</mat-option>
+                    <mat-option class="goto-check" value="25">25</mat-option>
+                    <mat-option class="goto-check" value="50">50</mat-option>
+                    <mat-option class="goto-check" value="100">100</mat-option>
+                </mat-select>
+
+                <div class="page-info">
+                    Page
+                    <mat-select class="form-control" style="width: 72px;" [(ngModel)]="currentPage"
+                        (selectionChange)="goToPage($event)">
+                        @for (page of getPagesArray(); track $index) {
+                        <mat-option style="width: 80px;" [value]="page">
+                            {{ page }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                    of {{ totalPages }}
+                </div>
+
+
+                <div [dir]="'ltr'">
+                    <button mat-mini-fab class="next-button me-2" (click)="previousPage()">
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
+                    <button mat-mini-fab class="next-button me-2" (click)="nextPage()">
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+
+                </div>
+            </mat-toolbar>
+        </div>
+    </div>
+
+
+
+    }
+</div>

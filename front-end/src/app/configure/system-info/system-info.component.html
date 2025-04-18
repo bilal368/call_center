@@ -1,0 +1,175 @@
+<div class="head-container " [dir]="'align'|translate">
+  <div class="sidenav-options">
+    <ng-container>
+      @for (item of subItems; track $index) {
+      <div class="build-div me-2 mt-2" (click)="divFunction(item.name)"
+        [ngStyle]="{'background-color': buildDiv === item.name ? 'var(--h3)' : '#CCCCCC','color': buildDiv === item.name ? 'white' : 'var(--h3)'}">
+        <label class="tab-text mt-2">
+          {{ item.label| translate }}
+        </label>
+      </div>
+      }
+
+    </ng-container>
+  </div>
+
+
+  @if (buildDiv=='Registration Details') {
+  <div class="container">
+    <form [formGroup]="this.customerForm">
+      <div class="row">
+       
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="organizationName">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Organization'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="organizationName">
+          </div>
+          <div class="form-group">
+            <label for="address1">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Address 1'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="address1">
+          </div>
+          <div class="form-group">
+            <label for="city">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.City'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="city">
+          </div>
+          <div class="form-group">
+            <label for="phone">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Phone'|translate}}
+            </label>
+            <input type="tel" class="form-control" formControlName="phone">
+          </div>
+          <div class="form-group">
+            <label for="email">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Email'|translate}}
+            </label>
+            <input type="email" class="form-control" formControlName="email">
+          </div>
+          <div class="form-group position-relative">
+            <label for="license">
+              {{ 'Menu.CONFIGURE.SYSTEM MANAGEMENT.License' | translate }}
+            </label>
+            <div class="input-group">
+              <input 
+                id="license" 
+                type="text" 
+                class="form-control" 
+                formControlName="token" 
+                
+                >
+              <button 
+                class="btn btn-outline-secondary" 
+                type="button" 
+                [cdkCopyToClipboard]="customerForm.get('token')?.value||''"
+                matTooltip="{{ 'Menu.CONFIGURE.SYSTEM MANAGEMENT.Copy' | translate }}"
+                >
+                <span class="material-symbols-outlined">
+                  content_copy
+                  </span>
+              </button>
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-md-6">
+          <div class="form-group w-100">
+            <label for="logo">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Logo Upload.NAME'|translate}}
+            </label>
+             
+                <div style="width: 100%;" class="d-flex justify-content-between">
+                  <input style="width:45%" 
+                  matTooltip="{{ 'Menu.CONFIGURE.SYSTEM MANAGEMENT.Logo Upload.NAME' | translate }}"
+                  class="form-control  me-1" type="file" accept=".jpg, .jpeg, .png, .gif, .svg" (change)="selectFile($event)" />
+                  @if(!logoUploadStarted){
+                    <div class=" d-flex justify-content-center" style="width: 50%;">
+                      <img [src]="logoUrl" alt="Upload Image" height="40px" width="50%" />
+
+                    </div>
+                  }  @else {
+                    <div class="text-center d-flex justify-content-center"style="width: 50%;">
+                      <div class="loader"></div>
+                    </div>
+                  }
+                </div>
+            
+            
+          </div>
+          <div class="form-group">
+            <label for="address2">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Address 2'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="address2">
+          </div>
+          <div class="form-group">
+            <label for="state">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.State'|translate}}
+            </label>
+            <input type="text" class="form-control" formControlName="state">
+          </div>
+          <div class="form-group">
+            <label for="fax">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Fax'|translate}}
+            </label>
+            <input type="tel" class="form-control" formControlName="fax">
+          </div>
+          <div class="form-group ">
+            <label for="website">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Website'|translate}}
+            </label>
+            <input type="url" class="form-control" formControlName="website">
+          </div>
+          
+          <div class="form-group">
+            <label for="serialKey">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Serial Key'|translate}}
+            </label>
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="serialKey" >
+              <button 
+              class="btn btn-outline-secondary" 
+              type="button" 
+              [cdkCopyToClipboard]="customerForm.get('serialKey')?.value||''"
+              matTooltip="{{ 'Menu.CONFIGURE.SYSTEM MANAGEMENT.Copy' | translate }}"
+              >
+              <span class="material-symbols-outlined">
+                content_copy
+                </span>
+            </button>
+            </div>
+         
+          </div>
+          <div class="form-group d-flex justify-content-end">
+            <!-- <button class="btn editButton" matTooltip="{{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Logo Upload.Edit'|translate}}" type="button" (click)="toggleEditMode()" *ngIf="!isEditMode">Edit</button> -->
+            <button class="btn btn-dark" matTooltip="{{ 'Menu.CONFIGURE.SYSTEM MANAGEMENT.Save Details' | translate }}"
+              type="submit" (click)="saveChanges()"
+              [disabled]="!this.customerForm.dirty || !this.customerForm.valueChanges">
+              {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.Save' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </form>
+
+  </div>
+  }
+  @if(buildDiv=='Data Archive'){
+    
+<app-data-archive></app-data-archive>
+  }
+  @if(buildDiv=='Auto Delete'){
+    
+    <app-auto-delete></app-auto-delete>
+  }
+  @if(buildDiv=='Mail Settings'){
+    
+        <app-mailer-settings></app-mailer-settings>
+    }
+</div>

@@ -1,0 +1,152 @@
+<div class="main-container">
+    <div style="display: flex; justify-content: space-between;">
+        <!-- Active Users -->
+        <div class="user-table">
+            <h2>
+                {{'Menu.CALL RECORDING.DASHBOARD.Active Users'| translate}}
+            </h2>
+            <div class="table-container">
+                <table mat-table [dataSource]="activeUsers" class="mat-elevation-z8">
+                    <!-- Username Column -->
+                    <ng-container matColumnDef="username">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.Username'| translate}}
+
+                        </th>
+                        <td mat-cell *matCellDef="let user"> {{user.username}} </td>
+                    </ng-container>
+
+                    <!-- IP Address Column -->
+                    <ng-container matColumnDef="ipAddress">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.IP Address'| translate}}
+
+                        </th>
+                        <td mat-cell *matCellDef="let user"> {{user.ipAddress}} </td>
+                    </ng-container>
+
+                    <!-- Login Time Column -->
+                    <ng-container matColumnDef="loginTime">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.Login Time'| translate}}
+
+                        </th>
+                        <td mat-cell *matCellDef="let user"> {{user.loginTime}} </td>
+                    </ng-container>
+
+                    <!-- Logout Time Column -->
+                    <!-- <ng-container matColumnDef="logoutTime">
+                        <th mat-header-cell *matHeaderCellDef> Logout Time </th>
+                        <td mat-cell *matCellDef="let user"> {{user.logoutTime || 'N/A'}} </td>
+                    </ng-container> -->
+
+                    <!-- Status Code Column -->
+                    <ng-container matColumnDef="statusCode">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.Status Code'| translate}}
+
+                        </th>
+                        <td mat-cell [matTooltip]="user.statusCode === 'Auth' ? 'Authenticated' : user.statusCode"
+                            *matCellDef="let user">
+
+                            @if (user.statusCode === 'Auth' ) {
+                            <mat-icon>key</mat-icon>
+                            }@else {
+                            {{user.statusCode}}
+                            }
+
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Users -->
+        <div class="user-table">
+            <h2>
+                {{'Menu.CALL RECORDING.DASHBOARD.Recent Users'| translate}}
+
+            </h2>
+            <div class="table-container">
+                <table mat-table [dataSource]="recentUsers" class="mat-elevation-z8">
+                    <!-- Username Column -->
+                    <ng-container matColumnDef="username">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.Username'| translate}}
+
+                        </th>
+                        <td mat-cell *matCellDef="let user"> {{user.username}} </td>
+                    </ng-container>
+
+                    <!-- IP Address Column -->
+                    <ng-container matColumnDef="ipAddress">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.IP Address'| translate}}
+
+                        </th>
+                        <td mat-cell *matCellDef="let user"> {{user.ipAddress}} </td>
+                    </ng-container>
+
+                    <!-- Login Time Column -->
+                    <ng-container matColumnDef="loginTime">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.Login Time'| translate}}
+
+                        </th>
+                        <td mat-cell *matCellDef="let user"> {{user.loginTime}} </td>
+                    </ng-container>
+
+                    <!-- Logout Time Column -->
+                    <ng-container matColumnDef="logoutTime">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.Logout Time'| translate}}
+
+                        </th>
+                        <td mat-cell *matCellDef="let user"> {{user.logoutTime || 'N/A'}} </td>
+                    </ng-container>
+
+                    <!-- Status Code Column -->
+                    <ng-container matColumnDef="statusCode">
+                        <th mat-header-cell *matHeaderCellDef>
+                            {{'Menu.CALL RECORDING.DASHBOARD.Status Code'| translate}}
+
+                        </th>
+                        <td mat-cell [matTooltip]="user.statusCode === 'Auth' ? 'Authenticated' : user.statusCode"
+                            *matCellDef="let user">
+                            @if (user.statusCode === 'Auth' ) {
+                            <mat-icon>key</mat-icon>
+                            }@else {
+                            {{user.statusCode}}
+                            }
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedlogoutColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedlogoutColumns;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="chart-container" *ngFor="let data of currentData">
+        <div class="chart-header">
+            <h1>Channel Status</h1>
+            <div>
+                <mat-button-toggle-group (change)="updateChartTypef(data, $event.value)" [(value)]="selectedChartType">
+                    <mat-button-toggle *ngFor="let type of data.type" [value]="type">
+                        <mat-icon *ngIf="type === 'bubble'">bubble_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'line'">timeline</mat-icon>
+                        <mat-icon *ngIf="type === 'pie'">pie_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'bar'">bar_chart</mat-icon>
+                        <mat-icon *ngIf="type === 'radar'">radar</mat-icon>
+                        <mat-icon *ngIf="type === 'scatter'">scatter_plot</mat-icon>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+        <canvas [id]="data.variable"></canvas>
+    </div>
+
+</div>

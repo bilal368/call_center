@@ -1,0 +1,22 @@
+.action-button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-button:hover {
+    background-color: var(--button-hover-bg-color);
+  }
+  
+  
+  .delete-button {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #b71c1c;
+  }
+  

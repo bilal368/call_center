@@ -1,0 +1,27 @@
+
+router-outlet{
+    margin: 0;
+   
+}
+    ::ng-deep button{
+        height: 40px;
+        max-height: 40px;
+    }
+    ::ng-deep .excelDiv{
+        height: 40px;
+        max-height: 40px;
+    }
+    ::ng-deep .btn{
+        height: 40px;
+        max-height: 40px;
+    }
+::ng-deep .custom-apply-button{
+    font-size: small;
+    margin-top: 4px;
+    font-weight: 500;
+
+}
+::ng-deep .custom-button-date{
+    font-size: small;
+    margin-top: 4px;
+}

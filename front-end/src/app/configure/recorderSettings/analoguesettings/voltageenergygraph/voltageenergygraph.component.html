@@ -1,0 +1,23 @@
+<div class="card-container">
+    @if(channeldata.length!=0){
+    <div *ngFor="let item of channeldata" class="card">
+        <div class="card-header">
+            <div>{{ item.channel? item.channel:"No Data" }}</div>
+        </div>
+        <div class="card-body">
+            <div class="card-detail">
+                <span class="label">Voltage : </span>
+                <span class="value">{{ item.voltage ? item.voltage :"No Data"}}</span>
+            </div>
+            <div class="card-detail">
+                <span class="label">Energy : </span>
+                <span class="value">{{ item.energy?item.energy:"No Data" }}</span>
+            </div>
+        </div>
+    </div>
+    }@else {
+    <div class="no-data">
+        <p>No Data Available</p>
+    </div>
+    }
+</div>

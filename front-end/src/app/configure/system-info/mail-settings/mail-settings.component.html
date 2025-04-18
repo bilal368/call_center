@@ -1,0 +1,52 @@
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mt-2">Mail Settings</h4>
+        </div>
+        <div class="card-body formOne">
+          <form class="mailSettingsForm" [formGroup]="mailSettingsForm" (ngSubmit)="submitMailerSettingsForm()">
+            <!-- SMTP Settings Form -->
+            
+            <div class="mb-3">
+                <label class="form-label">SMTP Server</label>
+                <input type="text" class="form-control" placeholder="Enter SMTP Server" formControlName="SMTPServer" />
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">SMTP Port</label>
+                <input type="number" class="form-control" placeholder="Enter SMTP Port" formControlName="SMTPPort" />
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Sender Email</label>
+                <input type="email" class="form-control" placeholder="Enter Sender Email" formControlName="senderEmail" />
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" placeholder="Enter Email Username" formControlName="username" />
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" placeholder="Enter SMTP Password" formControlName="passwordNew" />
+            </div>
+        
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" formControlName="isSslEnabled" />
+                <label class="form-check-label">Enable SSL</label>
+            </div>
+        
+            @if(errorMessage) {
+                <div class="text-danger mt-2">{{ errorMessage }}</div>
+            }
+        
+            <button type="submit" class="btn btn-dark" matTooltip="Save form" [disabled]="!mailSettingsForm.dirty || !mailSettingsForm.valid">Submit</button>
+        </form>
+        
+              
+            
+            
+        </div>
+    </div>
+</div>

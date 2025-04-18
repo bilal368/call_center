@@ -1,0 +1,114 @@
+.dialogueContainer {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(47, 41, 41);
+    color: white;
+    opacity: .5;
+
+}
+
+.dialogueContainer label {
+    /* margin-top: 15%; */
+    padding: 10%;
+    font-size: 23px;
+    text-align: center;
+    align-items: center;
+    line-height: 30px;
+    /* letter-spacing: 3px; */
+}
+
+.linePreloader {
+    width: 200px;
+    height: 4px;
+    background: linear-gradient(to right, #145DA0, #145DA0);
+    background-color: #ccc;
+    position: fixed;
+    top: 20%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 4px;
+    background-size: 20%;
+    background-repeat: repeat-y;
+    background-position: -25% 0;
+    animation: scroll 1.2s ease-in-out infinite;
+}
+
+.continuButton {
+    /* margin-top: 44.5%;*/
+    margin-left: 30%;
+    background-color: #145DA0;
+    color: white !important;
+    width: 120px;
+    height: 40px;
+    border-radius: 30px;
+    outline: none;
+    border: none;
+}
+
+.errorContainer {
+    background-color: #52674F;
+    color: white;
+    height: 100%;
+}
+
+.errorContainer mat-dialog-content {
+    font-size: 16px;
+    color: #F5EFF7;
+}
+
+.errorContainer mat-dialog-actions {
+    padding-left: 80%;
+    padding-top: 60%;
+}
+
+@keyframes scroll {
+    50% {
+        background-size: 80%
+    }
+
+    100% {
+        background-position: 125% 0;
+    }
+}
+
+/* Container styles */
+.dialog-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Message styles */
+  .dialog-message {
+    font-size: 16px;
+    color: #333; /* Dark gray text */
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  /* Action buttons container */
+  .dialog-actions {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    margin-top: 20px;
+  }
+  
+  /* OK button styles */
+  .ok-button {
+    background-color: #007bff; /* Primary blue color */
+    color: #fff; /* White text */
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    border: none;
+  }
+  
+  .ok-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly elevated shadow */
+  }
+  

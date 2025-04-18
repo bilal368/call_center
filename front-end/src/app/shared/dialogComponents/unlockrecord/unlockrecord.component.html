@@ -1,0 +1,16 @@
+<div class="header">
+    <h1 style="margin-left: 4px;" mat-dialog-title>Confirm {{data.status}}</h1>
+</div>
+
+<div mat-dialog-content class="dialog-content">
+  <p>{{data.message}}</p>
+</div>
+
+<div mat-dialog-actions style="display: flex;justify-content: space-between;" class="dialog-actions">
+    <div>
+        <button class="action-button cancel-button btn" mat-button (click)="onCancel()">Cancel</button>
+    </div>
+    <div>
+        <button class="action-button delete-button btn" mat-button (click)="onConfirm()">{{data.status}}</button>
+    </div>
+</div>

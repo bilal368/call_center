@@ -1,0 +1,64 @@
+.example-spacer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--textColor);
+    /* background-color: var(--headingBg); */
+    background-color: var(--h5);
+    padding: 10px;
+  }
+  .closeDialogIcon {
+    position: absolute; /* Set the icon to be positioned absolutely */
+    top: 10px;           /* Position it at the top */
+    right: 5px;        /* Position it to the right */
+    height: 20px;
+    margin-right: 10px;
+    color: var(--textColor);
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+    background-color: var(--h5);
+  
+    /* Remove margin-left, as it's not needed with absolute positioning */
+  }
+  .form-group {
+    padding-right: 10px;
+  }
+  .saveButtonDiv {
+    background-color: transparent;
+    height: 9vh;
+    padding: 0;
+    /* background-color: var(--employeeDbg); */
+    background-color: white;
+    margin-top: 15%;
+    border-radius: 15px;
+    margin-right: 10px;
+
+  }
+.usergroupSavebuttton {
+    background-color: var(--textColorblack);
+    /* background-color: rgb(60, 156, 89); */
+    color:var(--textColor) !important;
+    width: 10%;
+    height: 5vh !important;
+    /* border-radius: 1.5625vw; */
+    margin-left: 88%;
+
+  }
+  .name-right {
+    width: 70%;
+    margin-left: 6px;
+    margin-top: 2%;
+    padding-bottom: 7px;
+  }
+  .name-left{
+    width: 70%;
+    margin-left: 6px;
+    margin-top: 2%;
+    padding-bottom: 7px;
+  }
+  #waringText{
+    margin-top: 5px;
+    margin-left: 4px;
+  }

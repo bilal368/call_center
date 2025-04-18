@@ -1,0 +1,748 @@
+<!-- archive List shows -->
+<div id="listAdminUsers" class="container-fluid bg-light">
+<!-- 
+    <div class="example-spacer">
+      <h2>
+        {{'Menu.REPORTS RECORDING.ARCHIVE.Import Archive'| translate}}
+      </h2>
+  </div> -->
+    
+     
+      
+    </div>
+    <!-- report list page -->
+    <div class="mainContainer">
+        @if(!loading){
+            <div class="filters">
+                <div class="container  ">
+                  <div class="row">
+                    @if(xmlData){
+                    <div class="col-12">
+                      <div style="display: flex; gap: 5px; margin-top: 2px; height: auto;">
+     
+                        <div style="display: flex;" mat-button [matMenuTriggerFor]="filterDate"
+                          matTooltip="{{'Menu.REPORTS RECORDING.CALLS.Add Date filter' | translate}}">
+                          <div class="custom-button-date btn">
+                            <span class="material-symbols-outlined">
+                              schedule
+                            </span>
+                            @if (selectedDateRange == 'Custom') {
+                            {{ datePipe.transform(reqBody.inCallStartDate, 'dd-MM-yyyy') }}
+                            {{'Menu.REPORTS RECORDING.CALLS.to' | translate}}
+                            {{datePipe.transform(reqBody.inCallEndDate, 'dd-MM-yyyy') }}
+                            }@else {
+                            {{ selectedDateRange }}
+                            }
+                          </div>
+                          <mat-menu #filterDate="matMenu">
+                            <button mat-menu-item (click)="setDateRange('Today')">
+                              {{ 'Menu.REPORTS RECORDING.CALLS.Today' | translate }}
+                            </button>
+                            <button mat-menu-item (click)="setDateRange('This Week')">
+                              {{ 'Menu.REPORTS RECORDING.CALLS.This Week' | translate }}
+                            </button>
+                            <button mat-menu-item (click)="setDateRange('This Month')">
+                              {{ 'Menu.REPORTS RECORDING.CALLS.This Month' | translate }}
+                            </button>
+                            <button mat-menu-item (click)="setDateRange('This Quarter')">
+                              {{ 'Menu.REPORTS RECORDING.CALLS.This Quarter' | translate }}
+                            </button>
+                            <button mat-menu-item (click)="setDateRange('This Year')">
+                              {{ 'Menu.REPORTS RECORDING.CALLS.This Year' | translate }}
+                            </button>
+                            <button mat-menu-item (click)="openCustomDateDialog()">
+                              {{ 'Menu.REPORTS RECORDING.CALLS.Custom' | translate }}
+                            </button>
+                          </mat-menu>
+                  
+                        </div>
+                      
+                        <div class="filter-container">
+                  
+                          <!-- Menu Filter -->
+                          @for (filter of availableFilters; track $index) {
+                          <div>
+                            @if (filter.value) {
+                            <div class="filter-selectiom-container" mat-button [matMenuTriggerFor]="filterData"
+                              matTooltip="Add {{ filter.name }} filter">
+                              <div class="filter-button">
+                                @if(filter.name === 'Dialed'){
+                                <div (click)="filteroption(filter.key)">
+                                  {{'Menu.REPORTS RECORDING.CALLS.Dialed/CallerId Numbers'| translate}}</div>
+                                }@else if (filter.name === 'Agent') {
+                                <div (click)="filteroption(filter.key)">
+                                  {{'Menu.REPORTS RECORDING.CALLS.Agent ID'| translate}}</div>
+                                }
+                                @else{
+                                <div (click)="filteroption(filter.key)">{{ filter.name| translate}}</div>
+                                }
+                                <span (click)="cancel(filter)" class="material-symbols-outlined cancel-icon">
+                                  cancel
+                                </span>
+                              </div>
+                              <mat-menu #filterData="matMenu" [hasBackdrop]="true">
+                                @if (filter.key === 'dialed') {
+                                <ng-container>
+                                  <mat-option class="goto-check" (click)="$event.stopPropagation()">
+                                    <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchdialNumber"
+                                      (input)="filterDialedNumbers(searchdialNumber)"
+                                      placeholder="{{'Menu.REPORTS RECORDING.CALLS.Dialed/CallerId Numbers'| translate}}"
+                                      (keypress)="allowOnlyDigits($event)">
+                                  </mat-option>
+                                  <div class="text-end" style="margin-right: 16px;">
+                                    <button style="background-color: var(--h3); color: var(--button-text-color);">Confirm</button>
+                                  </div>
+                                </ng-container>
+                                }
+                                @if (filter.key === 'extension') {
+                                <ng-container>
+                                  <!-- Search Input -->
+                                  <mat-option class="goto-check" (click)="$event.stopPropagation()"
+                                    style="position: sticky; top: 0; background: white; z-index: 1;">
+                                    <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchExtension"
+                                      (input)="filterExtensionNumbers(searchExtension)"
+                                      placeholder="{{'Menu.REPORTS RECORDING.CALLS.Search Extension Numbers'| translate}} ">
+                                  </mat-option>
+                  
+                                  <div class="scrollable-container">
+                                    @if (filteredExtensionNumbers.length != 0) {
+                                    <!-- Select All Option -->
+                                    <button mat-menu-item>
+                                      <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="isAllExtensionsSelected()"
+                                        [indeterminate]="isExtensionIndeterminate()" (change)="toggleSelectAllExtensions($event)">
+                                        {{'Menu.REPORTS RECORDING.CALLS.Select All'| translate}}
+                                      </mat-checkbox>
+                                    </button>
+                                    }
+                  
+                                    <!-- Filtered Extension Numbers -->
+                                    @for (number of filteredExtensionNumbers; track $index) {
+                                    <ng-container>
+                                      <button mat-menu-item>
+                                        <mat-checkbox color="primary" (click)="$event.stopPropagation()" [(ngModel)]="selectedExtensionNumbersMap[number]"
+                                          (change)="updateSelectedExtensionNumbers()">
+                                          {{ number }}
+                                        </mat-checkbox>
+                                      </button>
+                                    </ng-container>
+                                    }
+                                  </div>
+                                </ng-container>
+                  
+                                }
+                                @if (filter.key === 'agent') {
+                                <ng-container>
+                                  <!-- Search Input -->
+                                  <mat-option class="goto-check" (click)="$event.stopPropagation()"
+                                    style="position: sticky; top: 0; background: white; z-index: 1;">
+                                    <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchAgent"
+                                      (input)="filterAgentNumbers(searchAgent)"
+                                      placeholder="{{'Menu.REPORTS RECORDING.CALLS.Search Agent ID'| translate}}">
+                                  </mat-option>
+                  
+                                  <div class="scrollable-container">
+                                    @if (filteredAgentNumbers.length != 0) {
+                                    <!-- Select All Option -->
+                                    <button mat-menu-item>
+                                      <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="isAllAgentSelected()"
+                                        [indeterminate]="isAgentIndeterminate()" (change)="toggleSelectAllAgents($event)">
+                                        {{'Menu.REPORTS RECORDING.CALLS.Select All'| translate}}
+                                      </mat-checkbox>
+                                    </button>
+                                    }
+                  
+                                    <!-- Filtered Agent Numbers -->
+                                    @for (number of filteredAgentNumbers; track $index) {
+                                    <ng-container>
+                                      <button mat-menu-item>
+                                        <mat-checkbox color="primary" (click)="$event.stopPropagation()" [(ngModel)]="selectedAgentNumbersMap[number]"
+                                          (change)="updateSelectedAgentNumbers()">
+                                          {{ number }}
+                                        </mat-checkbox>
+                                      </button>
+                                    </ng-container>
+                                    }
+                                  </div>
+                                </ng-container>
+                  
+                                }
+                                @if (filter.key === 'direction') {
+                                <ng-container>
+                                  <!-- "All" Checkbox -->
+                                  <button mat-menu-item>
+                                    <mat-checkbox color="primary" (click)="$event.stopPropagation()" [(ngModel)]="selectAll" (change)="toggleSelectAll()">
+                                      {{'Menu.REPORTS RECORDING.CALLS.Select All'| translate}}
+                                    </mat-checkbox>
+                                  </button>
+                  
+                                  <!-- Individual Checkboxes -->
+                                  @for (number of filteredDirectionNumbers; track $index) {
+                                  <ng-container>
+                                    <button mat-menu-item>
+                                      <mat-checkbox color="primary" (click)="$event.stopPropagation()" [(ngModel)]="selectedDirectionNumbersMap[number]"
+                                        (change)="updateSelectedDirectionNumbers()">
+                                        @if (number == '1') {
+                                        Outgoing
+                                        } @else {
+                                        Incoming
+                                        }
+                                      </mat-checkbox>
+                                    </button>
+                                  </ng-container>
+                                  }
+                                </ng-container>
+                  
+                                }
+                                @if (filter.key === 'color') {
+                                <ng-container>
+                                  <!-- Search Input -->
+                                  <mat-option class="goto-check" (click)="$event.stopPropagation()"
+                                    style="position: sticky; top: 0; background: white; z-index: 1;">
+                                    <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchcolor"
+                                      (input)="filterColor(searchcolor)"
+                                      placeholder="{{'Menu.REPORTS RECORDING.CALLS.Search Color'| translate}}">
+                                  </mat-option>
+                  
+                                  <!-- Scrollable Filtered Colors -->
+                                  <div class="scrollable-container">
+                                    @for (number of filteredColors; track $index) {
+                                    <ng-container>
+                                      <div style="display: flex; align-items: center;">
+                                        <button mat-menu-item>
+                                          <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="updateSelectedColors(number)">
+                                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                              <!-- Text on the left -->
+                                              <div style="flex: 1; text-align: left;">
+                                                {{ number.colorCode }}
+                                              </div>
+                  
+                                            </div>
+                  
+                                          </mat-checkbox>
+                  
+                                        </button>
+                                        <!-- Color box on the right -->
+                                        <div [ngStyle]="{
+                                            'background-color': number.colorCode,
+                                            'width': '20px',
+                                            'height': '20px',
+                                            'border-radius': '3px',
+                                            'margin-left': '-30px'
+                                          }">
+                                        </div>
+                                      </div>
+                                    </ng-container>
+                  
+                  
+                                    }
+                                  </div>
+                                </ng-container>
+                  
+                                }
+                                @if (filter.key === 'extensionLabel') {
+                                <ng-container>
+                                  <!-- Search Input -->
+                                  <mat-option class="goto-check" (click)="$event.stopPropagation()"
+                                    style="position: sticky; top: 0; background: white; z-index: 1;">
+                                    <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchExtensionLabel"
+                                      (input)="filterExtensionLabel(searchExtensionLabel)"
+                                      placeholder="{{'Menu.REPORTS RECORDING.CALLS.Search Extension Label'| translate}} ">
+                                  </mat-option>
+                  
+                                  <!-- Select All Option -->
+                                  @if (filteredExtensionLabel.length != 0) {
+                                  <div class="scrollable-container">
+                                    <button mat-menu-item>
+                                      <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="isAllExtensionsLabelSelected()"
+                                        [indeterminate]="isExtensionLabelIndeterminate()"
+                                        (change)="toggleSelectAllExtensionsLabel($event)">
+                                        {{'Menu.REPORTS RECORDING.CALLS.Select All'| translate}}
+                                      </mat-checkbox>
+                                    </button>
+                  
+                                    <!-- Filtered Extension Labels -->
+                                    @for (number of filteredExtensionLabel; track $index) {
+                                    <ng-container>
+                                      <button mat-menu-item>
+                                        <mat-checkbox color="primary" (click)="$event.stopPropagation()" [(ngModel)]="selectedExtensionLabelMap[number]"
+                                          (change)="updateSelectedExtensionLabel()">
+                                          {{ number }}
+                                        </mat-checkbox>
+                                      </button>
+                                    </ng-container>
+                                    }
+                                  </div>
+                                  }
+                                </ng-container>
+                  
+                                }
+                                @if (filter.key === 'agentName') {
+                                <ng-container>
+                                  <!-- Search Input -->
+                                  <mat-option class="goto-check" (click)="$event.stopPropagation()"
+                                    style="position: sticky; top: 0; background: white; z-index: 1;">
+                                    <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchAgentName"
+                                      (input)="filterAgentName(searchAgentName)"
+                                      placeholder="{{'Menu.REPORTS RECORDING.CALLS.Search Agent Name'| translate}}">
+                                  </mat-option>
+                  
+                                  <!-- Select All Option -->
+                                  @if (filteredAgentName.length != 0) {
+                                  <div class="scrollable-container">
+                                    <button mat-menu-item>
+                                      <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="isAllAgentNameSelected()"
+                                        [indeterminate]="isAgentNameIndeterminate()" (change)="toggleSelectAllAgentName($event)">
+                                        {{'Menu.REPORTS RECORDING.CALLS.Select All'| translate}}
+                                      </mat-checkbox>
+                                    </button>
+                  
+                                    <!-- Filtered Agent Names -->
+                                    @for (number of filteredAgentName; track $index) {
+                                    <ng-container>
+                                      <button mat-menu-item>
+                                        <mat-checkbox color="primary" (click)="$event.stopPropagation()" [(ngModel)]="selectedAgentNameMap[number]"
+                                          (change)="updateSelectedAgentName()">
+                                          {{ number }}
+                                        </mat-checkbox>
+                                      </button>
+                                    </ng-container>
+                                    }
+                                  </div>
+                                  }
+                                </ng-container>
+                  
+                                }
+                                @if (filter.key === 'tags') {
+                                  <ng-container>
+                                    <!-- Search Input -->
+                                    <mat-option class="goto-check" (click)="$event.stopPropagation()"
+                                      style="position: sticky; top: 0; background: white; z-index: 1;">
+                                      <input matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="searchTagName"
+                                        (input)="filterTagName(searchTagName)"
+                                        placeholder="{{'Menu.REPORTS RECORDING.CALLS.Search Tag Name'| translate}}">
+                                    </mat-option>
+                    
+                                    <!-- Select All Option -->
+                                    @if (filteredTagName.length != 0) {
+                                    <div class="scrollable-container">
+                                      <button mat-menu-item>
+                                        <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="isAllTagNameSelected()"
+                                          [indeterminate]="isTagNameIndeterminate()" (change)="toggleSelectAllTagName($event)">
+                                          {{'Menu.REPORTS RECORDING.CALLS.Select All'| translate}}
+                                        </mat-checkbox>
+                                      </button>
+                    
+                                      <!-- Filtered Agent Names -->
+                                      @for (number of filteredTagName; track $index) {
+                                      <ng-container>
+                                        <button mat-menu-item>
+                                          <mat-checkbox color="primary" (click)="$event.stopPropagation()" [(ngModel)]="selectedTagLabelMap[number]"
+                                            (change)="updateSelectedTagLabel()">
+                                            {{ number }}
+                                          </mat-checkbox>
+                                        </button>
+                                      </ng-container>
+                                      }
+                                    </div>
+                                    }
+                                  </ng-container>
+                    
+                                  }
+                              </mat-menu>
+                            </div>
+                            }
+                          </div>
+                          }
+                        </div>
+                  
+                        <div style="display: flex;gap: 10px;">
+                          @if (!allFiltersSelected()) {
+                          <div mat-button [matMenuTriggerFor]="filterMenu"
+                            matTooltip="{{'Menu.REPORTS RECORDING.CALLS.Add search filter' | translate}}" class="custom-add-button">
+                            <mat-icon>add</mat-icon>
+                          </div>
+                          }
+                          <mat-menu #filterMenu="matMenu" [overlapTrigger]="false">
+                            @for (availableFilter of availableFilters; track $index) {
+                  
+                            <button mat-menu-item (click)="$event.stopPropagation();">
+                              <mat-checkbox color="primary" class="example-margin" [(ngModel)]="availableFilter.value">
+                                @if(availableFilter.name === 'Dialed'){
+                                {{'Menu.REPORTS RECORDING.CALLS.Dialed/CallerId Numbers'| translate}}
+                                }@else if (availableFilter.name === 'Agent') {
+                                {{'Menu.REPORTS RECORDING.CALLS.Agent ID'| translate}}
+                                }
+                                @else{
+                                {{ availableFilter.name| translate }}
+                                }
+                              </mat-checkbox>
+                            </button>
+                            }
+                          </mat-menu>
+                          <button mat-button class="custom-apply-button" (click)="applyFilters()">
+                            {{'Menu.REPORTS RECORDING.CALLS.APPLY'| translate}}
+                          </button>
+                        </div>
+                      </div>
+                  
+                    </div>
+                  }@else {
+                    <div class="col-5 d-flex p-0 ms-3 justify-content-start">
+                    
+                      <div class="input-group m-1 ">
+                        <input [(ngModel)]="searchName" type="text" class="form-control" placeholder="{{'Menu.REPORTS RECORDING.ARCHIVE.Search file here'| translate}}" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button (click)="searchWithName()" class="btn bg-dark  btn-outline-secondary" type="button" id="button-addon2">
+                            <span class="material-symbols-outlined text-light">
+                                search
+                                </span>
+                        </button>
+                      </div>
+                      <!-- Archive Type Filter Button --><!-- Archive Type Button -->
+                      <button mat-flat-button class="custom-button custom-button-archive-type btn m-1" [matMenuTriggerFor]="filterMenu">
+                        Archive Type:@if(selectedArchiveTypes.length === 0){
+                          All
+                        } @else if( selectedArchiveTypes.length === 1){
+                          {{selectedArchiveTypes[0]}}
+                        }@else{
+                          Multiple
+                        }
+                      </button>
+
+                      <!-- Menu for Archive Type Selection -->
+                      <mat-menu #filterMenu="matMenu" class="agent-menu">
+                        <div class="p-1">
+                          <mat-checkbox color="primary" [(ngModel)]="selectAllTypes" (click)="$event.stopPropagation()" (change)="toggleSelectAllTypes($event.checked)">
+                            All
+                          </mat-checkbox>
+                        </div>
+                        <div class="p-1" *ngFor="let type of archiveTypes">
+                          <mat-checkbox color="primary"  [(ngModel)]="selectedArchiveTypesMap[type]" (click)="$event.stopPropagation()" (change)="toggleArchiveType(type)">
+                            {{ type }}
+                          </mat-checkbox>
+                        </div>
+                      </mat-menu>
+                        <!-- Apply Button -->
+                      <button mat-flat-button class="custom-apply-button btn" (click)="applyFiltersGetList()">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Apply'| translate}}
+                      </button>
+                                  
+                      
+                      
+                      
+                  </div>
+                  }
+                    
+                  </div>
+                </div>
+              </div>
+          <div class="table-container" style="overflow: auto;">
+            <table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource" >
+              <!-- archiveFileName Column -->
+              <ng-container  matColumnDef="archiveFileName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <div class="header-content" style="padding-left: 10px;">
+                  Archive File Name
+                    <br>
+                  </div>
+                </th>
+      
+                <td mat-cell *matCellDef="let element">
+                  {{element.archiveFileName}}</td>
+
+              </ng-container>
+      
+      
+              <!--createdDate Column -->
+              <ng-container  matColumnDef="createdDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+                  <div class="header-content">
+                    Created Date
+                    <br>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="columnCell">{{element.createdDate| date: 'dd-MM-yyyy hh:mm:ss a'}}<br></td>
+              </ng-container>
+              <!--archive Type Column -->
+              <ng-container  matColumnDef="archiveType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <div class="header-content text-center">
+                    Archive Type
+                    <br>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="columnCell text-center ">
+                 <div class= "typeStatus"  [matTooltip]="element.archiveType">
+                    @if (element.archiveType=='Manual') {
+                        <span >M</span>
+                    }@else {
+                      <span >A</span>
+                    }
+                 </div>
+                  </td>
+              </ng-container>
+                   <!-- Actions Column -->
+                   <ng-container   matColumnDef="Actions">
+                    <th style="width: 10%;" mat-header-cell *matHeaderCellDef>
+                      <div class="header-content">
+                       Action
+                        <br>
+                      </div>
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="columnCell">
+                        <div class="d-flex" >
+                          <button class="btn" (click)="onSelect(element)" type="button" matTooltip="{{'Menu.REPORTS RECORDING.ARCHIVE.Open the archive'| translate}}">
+                              <span  class="material-symbols-outlined">
+                                input
+                                </span>
+                            </button>
+                            <button class="btn" (click)="deleteWithConfirm(element)" type="button" matTooltip="{{'Menu.REPORTS RECORDING.ARCHIVE.Delete the archive'| translate}}">
+                              <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                  </ng-container>
+                  @if(xmlData){
+                  <!-- Date Column --archive data-->
+                  <ng-container  matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef class="header-cell">
+                      <div class="header-content">
+                        {{'Menu.REPORTS RECORDING.CALLS.Date'| translate}}
+                        <br>
+                      </div>
+                      <label class="attribute-label">
+                        {{'Menu.REPORTS RECORDING.CALLS.Time'| translate}}
+                      </label>
+                    </th>
+
+                    <td mat-cell *matCellDef="let element" >
+                      {{ element.date | date: 'dd-MM-yyyy' }} <br>
+                      <label class="value-label-Date">
+                        @if(element.callStartTime){
+                          {{ formatTableTime(element.callStartTime) }} - {{ formatTableTime(element.callEndTime) }}
+                        }
+                      </label>
+
+                  </ng-container>
+                    <!-- dialed Column --archive data-->
+                    <!-- Dialed Column -->
+                <ng-container matColumnDef="dialed">
+                  <th mat-header-cell *matHeaderCellDef class="header-cell">
+                    <div class="header-content">
+                      {{'Menu.REPORTS RECORDING.CALLS.Dialed'| translate}}
+                      <br>
+                    </div>
+                    <label class="attribute-label">
+                      {{'Menu.REPORTS RECORDING.CALLS.Caller ID'| translate}}
+                    </label>
+                  </th>
+                  <td mat-cell *matCellDef="let element"> {{element.dialed}} <br>
+                    <label class="value-label">{{element.callerId || '\u00A0'}}</label>
+                  </td>
+                </ng-container>
+                   <!-- Extension Label Column -->
+                <ng-container matColumnDef="extensionLabel">
+                  <th mat-header-cell *matHeaderCellDef class="header-cell">
+                    <div class="header-content">
+                      {{'Menu.REPORTS RECORDING.CALLS.Extension Label'| translate}}
+                      <br>
+                    </div>
+                    <div class="d-flex" style="width: 130px;">
+                      <label class="attribute-label">
+                        {{'Menu.REPORTS RECORDING.CALLS.Extension Number'| translate}}
+                      </label>
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let element">{{element.extensionLabel}} <br>
+                    <label class="value-label"> {{element.extensionNumber}}</label>
+                  </td>
+                </ng-container>
+                    
+                  <!-- Agent Name Column -->
+                  <ng-container matColumnDef="agentName">
+                    <th mat-header-cell *matHeaderCellDef class="header-cell">
+                      <div class="header-content">
+                        {{'Menu.REPORTS RECORDING.CALLS.Agent Name'| translate}}
+                        <br>
+                      </div>
+                      <label class="attribute-label">
+                        {{'Menu.REPORTS RECORDING.CALLS.Agent ID'| translate}}
+                      </label>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.agentName === 'NULL' || !element.agentName ? 'No Data' :
+                      element.agentName }} <br>
+                      <label class="value-label">{{element.agentCode}}</label>
+                    </td>
+                  </ng-container>
+                  <!-- Duration Column -->
+                <ng-container matColumnDef="duration" >
+                  <th  mat-header-cell *matHeaderCellDef class="header-cell duration" >
+                    {{'Menu.REPORTS RECORDING.CALLS.Duration'| translate}}
+                    <br><label></label>
+                  </th>
+                  <td  mat-cell *matCellDef="let element">
+                  
+                    <label>{{element.duration}}</label>
+                  </td>
+                </ng-container>
+
+                <!-- Direction Column -->
+                <ng-container matColumnDef="direction" >
+                  <th mat-header-cell *matHeaderCellDef class="header-cell" > 
+                    {{'Menu.REPORTS RECORDING.CALLS.Direction'| translate}}
+                    <br><label></label>
+                  </th>
+                  <td  mat-cell *matCellDef="let element" >
+                    @if (element.direction == 'Inbound') {
+
+                      <button class="greyBlueButton extensionChangeBTN" mat-raised-button disabled>
+                        <mat-icon class="bold-black-text">phone_callback</mat-icon>
+                        <span class="bold-black-text">
+                          {{'Menu.REPORTS RECORDING.CALLS.IN'| translate}}
+                        </span>
+                      </button>
+            
+                    }
+                    @if (element.direction == 'Outbound') {
+                
+                      <button class="greyBlueButton extensionChangeBTN" mat-raised-button disabled>
+                        <mat-icon class="rotated-icon">phone_callback</mat-icon>
+                        <span class="bold-black-text">
+                          {{'Menu.REPORTS RECORDING.CALLS.OUT' | translate}}
+                        </span>
+                      </button>
+
+                  
+                    }
+                  </td>
+                </ng-container>
+                <!-- action Column --archive data-->
+                <ng-container matColumnDef="action" class="actionContainer">
+                  <th mat-header-cell *matHeaderCellDef  class="header-cell">
+                    {{'Menu.REPORTS RECORDING.CALLS.Action'| translate}}
+                    <br><label></label>
+                  </th>
+                  <td mat-cell *matCellDef="let element" id="actionTd">
+                    <div class="d-flex ">
+                      <!-- Play Audio -->
+                      <button class="btn btn-sm"
+                        (click)="toggleAudio(element.recordedFileName)"
+                        matTooltip="{{'Menu.REPORTS RECORDING.CALLS.Play recording'| translate}}">
+                        <mat-icon style="color: red;cursor: pointer;">
+                          play_circle
+                        </mat-icon>
+                      </button>
+                      <!-- comment -->
+                      <button class="btn btn-sm m-1" (click)="feedbackOpen(element.recordingCallLogId,element.supervisorFeedBack)"
+                        matTooltip="{{'Menu.REPORTS RECORDING.ARCHIVE.Open Feedback'| translate}}">
+                        <mat-icon>comment</mat-icon>
+                      </button>
+                      <!-- Notes -->
+                      <button class="btn btn-sm" (click)="openNotes(element.recordingCallLogId,element.notes)"
+                        matTooltip="{{'Menu.REPORTS RECORDING.ARCHIVE.Open Notes'| translate}}">
+                        <span class="material-symbols-outlined">
+                          contract_edit
+                        </span>
+                      </button>
+                      <!-- Color code -->
+                      <button [ngStyle]="{ 
+                        color: element.colorCode ? element.colorCode : 'black', }" class="btn btn-sm"
+                        color>
+                        <mat-icon>palette</mat-icon>
+                      </button>
+            
+                      
+                      <!-- Call Tagging -->
+                      <button class="btn btn-sm" (click)="openCallTagging(element.recordedFileName, element.recordingCallLogId)"
+                        matTooltip="{{'Menu.REPORTS RECORDING.ARCHIVE.Open Call Tagging'| translate}}">
+                        <mat-icon>books_movies_and_music</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                  }@else {
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  }
+               
+            </table>
+        </div>
+        <div class="footer">
+          <mat-toolbar class="pagination-toolbar">
+            <div class="page-info">{{'Menu.CONFIGURE.EXTENSION MAPPING.TotalRecords' | translate}}: {{ totalRecord }}</div>
+            <span class="example-spacer"></span>
+            <div class="page-info">
+              {{'Menu.CONFIGURE.EXTENSION MAPPING.RecordsPerPage' | translate}}
+            </div>
+            <mat-select class="form-control me-4" style="width:6vw" [(ngModel)]="recordsPerPage"
+              (selectionChange)="onItemsPerPageChange($event)">
+              <mat-option class="goto-check" [value]="10" selected>10</mat-option>
+              <mat-option class="goto-check" [value]="25">25</mat-option>
+              <mat-option class="goto-check" [value]="50">50</mat-option>
+              <mat-option class="goto-check" [value]="100">100</mat-option>
+            </mat-select>
+            <div class="page-info">
+              {{'Menu.CONFIGURE.EXTENSION MAPPING.page' | translate}}
+              <mat-select class="form-control" style="width: 6vw;" [(value)]="pageNumber" (selectionChange)="goToPage($event)">
+                @for (page of getPagesArray(); track $index) {
+                <mat-option [value]="page" class="goto-check-pagination"> 
+                  {{ page }}
+                </mat-option>
+                }
+                <!-- <mat-option *ngFor="let page of getPagesArray()" [value]="page">
+                              {{ page }}
+                          </mat-option> -->
+              </mat-select>
+              {{'Menu.CONFIGURE.EXTENSION MAPPING.of' | translate}} {{ getTotalPages() }}
+            </div>
+            <div [dir]="'ltr'">
+              <button mat-mini-fab class="next-button me-2 " (click)="previousPage()">
+                <mat-icon>chevron_left</mat-icon>
+              </button>
+              <button mat-mini-fab class="next-button me-2" (click)="nextPage()">
+                <mat-icon>chevron_right</mat-icon>
+              </button>
+        
+            </div>
+          </mat-toolbar>
+  <!-- *********************************** -->
+           <!-- Audio -->
+           @if(audioDiv && this.totalRecord>0){
+            <mat-toolbar color="primary" class="toolbar-3">
+              <span>{{ showTime }}</span>
+              <div class="center-content">
+                @if (playButton) {
+                <button style="background-color: transparent;" mat-icon-button
+                  (click)="playAudio()"><mat-icon>play_arrow</mat-icon></button>
+                }
+                @if (pauseButton) {
+                <button style="background-color: transparent;" mat-icon-button
+                  (click)="pauseAudio()"><mat-icon>pause</mat-icon></button>
+                }
+                <button style="background-color: transparent;" mat-icon-button
+                  (click)="stopAudio()"><mat-icon>stop</mat-icon></button>
+                <span class="flex-spacer"></span>
+                <button style="background-color: transparent;" mat-icon-button
+                  (click)="closeWavesurfer()"><mat-icon>clear</mat-icon></button>
+              </div>
+            </mat-toolbar>
+            }
+            @if (audioDiv && !loadingWave) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            }
+        
+        
+            @if(this.totalRecord !== 0){
+            <div id="wavesurferContainer">
+            </div>
+            }
+
+
+
+
+<!-- ************************************** -->
+        </div>
+        }@else{
+            <div class="loader"></div>
+        }
+      </div>

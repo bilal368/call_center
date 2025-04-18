@@ -1,0 +1,174 @@
+<div class="mainContainer ">
+    <div style="display: flex; justify-content: space-between;">
+        <mat-toolbar style="justify-content: space-between;">
+            <div style="display: flex;">
+                <button (click)="userGroupDialougue()" class="custom-add-button btn">{{'Menu.CONFIGURE.USER
+                    MANAGER.Usergroupall'| translate}}:{{alltext}}</button>
+                <input type="text" placeholder="{{'Menu.CONFIGURE.USER MANAGER.SearchUsers'| translate}}"
+                    [(ngModel)]="searchQuery" class="seachinput" (keydown.enter)="searchFuntion()" />
+                <span (click)="searchFuntion()"
+                    style="margin-top: 1%; padding: 7px; border: 1px solid #ccc; border-radius: 0 4px 4px 0;  height: 35px;cursor: pointer; background-color: var(--h3); color: white;"
+                    class="material-icons search-icon">search</span>
+            </div>
+            <div style="display: flex; gap:5px">
+                <div class="addgroup btn" [matTooltip]="toolTips.Add | translate"
+                    (click)="openDialog(true, true, null, null)">
+                    <div class="label-icon-container">
+                        <span class="material-symbols-outlined icon">
+                            group_add
+                        </span>
+                        <label class="label" style="cursor: pointer;">{{ 'Menu.CONFIGURE.USER MANAGER.Add User' |
+                            translate }}</label>
+                    </div>
+                </div>
+
+                <div class="fileupload btn" [matTooltip]="toolTips.UploadFile|translate"
+                    (click)="openDialog(false,false,null,null)">
+                    <div class="label-icon-container">
+                        <span class="material-symbols-outlined">
+                            upload_file
+                        </span>
+                        <label class="label" style="cursor: pointer;">{{ 'Menu.CONFIGURE.USER MANAGER.Import User' |
+                            translate }}</label>
+                    </div>
+                </div>
+                <div class="deleteicon btn" [matTooltip]="toolTips.Delete|translate" (click)="deleteUsers()">
+                    <div class="label-icon-container">
+                        <mat-icon>delete</mat-icon>
+                        <label class="label" style="cursor: pointer;">{{ 'Menu.CONFIGURE.USER MANAGER.Delete Users' |
+                            translate }}</label>
+                    </div>
+                </div>
+            </div>
+        </mat-toolbar>
+    </div>
+
+    <div>
+        <div style="height: 78vh; overflow:auto">
+            <table mat-table class="user-table mat-elevation-z8">
+                <thead class="emailnamehead">
+                    <tr>
+                        <th>
+                            <mat-checkbox class="custom-white-checkbox" [checked]="allGroupsCheckedUser"
+                                (change)="allcheckboxSelectionUsers($event)"></mat-checkbox>
+                        </th>
+                        <th>{{ 'Menu.CONFIGURE.USER MANAGER.EmployeeID' | translate }}</th>
+                        <th>{{ 'Menu.CONFIGURE.USER MANAGER.usergroupName' | translate }}<br>
+                            <label class="UserName"> {{ 'Menu.CONFIGURE.USER MANAGER.UserName' | translate }}</label>
+                        </th>
+                        <th>{{ 'Menu.CONFIGURE.USER MANAGER.Extension' | translate }}<br>
+                            <label class="UserName">{{ 'Menu.CONFIGURE.USER MANAGER.GroupName' | translate }}</label>
+                        </th>
+                        <th>{{ 'Menu.CONFIGURE.USER MANAGER.Email' | translate }}<br>
+                            <label class="UserName">{{ 'Menu.CONFIGURE.USER MANAGER.Phone' | translate }}</label>
+                        </th>
+                        <th>{{ 'Menu.CONFIGURE.USER MANAGER.Action' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (names of users; track $index) {
+
+                    <tr>
+                        <td>
+                            <mat-checkbox color="primary" [(ngModel)]="names.checked"
+                                (change)="checkboxdataAddingUsers(names, $event)">
+                            </mat-checkbox>
+                        </td>
+                        <td>{{ names.employeeID }}</td>
+                        <td>{{ names.firstname }} {{ names.middlename }} {{ names.lastname }}<br>
+                            <label class="labelUserName">{{ names.username }}</label>
+                        </td>
+                        <td >
+                          
+                                {{ names.extension || 'No data' }}
+                        <br>
+                            <label class="labelUserName ">{{ names.roleName || 'No data' }}</label>
+                        </td>
+
+                        <td>{{ names.primaryEmail }}<br>
+                            <label class="labelUserName"> {{ names.phone || 'No data' }}</label>
+                        </td>
+
+                        <td>
+                            <div style="display: flex;align-items:center">
+                                @if(names.isLDAPUser!=1){
+                                <span class="material-symbols-outlined" id="userGrouplistEditicons"
+                                    (click)="openDialog(false, true, names.roleId, names.roleName); getUserId(names.userId)"
+                                    [matTooltip]="toolTips.Edit | translate">
+                                    edit_square
+
+                                </span>
+                                }
+
+                                @if(names.retryCount>=3){
+                                <div style="margin-left:-33px;margin-top:3px">
+                                    <button class="btn" (click)="unLockUser(names.userId)">
+                                        <span matTooltip="{{'Menu.CONFIGURE.USER MANAGER.unlockUser.Name'| translate}}"
+                                            class="material-symbols-outlined" style="color: rgb(165, 21, 21);">
+                                            lock
+                                        </span> </button>
+                                </div>
+                                }
+                            </div>
+                        </td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+
+            @if (users.length === 0) {
+            <div class="text-center" style="padding-top: 20px;">
+                {{ 'Menu.CONFIGURE.USER MANAGER.No data found' | translate }}
+            </div>
+            }
+
+
+        </div>
+
+        <mat-toolbar class="pagination-toolbar">
+            <div class="page-info">
+                {{'Menu.REPORTS RECORDING.AGENTS.Total Records'| translate}}
+                :
+                {{ totalRecords }}
+            </div>
+            <span class="example-spacer"></span>
+            <div class="page-info">
+                {{'Menu.REPORTS RECORDING.AGENTS.Records Per Page'| translate}}
+            </div>
+            <mat-select class="form-control me-4" style="width:5vw" (selectionChange)="onItemsPerPageChange($event)"
+                [(value)]="recordsPerPage">
+                <mat-option class="goto-check-pagination" [value]="10">10</mat-option>
+                <mat-option class="goto-check-pagination" [value]="25">25</mat-option>
+                <mat-option class="goto-check-pagination" [value]="50">50</mat-option>
+                <mat-option class="goto-check-pagination" [value]="100">100</mat-option>
+            </mat-select>
+            <div class="page-info">
+                {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Page'| translate}}
+                <mat-select class="form-control" style="width: 5vw;" [(value)]="currentPage"
+                    (selectionChange)="goToPage($event)">
+                    @for(page of getPagesArray();track page;){
+                    <mat-option class="goto-check-pagination" [value]="page">
+                        {{ page }}
+                    </mat-option>
+                    }
+
+                </mat-select>
+                {{'Menu.CONFIGURE.EMPLOYEE MANAGER.of'| translate}} {{ calculateTotalPages() }}
+            </div>
+            <div [dir]="'ltr'">
+                <button mat-mini-fab class="next-button me-2" (click)="previousPage()">
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+                <button mat-mini-fab class="next-button me-2" (click)="nextPage()">
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+
+            </div>
+        </mat-toolbar>
+
+
+    </div>
+
+</div>

@@ -1,0 +1,390 @@
+<div [dir]="'align'|translate">
+    @if (this.data.upload==true) {
+    <div>
+        <form [formGroup]="myForm" (ngSubmit)="submitForm(this.data.update)">
+            <div class="fromMainContainer">
+                <div class="headerContainer">
+                    @if (this.data.update===true) {
+                    <div>
+                        <label class="headerLabel" for=""> {{'Menu.CONFIGURE.USER MANAGER.ADD NEW USER'|
+                            translate}}</label>
+                    </div>
+                    }@else {
+                    <div>
+                        <label class="headerLabel" for="">{{'Menu.CONFIGURE.USER MANAGER.UPDATE NEW USER'|
+                            translate}}</label>
+                    </div>
+                    }
+                    <!-- <div (click)="closeDialog()" class="closeDialogIcon" >
+                        <span style="color:var(--headingBg) ;" class="material-symbols-outlined" matTooltip="Close">
+                            close
+                        </span>
+                    </div> -->
+                    <div (click)="closeDialog()" class="closeDialogIcon" matTooltip="Close">
+                        <span  class="material-symbols-outlined">
+                            close
+                        </span>
+                    </div>
+                </div>
+
+
+                <div style=" display: flex;">
+
+                    <div class="leftFormstyle">
+
+                        <div class="textFromfeild">
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.First Name'| translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="First Name"
+                                id="First Name" formControlName="FirstName"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.First Name'| translate}}"
+                                [class.is-invalid]="f['FirstName'].touched && f['FirstName'].invalid" tabindex="1">
+                            @if (f['FirstName'].errors?.['required']&&f['FirstName'].touched) {
+                            <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.USER MANAGER.Firstname is
+                                required'|
+                                translate}}</div>
+                            }
+                            @if (f['FirstName'].errors?.['maxlength']) {
+                            <div class="text-danger">
+                                {{'Menu.CONFIGURE.USER MANAGER.Firstname 50'|
+                                translate}}
+                            </div>
+
+                            }
+                        </div>
+                        <div class="textFromfeild">
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.Second Name'| translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="Second Name"
+                                id="Last Name" formControlName="SecondName"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.Second Name'| translate}}"
+                                [class.is-invalid]="f['SecondName'].touched && f['SecondName'].invalid" tabindex="3">
+                            @if (f['SecondName'].errors?.['required']&&f['SecondName'].touched) {
+                            <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.USER MANAGER.LastName is
+                                required'| translate}}</div>
+                            }
+                            @if (f['SecondName'].errors?.['maxlength']) {
+                            <div class="text-danger">
+                                {{'Menu.CONFIGURE.USER MANAGER.Lastname 50 characters long'| translate}}
+                            </div>
+
+                            }
+                        </div>
+                        <div class="textFromfeild">
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.Phone Number'| translate}}</label>
+
+                            <input type="text" class="form-control-username" required="required" name="Phone Number"
+                                id="Phone Number" formControlName="PhoneNumber"
+                                placeholder="{{ 'Menu.CONFIGURE.USER MANAGER.Phone Number' | translate }}"
+                                [class.is-invalid]="f['PhoneNumber'].touched && f['PhoneNumber'].invalid" tabindex="5">
+
+
+                            @if(f['PhoneNumber'].touched){
+
+                            @if(f['PhoneNumber'].errors?.['required']){
+                            <div class="text-danger" id="warningText">
+                                {{ 'Menu.CONFIGURE.USER MANAGER.Phonenumber is required' | translate }}
+                            </div>
+                            }
+
+                            @if(f['PhoneNumber'].errors?.['pattern']){
+                            <div class="text-danger" id="warningText">
+                                {{ 'Menu.CONFIGURE.USER MANAGER.ValidPhone' | translate }}
+                            </div>
+                            }
+
+
+
+                            }
+
+
+
+
+
+                        </div>
+
+                        <div class="textFromfeild">
+                            @if(this.data.update===true){
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.USERNAME'| translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="username"
+                                id="username" formControlName="username"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.USERNAME'| translate}}"
+                                [class.is-invalid]="f['username'].touched && f['username'].invalid" tabindex="7">
+                            @if (f['username'].errors?.['required']&&f['username'].touched) {
+
+                            <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.USER MANAGER.Username is
+                                required'| translate}}
+                            </div>
+                            }
+
+                            }@else {
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.USERNAME'| translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="username"
+                                id="username" formControlName="username" readonly
+                                style="background-color: rgb(206, 205, 205);"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.USERNAME'| translate}}"
+                                [class.is-invalid]="f['username'].touched && f['username'].invalid" tabindex="7">
+                            }
+                        </div>
+                        <div class="textFromfeild">
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.Designation'| translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="Designation"
+                                id="Designation" formControlName="Designation"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.Designation'| translate}}"
+                                [class.is-invalid]="f['Designation'].touched && f['Designation'].invalid" tabindex="9">
+                            @if (f['Designation'].errors?.['required']&&f['Designation'].touched) {
+
+                            <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.USER MANAGER.Designation is
+                                required'| translate}}
+                            </div>
+
+                            }
+
+                            @if (f['Designation'].errors?.['maxlength']) {
+                            <div class="text-danger">
+                                {{'Menu.CONFIGURE.USER MANAGER.Designation 30 characters long'| translate}}
+                            </div>
+                            }
+                        </div>
+                     
+
+                    </div>
+                    <div style="margin-left: 15px; margin-top: 10px;    margin-right: 15px;">
+                        <div class="textFromfeild">
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.Middle Name'| translate}}</label>
+                            <input type="text" class="form-control-username" name="Middle Name" id="Middle Name"
+                                formControlName="MiddleName"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.Middle Name'| translate}}" tabindex="2">
+                            <!-- @if (f['MiddleName'].errors&& f['MiddleName'].touched) {
+                        <div class="text-danger" id="waringText">MiddleName is required
+                        </div>
+                        } -->
+
+                        </div>
+
+                        <div class="textFromfeild">
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.Email'| translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="Email" id="Email"
+                                formControlName="Email" placeholder="{{'Menu.CONFIGURE.USER MANAGER.Email'| translate}}"
+                                [class.is-invalid]="f['Email'].touched && f['Email'].invalid" tabindex="4">
+                            @if (f['Email'].errors&& f['Email'].touched) {
+                            @if (f['Email'].errors['required']) {
+                            <div class="text-danger" id="waringText">Email is required
+                            </div>
+
+                            }
+                            @if (f['Email'].errors['email']) {
+                            <div class="text-danger" id="waringText"> {{'Menu.CONFIGURE.USER MANAGER.EmailValidate'|
+                                translate}}
+                            </div>
+                            }
+                            }
+
+                        </div>
+                     
+                        <div class="textFromfeild">
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.Employee ID'| translate}}</label>
+                            <input type="text" class="form-control-username" required="required" name="Employee ID"
+                                id="EmployeeID" formControlName="EmployeeID"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.Employee ID'| translate}}"
+                                [readonly]=!this.data.update
+                                [style.background-color]="data.update ? 'inherit': 'rgb(206, 205, 205)' "
+                                [class.is-invalid]="f['EmployeeID'].touched && f['EmployeeID'].invalid" tabindex="8">
+                            @if (f['EmployeeID'].errors?.['required']&&f['EmployeeID'].touched) {
+
+                            <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.USER MANAGER.EmployeeID is
+                                required'| translate}}
+                            </div>
+                            }
+                            @if (f['EmployeeID'].errors?.['minlength']) {
+                            <div class="text-danger">
+                                Employee ID must be at least {{
+                                myForm.controls['EmployeeID'].errors?.['minlength'].requiredLength
+                                }} characters long.
+                            </div>
+
+                            }
+                            @if (f['EmployeeID'].errors?.['maxlength']) {
+                            <div class="text-danger">
+                                {{'Menu.CONFIGURE.USER MANAGER.EmployeeID 10 characters long'| translate}}
+                            </div>
+
+                            }
+
+                        </div>
+                        <div class="textFromfeild">
+                            <label for="group">{{'Menu.CONFIGURE.USER MANAGER.USER GROUP'| translate}}</label>
+
+                            <mat-select formControlName="group" class="form-control" [(ngModel)]="selectedValue"
+                                id="dropdown">
+                                <mat-option style="display: none;" value="" disabled selected>Please select</mat-option>
+                                <mat-option>
+                                    <input style="width: 350px;" matInput placeholder="Search..."
+                                        [formControl]="searchControl" [(ngModel)]="searchTermOption"
+                                        (ngModelChange)="filterOptions(searchTermOption)"
+                                        (click)="$event.stopPropagation()"
+                                        [class.is-invalid]="searchControl.touched && searchControl.invalid"
+                                        tabindex="10" />
+                                </mat-option>
+
+
+                                @for (item of filteredOptions; track $index) {
+                                <mat-option [value]="item.roleId">
+                                    {{ item.roleName }}
+                                </mat-option>
+                                }
+                            </mat-select>
+                            @if (uploadform.get('group')?.invalid && (uploadform.get('group')?.touched ||
+                            uploadform.get('group')?.dirty)) {
+                            <div class="text-danger" id="waringText">
+                                {{'Menu.CONFIGURE.USER MANAGER.Usergroupisrequired'| translate}}
+                            </div>
+                            }
+
+                        </div>
+                        <div class="textFromfeild">
+                            <label for="user-group">{{'Menu.CONFIGURE.USER MANAGER.Password'| translate}}</label>
+                            <input type="password" class="form-control-username" name="password" id="password"
+                                formControlName="password"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.Password'| translate}}"
+                                [class.is-invalid]="f['password'].touched && f['password'].invalid" tabindex="11">
+
+                        </div>
+
+
+                        @if (f['password'].errors?.['minlength']) {
+                        <div class="text-danger">
+                            Password must be at least {{
+                            myForm.controls['password'].errors?.['minlength'].requiredLength
+                            }} characters long.
+                        </div>
+
+                        }
+                        @if (f['password'].errors?.['maxlength']) {
+                        <div class="text-danger">
+                            {{'Menu.CONFIGURE.USER MANAGER.Password 10 characters long'| translate}}
+                        </div>
+
+                        }
+                        @if (f['password'].errors?.['required']&&f['password'].touched) {
+
+                        <div class="text-danger">{{'Menu.CONFIGURE.USER MANAGER.Password is required'| translate}}
+                        </div>
+
+                        }
+                        <div class="textFromfeild">
+                            <label for="password">{{'Menu.CONFIGURE.USER MANAGER.Confirm Password'| translate}}</label>
+                            <input type="password" class="form-control-username" name="password" id="cofirmpassword"
+                                formControlName="confirmPassword"
+                                placeholder="{{'Menu.CONFIGURE.USER MANAGER.Confirm Password'| translate}}"
+                                [class.is-invalid]="f['confirmPassword'].touched && f['confirmPassword'].invalid"
+                                tabindex="12">
+                            @if (f['confirmPassword'].errors?.['required']&&f['confirmPassword'].touched) {
+
+                            <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.USER MANAGER.Confirmpassword
+                                required'| translate}}
+                            </div>
+
+                            }
+
+                            @if (f['confirmPassword'].hasError('passwordMismatch')
+
+                            ) {
+                            <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.USER MANAGER.Passwords do not
+                                match'| translate}}
+                            </div>
+                            }
+
+                        </div>
+
+
+
+
+                        <!-- button change according to update and insert -->
+
+
+
+                    </div>
+
+                </div>
+                @if(this.data.update===true){
+                <div class="text-end">
+                    <button id="usermangerSavebutton" class="btn btn-dark" mat-button type="submit"
+                        [disabled]="myForm.pristine ||!myForm.valid" matTooltip="Save user details">
+                        {{'Menu.CONFIGURE.USER MANAGER.Save'| translate}}
+                    </button>
+                </div>
+                }@else {
+                <div class="text-end">
+
+                    <button class="usermangerUpdatebutton btn btn-dark" type="submit"
+                        [disabled]="myForm.pristine ||!myForm.valid" matTooltip="Update user details">
+                        {{'Menu.CONFIGURE.USER MANAGER.Update'| translate}}
+                    </button>
+                </div>
+                }
+
+            </div>
+        </form>
+    </div>
+    }@else {
+    <div>
+        <div class="mainalertContainer">
+            <div class="alertHeader">
+                <label class="alertHeaderlabel" for="">{{'Menu.CONFIGURE.USER MANAGER.IMPORTPHONEDETAILS'|
+                    translate}}</label>
+                <!--   <div (click)="closeDialog()" class="closeIconstyle">
+                    <span style="color:var(--headingBg) ;" class="material-symbols-outlined" matTooltip="Close">
+                        close
+                    </span>
+                </div>-->
+            </div>
+            <div [formGroup]="uploadform" style="padding: 10px;">
+                <mat-select formControlName="updloaddrop" class="form-control" [(ngModel)]="selectedValue"
+                    id="dropdown">
+                    <mat-option style="display: none;" value="" disabled selected>Select user group</mat-option>
+                    <mat-option >
+
+                        <input placeholder="Search..."
+                            [(ngModel)]="searchOptionupload" [formControl]="searchControl"
+                            (input)=filteredOptionsUploads(searchOptionupload) type="text" class="form-control"
+                            (click)="$event.stopPropagation()">
+                    </mat-option>
+                    @for (item of filteredOptionsUpload; track $index) {
+                    <mat-option [value]="item.roleId">
+                        {{ item.roleName }}
+                    </mat-option>
+                    }
+                </mat-select>
+                @if (myForm.get('updloaddrop')?.invalid && (myForm.get('updloaddrop')?.touched ||
+                myForm.get('updloaddrop')?.dirty)) {
+                <div style="color: red; font-size: 12px;height: 2px;">
+                    {{'Menu.CONFIGURE.USER MANAGER.Usergroupisrequired'| translate}}
+                </div>
+                }
+            </div>
+            <label class="selectlabel" for="">{{'Menu.CONFIGURE.USER MANAGER.Select the file to upload'|
+                translate}}</label>
+            <div style="display:flex;justify-content: space-between;">
+                <input class="inputstyle" type="file" (change)="onFileChange($event)">
+                <button class="uploadbuttonstl" mat-button type="submit" (click)="insertDatafuntion()">
+                    <span>{{'Menu.CONFIGURE.USER MANAGER.Upload'| translate}}</span> <!-- Text content -->
+                    <span  class="material-symbols-outlined">
+                        cloud_upload
+                    </span>
+                </button>
+            </div>
+            <div class="downloadclosedialouge">
+                <button (click)="closeDialog()" class="closeDialoguebuttonstl" mat-button type="submit">
+                    <span>{{'Menu.CONFIGURE.USER MANAGER.CANCEL'| translate}}</span>
+                </button>
+                <button class="downloadTemplatebutton" mat-button type="submit" (click)="generateTemplate()"
+                    matTooltip='Download Template'>
+                    <span>{{'Menu.CONFIGURE.USER MANAGER.DOWNLOAD TEMPLATE'| translate}}</span>
+                    <span class="material-symbols-outlined">
+                        system_update_alt
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+</div>

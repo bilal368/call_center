@@ -1,0 +1,36 @@
+.container-fluid{
+  padding: 0;
+}
+span {
+  width: 100%;
+  display: flex;
+}
+.spacer {
+    flex: 1 1 auto;
+  }
+
+  .textarea{
+    height: 200px;
+  }
+  .blueGreyButton, .tableHeadblueGrey {
+    background-color: var(--h3) !important;
+    color: var(--h2) !important;
+}
+.example-spacer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--textColor);
+  /* background-color: var(--headingBg); */
+  background-color: var(--h5);
+  padding: 10px;
+  margin: 0;
+  width: 100%;
+}
+.closeButtonHover{
+  color:var(--textColor); 
+  }
+  
+  .closeButtonHover:hover {
+    background-color: transparent;
+  }

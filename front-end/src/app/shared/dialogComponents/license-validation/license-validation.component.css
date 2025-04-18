@@ -1,0 +1,44 @@
+.validation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-button {
+  align-self: flex-end;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  margin-top: 20px;
+}
+
+.error-message {
+  color: #f44336;
+  margin-top: 10px;
+  font-size: 0.875em;
+}
+
+/* This will be applied to the entire body when the dialog is open */
+.dialog-open::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  z-index: 1;
+}
+
+/* Make sure the dialog content appears above the blurred background */
+.cdk-overlay-pane {
+  z-index: 1000 !important;
+  position: relative;
+}

@@ -1,0 +1,491 @@
+<!-- *ngIf="superAdmin" -->
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" [disableClose]="true">
+    <!-- logo Div -->
+    <div class="logoDiv " style="height: 7%;overflow: auto;">
+      @if(logoUrl===''){
+      <img src="\assets\images\DGVoxNew.png" alt="Logo">
+      }@else {
+      <img src="{{logoUrl}}" alt="LogoFromServer">
+
+      }
+    </div>
+    <!-- icons changed to span because of there is mat-icon not available for locally.
+    There is a issue when mixed using of span and mat-icon in same component -->
+    <!-- Accordion Div -->
+    <div style="height: 75%;overflow: auto;margin-bottom: 1%;">
+      <mat-accordion>
+        <!-- CONFIGURE -->
+         @if(privileagedUI([18,19,20,21,24,25,26,32,22,27,23])){
+          <mat-expansion-panel class="custom-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="me-2 material-symbols-outlined">settings</span>
+                <!-- <mat-icon class="me-2">settings</mat-icon> -->
+                {{'Menu.CONFIGURE.NAME'| translate}}
+                <!-- CONFIGURE -->
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list (click)="getRoute()">
+              <!-- ACTIVE DIRECTORY -->
+              @if (privileagedUI([18,19,20,21])) {
+              <mat-list-item routerLink="configure/active-directory" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.CONFIGURE.ACTIVE DIRECTORY.NAME'| translate}}
+                </a>
+              </mat-list-item>
+              }
+              <!-- EMPLOYEE MANAGER -->
+              @if (privileagedUI([24])) {
+              <mat-list-item routerLink="configure/employee-management"
+               [routerLinkActiveOptions]="{ exact: true }"
+               [queryParams]="{ employee:true }" 
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.CONFIGURE.EMPLOYEE MANAGER.NAME'| translate}}
+                </a>
+              </mat-list-item>
+              }
+              <!-- EXTENSION MAPPING -->
+              @if (privileagedUI([25])) {
+                <mat-list-item routerLink="configure/extension-mapping" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.CONFIGURE.EXTENSION MAPPING.NAME'| translate}}
+                </a>
+              </mat-list-item>
+              }
+            
+                <!-- HIERARCHY MANAGEMENT -->
+                @if (privileagedUI([32])) {
+                  <mat-list-item routerLink="configure/hierarchy-management"
+                   [routerLinkActiveOptions]="{ exact: true }"
+                    routerLinkActive="selected-button">
+                    <a class="matItem">
+                      {{'Menu.CONFIGURE.HIERARCHY MANAGEMENT.NAME'| translate}}
+                    </a>
+                  </mat-list-item>
+                  }
+              <!--RECORDER SETTINGS -->
+              @if (privileagedUI([26])) {
+              <mat-list-item [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="selected-button">
+                <a class="matItem" (click)="showRecorderSubItems=!showRecorderSubItems">
+                  {{'Menu.CONFIGURE.EXTENSION MAPPING.RECORDER SETTINGS'| translate}}
+                </a>
+              </mat-list-item>
+              }
+              <mat-nav-list *ngIf="showRecorderSubItems">
+                <mat-list-item class="ps-5" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="selected-button"
+                  routerLink="configure/recorder-settings/avaya">
+                  <a class="matItem">
+                    {{'Menu.CONFIGURE.EXTENSION MAPPING.Avaya'| translate}}
+  
+                  </a>
+                </mat-list-item>
+                <mat-list-item class="ps-5" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="selected-button"
+                  routerLink="configure/recorder-settings/sip-trunk">
+                  <a class="matItem">
+                    {{'Menu.CONFIGURE.EXTENSION MAPPING.SIP Trunk'| translate}}
+                  </a>
+                </mat-list-item>
+                <mat-list-item class="ps-5" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="selected-button"
+                  routerLink="configure/recorder-settings/analouge">
+                  <a class="matItem">
+                    {{'Menu.CONFIGURE.EXTENSION MAPPING.Analogue'| translate}}
+                  </a>
+  
+                </mat-list-item>
+                <mat-list-item class="ps-5" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="selected-button"
+                  routerLink="configure/recorder-settings/digital">
+                  <a class="matItem">
+                    Digital
+                  </a>
+  
+                </mat-list-item>
+                <mat-list-item class="ps-5" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="selected-button"
+                  routerLink="configure/recorder-settings/mediaproxy">
+                  <a class="matItem">
+                    Media Poxy
+                  </a>
+                </mat-list-item>
+                <mat-list-item class="ps-5" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="selected-button"
+                routerLink="configure/recorder-settings/e-one">
+                <a class="matItem">
+                  E1 Recorder
+                </a>
+              </mat-list-item>
+              </mat-nav-list>
+              <!-- ROLES & PRIVILEGES -->
+              @if (privileagedUI([22])) {
+              <mat-list-item routerLink="configure/roles-privileges" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.CONFIGURE.ROLES & PRIVILEGES.NAME'| translate}}
+                </a>
+              </mat-list-item>
+  
+              }
+              <!--SYSTEM MANAGEMENT -->
+              @if (privileagedUI([27])) {
+              <mat-list-item [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="selected-button"
+              routerLink="configure/system-management">
+              <a class="matItem">
+                {{'Menu.CONFIGURE.SYSTEM MANAGEMENT.NAME'| translate}}
+              </a>
+            </mat-list-item>
+              }
+              <!-- USER MANAGER -->
+              @if (privileagedUI([23])) {
+              <mat-list-item routerLink="configure/user-manager" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.CONFIGURE.USER MANAGER.NAME'| translate}}
+                </a>
+              </mat-list-item>
+  
+              }
+            </mat-list>
+          </mat-expansion-panel>
+         }
+      
+
+        <!-- CALL RECORDING -->
+        @if (privileagedUI([15,1])) {
+        <mat-expansion-panel class="custom-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="me-2 material-symbols-outlined">voicemail</span>
+              <!-- <mat-icon class="me-2">voicemail</mat-icon> -->
+              {{'Menu.CALL RECORDING.NAME'| translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list (click)="getRoute()">
+            @if (privileagedUI([15])) {
+            <mat-list-item class="listhover" routerLink="dashboard" [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="selected-button">
+              <a class="matItem">
+                {{'Menu.CALL RECORDING.DASHBOARD.NAME'| translate}}
+              </a>
+            </mat-list-item>
+            }@if (privileagedUI([1])) {
+
+            <mat-list-item class="listhover" routerLink="station-monitor" [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="selected-button">
+              <a class="matItem">
+                {{'Menu.CALL RECORDING.STATION MONITOR.NAME'| translate}}
+              </a>
+            </mat-list-item>
+            }
+
+
+          </mat-list>
+        </mat-expansion-panel>
+        }
+
+        <!--RECORDING Reports -->
+        @if (privileagedUI([33,34,16,7,30,13,12,28,35,29,11])) {
+          <mat-expansion-panel class="custom-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <!-- <mat-icon class="me-2">data_table</mat-icon> -->
+                <span class="me-2 material-symbols-outlined">data_table</span>
+                {{'Menu.REPORTS RECORDING.NAME'| translate}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list (click)="getRoute()">
+              <!-- AGENTS -->
+              @if (privileagedUI([33])) {
+                <mat-list-item routerLink="reports/agent-report" [routerLinkActiveOptions]="{ exact: true }"
+                  routerLinkActive="selected-button">
+                  <a class="matItem"> {{'Menu.REPORTS RECORDING.AGENTS.NAME'| translate}}</a>
+                </mat-list-item>
+              }
+              <!-- ARCHIVE REPORTS -->
+              @if (privileagedUI([34])) {
+              <mat-list-item routerLink="reports/archive-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.ARCHIVE.NAME'| translate}}
+                </a>
+              </mat-list-item>
+              }
+              <!-- AUDIT TRAIL REPORT -->
+              @if (privileagedUI([16])) {
+              <mat-list-item routerLink="reports/audit-trail-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.AGENTS.AUDIT TRAIL'| translate}}
+                </a>
+              </mat-list-item>
+            }
+              <!-- CALL REPORT-->
+              @if (privileagedUI([7])) {
+              <mat-list-item routerLink="reports/call-reports" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.CALLS.NAME'| translate}}
+                </a>
+              </mat-list-item>
+              }
+  
+              <!-- COLOUR CODED CALLS -->
+               @if (privileagedUI([30])) {
+              <mat-list-item routerLink="reports/color-code-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.NAME'| translate}}
+                </a>
+              </mat-list-item>
+            }
+              <!-- CONCURRENT CALLS -->
+              @if (privileagedUI([13])) {
+              <mat-list-item routerLink="reports/concurrent-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.CONCURRENT CALLS.NAME'| translate}}
+                </a>
+              </mat-list-item>
+            }
+              <!-- DELETED CALLS -->
+              @if (privileagedUI([12])) {
+              <mat-list-item routerLink="reports/deleted-calls-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.DELETED CALLS.NAME'| translate}}
+                </a>
+              </mat-list-item>
+            }
+              <!-- EXTENSION REPORT-->
+              @if (privileagedUI([28])) {
+              <mat-list-item routerLink="reports/extension-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.EXTENSIONS.NAME'| translate}}
+                </a>
+              </mat-list-item>
+            }
+              <!-- FREQUENT CALLS -->
+              @if (privileagedUI([35])) {
+              <mat-list-item routerLink="reports/frequent-calls-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.FREQUENT CALLS.NAME'| translate}}
+                </a>
+              </mat-list-item>
+            }
+              <!-- LOGIN TRACK REPORT -->
+              @if (privileagedUI([29])) {
+              <mat-list-item routerLink="reports/login-track-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.LOGIN TRACK.NAME'| translate}}
+                </a>
+              </mat-list-item>
+            }
+              <!-- TIME LINE -->
+              @if (privileagedUI([11])) {
+              <mat-list-item routerLink="reports/time-line-report" [routerLinkActiveOptions]="{ exact: true }"
+                routerLinkActive="selected-button">
+                <a class="matItem">
+                  {{'Menu.REPORTS RECORDING.TIME LINE.NAME'| translate}}
+                </a>
+              </mat-list-item>
+            }
+            </mat-list>
+  
+          </mat-expansion-panel>
+        }
+    
+
+
+        <!-- CALL ACCOUNTING -->
+        <mat-expansion-panel class="custom-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <!-- <mat-icon class="me-2">contract</mat-icon> -->
+              <span class="me-2 material-symbols-outlined">
+                contract
+              </span>
+              {{'Menu.CALL ACCOUNTING.NAME'| translate}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item>
+              <!-- <a class="matItem" [routerLink]="['tenant']"  matTooltip="{{'SuperAdmin.Menu.tenantlist'|translate}}">{{'SuperAdmin.Menu.tenantlist'|translate}}</a> -->
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        <!-- ALERTS MANAGEMENT -->
+        @if (privileagedUI([6])) {
+        <mat-expansion-panel class="custom-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <!-- <mat-icon class="me-2">notifications</mat-icon> -->
+
+              <span class="me-2 material-symbols-outlined">
+                notifications
+              </span>
+              {{'Menu.ALERTS MANAGEMENT.NAME'| translate}}
+
+              <!-- {{'SuperAdmin.Menu.tenants'|translate}} -->
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list (click)="getRoute()">
+            <!-- RECORDING -->
+            <mat-list-item routerLink="alerts/recording" [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="selected-button">
+              <a class="matItem">
+                {{'Menu.ALERTS MANAGEMENT.RECORDING.NAME'| translate}}
+              </a>
+            </mat-list-item>
+            <!-- SYSTEM -->
+            <mat-list-item routerLink="alerts/system" [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="selected-button">
+              <a class="matItem">
+                {{'Menu.ALERTS MANAGEMENT.SYSTEM.NAME'| translate}}
+              </a>
+            </mat-list-item>
+            <!-- CONFIG CHANGES -->
+            <mat-list-item routerLink="alerts/config-changes" [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="selected-button">
+              <a class="matItem">
+                {{'Menu.ALERTS MANAGEMENT.CONFIG CHANGES.NAME'| translate}}
+              </a>
+            </mat-list-item>
+            <!-- CALL RECORDERS -->
+            <mat-list-item routerLink="alerts/call-records" [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="selected-button">
+              <a class="matItem">
+                {{'Menu.ALERTS MANAGEMENT.CALL RECORDERS.NAME'| translate}}
+              </a>
+            </mat-list-item>
+            <!-- ARCHIVE -->
+            <mat-list-item routerLink="alerts/archive" [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="selected-button">
+              <a class="matItem">
+                {{'Menu.ALERTS MANAGEMENT.ARCHIVE.NAME'| translate}}
+              </a>
+            </mat-list-item>
+            <!-- CHANNELS -->
+            <mat-list-item routerLink="alerts/extensions" [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="selected-button">
+              <a class="matItem">
+                {{'Menu.ALERTS MANAGEMENT.CHANNELS.NAME'| translate}}
+              </a>
+            </mat-list-item>
+            <mat-list-item>
+              <!-- <a class="matItem" [routerLink]="['tenant']"  matTooltip="{{'SuperAdmin.Menu.tenantlist'|translate}}">{{'SuperAdmin.Menu.tenantlist'|translate}}</a> -->
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+        }
+      </mat-accordion>
+    </div>
+    <div class="flip-container " style="height: 13%;margin-bottom: 0;bottom: 0;">
+      <!-- Flip Card -->
+      <div class="flip-card" [class.flipped]="isFlipped">
+        <!-- Disk Usage Div -->
+        <div class="card shadow-sm">
+          <div class="card-body p-1">
+            <!-- Title -->
+            <div class="d-flex justify-content-between align-items-center ">
+              <h5 class="mb-0 text-dark bold">
+                {{ 'Menu.Disk Usage' | translate }}
+              </h5>
+              <small class="text-muted" *ngIf="diskUsage">{{ diskUsage?.used_percentage }} Used</small>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress mb-2" style="height: 8px; border-radius: 4px;">
+              <div *ngIf="diskUsage" class="progress-bar progress-bar-striped progress-bar-animated"
+                [ngClass]="getProgressBarClass(diskUsage?.used_percentage)" [style.width]="diskUsage?.used_percentage"
+                [attr.aria-valuenow]="diskUsage?.used_percentage.replace('%', '')" aria-valuemin="0"
+                aria-valuemax="100"></div>
+            </div>
+
+            <!-- Usage Details -->
+            <div class="d-flex justify-content-between text-muted small">
+              <span><strong>{{ 'Menu.Total' | translate }}:</strong> {{ diskUsage?.total }}</span>
+              <span><strong>{{ 'Menu.Used' | translate }}:</strong> {{ diskUsage?.used }}</span>
+              <span><strong>{{ 'Menu.Available' | translate }}:</strong> {{ diskUsage?.available }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-div  align-items-center p-3 rounded">
+          <!-- Icon Section -->
+          <div class="icon-container align-items-center   me-2 bg-danger rounded-circle">
+            <img src="/assets/superAdminIcon.png" alt="Admin Icon" class="icon-img">
+          </div>
+          <!-- Text Section -->
+          <div class="text-container">
+            <p class="mb-1 text-white " [matTooltip]="userName">{{ userName.slice(0,12) }}..</p>
+            <small class="text-white">{{ 'Menu.Super Admin' | translate }}</small>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Flip Button -->
+      <!-- <div class="flip-button bg-light btn" (click)="flipManually()">
+        <span class="material-symbols-outlined" >
+          cached
+          </span>
+      </div> -->
+    </div>
+
+    <!-- copyright -->
+    <div class="text-center  text-light small  animated-footer"
+      style=" bottom: 0px;left: 0; width: 99%;position: absolute;margin-top: 0;">
+      {{'Menu.Copyright'| translate}} &copy; {{year}} -
+      {{'Menu.Speechlogix'| translate}}
+    </div>
+
+
+
+  </mat-sidenav>
+  <mat-sidenav-content style="overflow: hidden;">
+
+    <div class="header2">
+      <h2 class="mt-2 text-center ps-1">{{headerTop|translate}}
+      </h2>
+
+      <div class="pe-2 p-1 ps-2">
+        <div style="display: flex;justify-content: space-around;padding-top: 10px;">
+          @if(showAlert){
+            <div style="padding-right: 5px;margin-bottom: 10px;"><span class="blink">{{notificationMessage}}</span> </div>
+          }
+          <!-- <mat-icon style="font-size: small;" class="blink">highlight_off</mat-icon> -->
+          @if (userHierarchyId == 2) {
+
+          <button class="licenseKey" (click)="openValidationDialog()">
+            <mat-icon>
+              <span class="material-symbols-outlined">
+                license
+              </span>
+            </mat-icon>
+          </button>
+
+          }
+          <div matTooltip="Change language" class="me-1 logout" (click)="openProfile()">
+            <mat-icon>
+              <span class="material-symbols-outlined">
+                translate
+              </span>
+            </mat-icon>
+          </div>
+          <div class="ms-1 me-1 logout">|</div>
+          <div matTooltip="Log out" class="ms-1 logout" (click)="logOut('logOutManually','')">
+            <mat-icon style="color: red;">logout</mat-icon>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+    <!-- <router-outlet></router-outlet> -->
+    <router-outlet>
+
+    </router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,26 @@
+
+
+.button {
+   
+    border: none;
+    cursor: pointer;
+ 
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+
+.control-buttons button {
+    width: 5vw;
+    height: 5vh;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+
+

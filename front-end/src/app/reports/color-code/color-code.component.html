@@ -1,0 +1,244 @@
+<div class="mainColorcode">
+  <div class="filters">
+    <div style="display: flex;">
+      <button  class="custom-button-date btn"[matMenuTriggerFor]="filterDate">
+        <span class="material-symbols-outlined ">
+            schedule
+          </span>
+    <span class="">{{ selectedDateRange }}</span>
+        </button>
+      
+    <mat-menu #filterDate="matMenu">
+        <button mat-menu-item (click)="setDateRange('Today')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Today'| translate}}</button>
+        <button mat-menu-item (click)="setDateRange('This Week')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.This Week'| translate}}</button>
+        <button mat-menu-item (click)="setDateRange('This Month')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.This Month'| translate}}</button>
+        <button mat-menu-item (click)="setDateRange('This Quarter')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.This Quarter'| translate}}</button>
+        <button mat-menu-item (click)="setDateRange('This Year')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.This Year'| translate}}</button>
+        <button mat-menu-item (click)="openCustomDateDialog(selectedDateRange)">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Custom'| translate}}</button>
+    </mat-menu>
+
+
+<button  mat-flat-button class="custom-button  btn" [matMenuTriggerFor]="filterColor">
+  {{ 'Menu.REPORTS RECORDING.COLOUR CODED CALLS.colorcode' | translate }}:
+  {{ getColorFilterText() | translate }} <!-- Use the method to get the appropriate label -->
+</button>
+
+<mat-menu #filterColor="matMenu" class="color-menu">
+  <div class="color-list d-flex me-1" (click)="$event.stopPropagation()">
+    <!-- 'All' Checkbox -->
+    <mat-checkbox 
+      color="primary" 
+      (change)="toggleColor('All', $event)" 
+      [checked]="selectedColors.includes('All')">
+      {{ 'All' | translate }}
+    </mat-checkbox>
+  </div>
+
+  <div class="itemsDiv">
+    <!-- Dynamic Color Code List -->
+    <div *ngFor="let color of filteredColorCodes; trackBy: trackByColor" class="color-item">
+      <mat-checkbox 
+        color="primary" 
+        [checked]="isColorSelected(color.colorCodeId)" 
+        (change)="toggleColor(color.colorCodeId, $event)" 
+        (click)="$event.stopPropagation()">
+        <div class="color-label-container">
+          <span class="color-text">{{ color.colorCode }}</span>
+          <div 
+            class="color-block" 
+            [ngStyle]="{'background-color': color.colorCode}">
+          </div>
+        </div>
+      </mat-checkbox>
+    </div>
+    
+    
+  </div>
+</mat-menu>
+
+
+
+ 
+      
+      <div class="date-container" [matMenuTriggerFor]="filterDire">
+        <button mat-flat-button class="custom-button btn">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Direction'| translate}}: {{ selectedDirection }}</button>
+      </div>
+      <mat-menu #filterDire="matMenu">
+        <button mat-menu-item (click)="setDirection('')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.All'| translate}}
+           </button>
+          <button mat-menu-item (click)="setDirection('0')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Incoming'| translate}}
+          </button>
+          <button mat-menu-item (click)="setDirection('1')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Outgoing'| translate}}</button>
+      </mat-menu>
+
+
+
+    
+     <!-- Apply Button -->
+        <button  class="custom-apply-button btn" (click)="applyFilters()">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Apply'| translate}}
+        </button>
+    
+    </div>
+    <!-- File Download -->
+    <div class="report-button d-flex" mat-button  [matMenuTriggerFor]="menu4">
+      <div class="excelDiv btn" matTooltip="{{'Menu.REPORTS RECORDING.CALLS.Download records' | translate}}"
+      [matMenuTriggerFor]="menu4">
+      <mat-icon class="icon">download_2</mat-icon>
+      <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+  </div>
+      <mat-menu #menu4="matMenu">
+          <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+            <div style="justify-content: space-around;display: flex;">     
+            <div>Excel</div>
+            <div>
+              <span class="material-symbols-outlined">article</span>
+            </div>
+          </div>
+          </button>
+          <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+            <div style="justify-content: space-around;display: flex;">
+            <div>PDF</div>    
+            <div>
+              <span class="material-symbols-outlined">picture_as_pdf</span>
+            </div>
+          </div>
+          </button>
+          <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+            <span>TIFF</span>
+            <span class="material-symbols-outlined">perm_media</span>
+          </button>
+          <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+            <span>Web Archive</span>
+            <span class="material-symbols-outlined">install_desktop</span>
+          </button>
+      </mat-menu>
+    </div>       
+    </div>
+   
+<div class="table-container">
+    @if(dataStatus){
+  <table mat-table [dataSource]="dataSource" matSort class="tableData" style="background-color: var(--h3);">
+
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="color">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color:var(--h3)" (click)="sortColor()">
+              <div class="header-cell-container">
+                  <div class="label-column">
+                      <label class="colorlabel">
+                        {{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Color'| translate}}
+                          </label>
+                  </div>
+               
+              </div>
+          </th>
+
+
+          <td mat-cell *matCellDef="let element" style="background-color: #ffffff;color: var(--h3)">
+              <div class="header-cell-container">
+                  <div class="label-column" style="color: white;font-size:12px ;padding: 2px;;width: 3vw;">
+                    <label
+                    [ngStyle]="{
+                        'background-color': element.color,
+                        'color': 'white',
+                        'border-radius': '20px',
+                        'cursor': 'pointer',
+                        'padding': '2px',
+                        'width': '150%',
+                        'text-align': 'center'
+                    }"
+                    style="font-size:12px;">
+                    {{element.color}}
+                </label>
+                          
+                  </div>
+              </div>
+          </td>
+      </ng-container>
+      
+
+  <!-- Recordings Column -->
+      <ng-container matColumnDef="recordings">
+          <th mat-header-cell *matHeaderCellDef class="recordings" mat-sort-header (click)="sortRecordings()">
+              <div class="header-cell-container"  >
+                  <div class="label-column">
+                      <label class="recordingsLable">
+                        {{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Recordings'| translate}}
+
+                      </label>
+                  </div>
+                  
+              </div>
+          </th>
+
+          <td mat-cell *matCellDef="let element" style="background-color: #ffffff;color: var(--h3);">
+              <div class="header-cell-container">
+                  <div class="label-column">
+                      <label
+                          style="color: black;font-size:12px ;cursor:pointer ;padding: 2px;width: 110%;">{{element.recordings}}</label>
+                  </div>
+              </div>
+          </td>
+      </ng-container>
+ 
+
+      <!-- Percentage Column -->
+      <ng-container matColumnDef="percentage">
+          <th mat-header-cell *matHeaderCellDef style="background-color: var(--h3)" mat-sort-header (click)="sortPercentage()">
+            <div class="header-cell-container" >
+              <div class="label-column">
+                <label class="percentageLable">
+                  {{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Percentage'| translate}}
+                  </label>
+              </div>
+            
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let element" style="background-color: #ffffff;color: var(--h3);">
+            <div style="display: flex; align-items: center;">
+              <div><span>{{element.percentage | number:'1.2-2'}}%</span></div>
+               <div class="progress" style="flex-grow: 1; margin-left:4px;">
+                <div 
+                  class="progress-bar"
+                  [ngStyle]="{
+                      'background-color': element.color,
+                     
+                  }"
+                  role="progressbar"
+                  [style.width.%]="element.percentage"
+                  [attr.aria-valuenow]="element.percentage"
+                  aria-valuemin="0"
+                  aria-valuemax="100">
+                </div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+  
+
+      <!-- Export Column -->
+      <ng-container matColumnDef="export">
+          <th mat-header-cell *matHeaderCellDef >
+              <div class="label-column">
+                  <label  class="exportLable">
+                    {{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Export'| translate}}
+
+                  </label>
+              </div>
+          </th>
+          <td mat-cell *matCellDef="let element" style="background-color: #ffffff;color: var(--h3);">
+              <button mat-button  (click)="getExcel(element)" class="employeeBtn" [matTooltip]="toolTips.Download |translate">
+                <mat-icon class="xlclass">download_2</mat-icon>
+                <span class="xlclass">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.XLS'| translate}}
+                </span>
+              </button>
+          </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"
+          *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+}
+</div>
+ 
+</div>

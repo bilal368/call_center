@@ -1,0 +1,164 @@
+.head-container {
+    margin-left: .5%;
+}
+
+.sidenav-options {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    /* background-color: var(--employeeDbg); */
+}
+.build-div {
+    width: 20%;
+    height: 40px;
+    background-color: var(--tabColor);
+    border-radius: 15px 15px 0px 0px;
+    color:  var(--tabNameColor);
+    align-items: center;
+    padding-top: 5px;
+    letter-spacing: 1px;
+}
+.mainContainer {
+    background-color: var(--currentwindow);
+    height: 85vh;
+    padding-top: 4px;
+    /* margin-left: .5%; */
+    /* display: flex;
+    justify-content: space-around; */
+}
+.userContainer{
+    padding: 0;
+    width: 99%;
+    height: 100%;
+    margin: 0;
+    /* margin-left: -0px; */
+    background-color: white;
+    box-shadow: #32325d40 0 6px 12px -2px, #0000004d 0 3px 7px -3px;
+
+}
+.header{
+    width: 100%;
+    height: 8vh;
+   padding: 2px;
+    background-color: var(--h3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.itemsDiv{
+    height: 60vh;
+    overflow-y: auto;
+}
+.searchUserNet{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    height: 5vh;
+}
+.searchUserNet input{
+    width: 80%;
+   margin: 1px;
+   border-radius: 5px;
+}
+.searchUser .material-symbols-outlined{
+    margin-top: .6vh;
+    font-size: 1.5rem;
+}
+.searchUserNet .material-symbols-outlined{
+    margin-top: .6vh;
+    font-size: 1.8rem;
+}
+.searchText{
+
+    
+    display: flex!important;
+    justify-content: space-between;
+    background-color: #32325d40;
+}
+.searchText span{
+    opacity: 70%;
+}
+.subDiv{
+    display: flex;
+    justify-content: space-between;
+    width: 25%;
+}
+.header label{
+    color: white;
+    font-size: 1.2rem;
+
+}
+.header button{
+    background-color: rgb(251, 252, 253);
+}
+.header .material-symbols-outlined {
+    color: rgb(92, 91, 91); /* Or any desired color */
+  }
+mat-form-field{
+    border-radius: 2px !important;
+}
+.content{
+    height: 60vh;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+/* Fix header background and ensure it stays on top */
+thead th {
+    position: sticky; /* Use sticky positioning */
+    top: 0; /* Stick to the top */
+    z-index: 1; /* Ensure header is above body */
+  }
+.buttonDiv{
+    padding-top: 5vh;
+    text-align: end;
+    height: 15vh;
+    /* background-color: aqua; */
+}
+
+.userTable th{
+    text-align: center;
+}
+.userTable td{
+    height: 8vh;
+    text-align: center;
+    align-items: center;
+}
+.userTable #userName{
+    text-align: left;
+    align-items: center;
+}
+/* alert box */
+.alert  {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: large;
+    z-index: 1;
+    width: 20vw;
+    top: 0;
+    left: 42vw;
+    right: 42vw;
+    transform: translate(-50%, -50%);
+    border:1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    padding-top: 2rem;
+    background: #fff;
+    color: #21c66b;
+    box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.5);
+    transition:  all 0.2s ease-in-out;
+    opacity: 0;
+  }
+  
+  .visible {
+    opacity: 1;
+    transform: translateY(1.25rem);
+  }
+  .alert  span{
+    color: rgb(12, 165, 114);
+  }
+  .is-active {
+    background-color: #3c3c3b;
+  }

@@ -1,0 +1,104 @@
+@if(this.data.clickedStatus ==='Map'){
+    <div class="fromMainContainer">
+        <div class="example-spacer ">
+     
+      
+            <span style="padding-left: 20px;font-size: 20px;">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.HeadingAdd' | translate}}</span>
+        
+            <div (click)="closeDialog()" class="btn closeDialogIcon" matTooltip="Close">
+                <span style="color:var(--headingBg) ;" class="material-symbols-outlined">
+                    close
+                </span>
+            </div>
+        </div>
+        <div class="container " >
+            <form class="viewEmployeeDetails" [formGroup]="mappingForm" (ngSubmit)="onSubmitHeirarchy()">
+                <div class="example-full-width">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="name" class="name-right">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Location' | translate}}</label>
+                                <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectLoc' | translate}}" 
+                                    formControlName="location" (valueChange)="getDepartmentsByLocation($event)">
+                                    <mat-option (click)="$event.stopPropagation()">
+                                        <input placeholder="Search Location"  
+                                        style="width: 250vw; padding: 5px; "
+                                         (click)="$event.stopPropagation()"
+                                       
+                                          (input)="onSearchLocation($event)">
+                                    </mat-option>
+                                    @for(item of locationList; track item) {
+                                    <mat-option [value]="item.locationId">{{item.locationName}}</mat-option>
+                                    }
+                                </mat-select>
+                                @if (f1['location'].errors?.['required']&&f1['location'].touched) {
+                                    <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.location is required'|translate}}</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="name" class="name-left">{{'Menu.CONFIGURE.EXTENSION MAPPING.DEPARTMENT' | translate}}</label>
+                                <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectDep' | translate}}" 
+                                    formControlName="department" (valueChange)="getDivisionByDept($event)">
+                                    <mat-option (click)="$event.stopPropagation()">
+                                        <input placeholder="Search Department"
+                                        style="width: 250vw; padding: 5px; "
+                   
+                                        (input)="onSearchDepartment($event)"
+                                            (click)="$event.stopPropagation()">
+                                    </mat-option>
+                                    @for(item of departmentList; track item) {
+                                    <mat-option [value]="item.departmentId">{{item.departmentName}}</mat-option>
+                                    }
+                                </mat-select>
+                                @if (f1['department'].errors?.['required']&&f1['department'].touched) {
+                                    <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.department  is required'|translate}}</div>
+                                }
+                            </div>
+                        </div>
+             
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="name" class="name-right">{{'Menu.CONFIGURE.EXTENSION MAPPING.DIVISION' | translate}}</label>
+                                <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectDiv' | translate}}" 
+                                    formControlName="division">
+                                    <mat-option (click)="$event.stopPropagation()">
+                                        <input placeholder="Search Division"
+                                        style="width: 250vw; padding: 5px; "
+                                      
+                                        (input)="onSearchDivision($event)"
+                                            (click)="$event.stopPropagation()">
+
+                                        
+                                    </mat-option>
+                                    @for(item of divisiomList; track item) {
+                                    <mat-option [value]="item.divisionId">{{item.divisionName}}</mat-option>
+                                    }
+                                </mat-select>
+                                @if (f1['division'].errors?.['required']&&f1['division'].touched) {
+                                    <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.division  is required'| translate}}</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Update buttons -->
+                <div class="saveButtonDiv">
+                        <button class="usergroupSavebuttton btn" mat-button type="submit" [matTooltip]="toolTips.Save | translate" >
+                            {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Save'| translate}}                    
+                         </button> 
+                 
+                </div>
+         
+            </form>
+        </div>
+
+    </div>
+}

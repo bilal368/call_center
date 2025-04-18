@@ -1,0 +1,196 @@
+<div class="container" [dir]="'align'|translate">
+  <div class="row">
+    <div class="col-4">
+      <div class="heading ">
+        <h3>
+          {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Roles'| translate}}
+        </h3>
+        <div class="input-container">
+          <input placeholder="{{'Menu.CONFIGURE.ROLES & PRIVILEGES.Search'| translate}}" class="searchBox" (change)="searchUsers(value)" #value>
+          <span class="material-symbols-outlined bg-dark">
+            search
+          </span>
+        </div>
+      </div>
+      <div class="PrivContentDivRoles">
+        <mat-accordion>
+          <mat-expansion-panel hideToggle *ngFor="let userGroup of arrayOfUsers | keyvalue" style="padding: 1px;">
+            <mat-expansion-panel-header class="expansionHeader " (click)="selectUserGroup(userGroup)">
+              <mat-panel-title  [ngClass]="{'selected': isUserGroupSelected(userGroup.key)}">
+                <img
+                  [src]="userGroup.key.includes('dmin') || userGroup.key.includes('anager') ? 'assets/icons/groups_24.svg' : 'assets/icons/groups_25.svg'"
+                  alt="" class="me-1" style="filter: hue-rotate(50deg);">
+                {{userGroup.key | titlecase}}
+              </mat-panel-title>
+              <mat-panel-description >
+                <img src="assets/icons/arrow_drop_down.svg" alt="">
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div id="dgUserAccessToggle" *ngFor="let user of  Users"
+              style="display: flex;justify-content: space-between;" (click)="selectUser(user)">
+              <span class="p-1" style="width: 80%;cursor: pointer;" [ngClass]="{'selected': isUserSelected(user)}">
+                <img src="assets/icons/account_circle_24.svg" alt="">
+                {{user.name}}
+              </span>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="heading">
+        <h3>
+          {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Privileges'| translate}}
+        </h3>
+        
+      </div>
+
+      <div class="PrivContentDiv" >
+        @if (featureDataStatus) {
+        <!-- data fetched from privileages -->
+
+        <!-- Child Node -->
+        <mat-tree [dataSource]="dataSource1" [treeControl]="treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+            <mat-checkbox class="checklist-leaf-node" color="primary"
+              [checked]="checklistSelection.isSelected(node)||personalizeData(node)"
+              (change)="checklistSelection.toggle(node);onCheckboxChange(node,$event)">{{node.item}}</mat-checkbox>
+          </mat-tree-node>
+
+          <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+
+
+          </mat-tree-node>
+          <!-- parent -->
+          <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.item">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            <mat-checkbox color="primary" [checked]="descendantsAllSelected(node)||personalizeData(node)"
+              [indeterminate]="descendantsPartiallySelected(node)"
+              (change)="todoItemSelectionToggle(node);onCheckboxChange(node,$event)">{{node.item}}</mat-checkbox>
+
+          </mat-tree-node>
+        </mat-tree>
+
+
+        }
+        @else {
+        <span>
+          {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Please select a role/user group to display applicable privileages'|
+          translate}}
+        </span>
+        }
+
+      </div>
+
+    </div>
+    <div class="col-4">
+      <div class="heading">
+        <h3>
+          {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Data Restrictions'| translate}}
+        </h3>
+       
+      </div>
+      
+      <div class="dataRestrictionDIv">
+        @if(featureDataStatus){
+        <!-- Hierarchy -->
+        <mat-accordion>
+          <mat-expansion-panel class="hierarchyExpansion" hideToggle style="padding: 1px;">
+            <mat-expansion-panel-header class="expansionHeader">
+              <mat-panel-title>
+                <img src="assets/icons/HierarchyDataRestrictions.svg" alt="">
+                {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Hierarchy'| translate}}
+              </mat-panel-title>
+              <mat-panel-description style="flex-grow: 1;">
+
+                <img src="assets/icons/arrow_drop_down.svg" alt="">
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <!-- Child Node -->
+            <mat-tree [dataSource]="dataRestrictions" [treeControl]="treeControl1">
+              <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-checkbox class="checklist-leaf-node" color="primary"
+                  [checked]="checklistSelection.isSelected(node)||personalizeData1(node)"
+                  (change)="checklistSelection.toggle(node);onCheckboxChangeHierarcy(node,$event)">{{node.item}}</mat-checkbox>
+              </mat-tree-node>
+
+              <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+
+
+              </mat-tree-node>
+              <!-- parent -->
+              <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.item">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl1.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                <mat-checkbox color="primary" [checked]="descendantsAllSelected1(node)||personalizeData1(node)"
+                  [indeterminate]="descendantsPartiallySelected1(node)"
+                  (change)="todoItemSelectionToggle(node);onCheckboxChangeHierarcy(node,$event)">{{node.item}}</mat-checkbox>
+
+              </mat-tree-node>
+            </mat-tree>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+
+        <!-- Alarms and Alerts -->
+        <mat-accordion hidden>
+          <mat-expansion-panel hideToggle style="padding: 1px;">
+            <mat-expansion-panel-header class="expansionHeader">
+              <mat-panel-title style="width: 70%;">
+                <img src="assets/icons/alarms.svg" alt="">
+
+                {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Alarms & Alerts'| translate}}
+
+              </mat-panel-title>
+              <mat-panel-description style="width: 30%;" style="flex-grow: 1;">
+
+                <img src="assets/icons/arrow_drop_down.svg" alt="">
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="alerts">
+              <mat-checkbox color="primary">
+                {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Email'| translate}}
+
+              </mat-checkbox>
+              <br>
+              <mat-checkbox color="primary">
+                {{'Menu.CONFIGURE.ROLES & PRIVILEGES.SMS'| translate}}
+
+              </mat-checkbox>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+     
+      }
+      @else {
+      <span>
+        {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Please select a role/user group to display applicable data restrictions'|
+        translate}}
+      </span>
+
+      }
+    </div>
+    </div>
+  </div>
+  <div class="buttonMainDiv">
+    <div class="buttonDiv ">
+      <button matTooltip="{{'Menu.CONFIGURE.ROLES & PRIVILEGES.Cancel' | translate}}" class="rolesAndPrivileagesCancelbuttton btn" mat-button type="submit">
+        {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Cancel'| translate}}
+      </button>
+      <button matTooltip="{{'Menu.CONFIGURE.ROLES & PRIVILEGES.Save privileges' | translate}}" class="rolesAndPrivileagesSavebuttton btn" mat-button type="submit" (click)="saveRolesAndPrivileages()">
+        {{'Menu.CONFIGURE.ROLES & PRIVILEGES.Save'| translate}}
+      </button>
+    </div>
+  </div>
+</div>

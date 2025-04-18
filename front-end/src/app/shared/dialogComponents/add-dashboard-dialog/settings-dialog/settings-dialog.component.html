@@ -1,0 +1,92 @@
+<div class="div">
+  @if (data.filterSettings.name == 'Station Time Activity' || data.filterSettings.name == 'Station Call Activity') {
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex"  (selectedTabChange)="onTabChanged($event)">
+      <mat-tab label="Extensions"> 
+        <div>
+          <!-- Select All Checkbox -->
+          <mat-checkbox
+            [(ngModel)]="allSelected"
+            (change)="toggleAllSelections()"
+          >
+            Select All
+          </mat-checkbox>
+          @for (extension of extensions; track $index) {
+          <div >
+            <mat-checkbox
+              [(ngModel)]="extension.selected"
+              (change)="checkIfAllSelected()"
+            >
+              {{ extension.extensionNumber ? extension.extensionNumber : 'Unknown Extension' }}
+            </mat-checkbox>
+          </div>
+        }
+        </div>
+  
+      </mat-tab>
+  
+      <mat-tab label="Group Extension"> 
+      
+        <mat-tree [dataSource]="dataSourceTree" [treeControl]="treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+            <mat-checkbox class="checklist-leaf-node" color="primary"
+              [checked]="checklistSelection.isSelected(node)||validateData(node)"
+              (change)="checklistSelection.toggle(node);onCheckboxChange(node,$event)">{{node.item}}</mat-checkbox>
+          </mat-tree-node>
+      
+          <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+      
+      
+          </mat-tree-node>
+          <!-- parent -->
+          <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.item">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            <mat-checkbox color="primary" [checked]="descendantsAllSelected(node)||validateData(node)"
+              [indeterminate]="descendantsPartiallySelected(node)"
+              (change)="todoItemSelectionToggle(node);onCheckboxChange(node,$event)">{{node.item}}</mat-checkbox>
+      
+          </mat-tree-node>
+        </mat-tree>
+      </mat-tab>
+    </mat-tab-group>
+  }@else{
+    <mat-tab-group>
+      <mat-tab label="Agents"> 
+        <div>
+          <mat-checkbox
+            [(ngModel)]="allSelected"
+            (change)="toggleAllAgentSelections()"
+          >
+            Select All
+          </mat-checkbox>
+          @for (agent of Agents; track $index) {
+          <div >
+            <mat-checkbox
+              [(ngModel)]="agent.selected"
+              (change)="checkIfAgentAllSelected()"
+            >
+              {{ agent.agentCode ? agent.agentCode : 'Unknown Agent' }}
+            </mat-checkbox>
+          </div>
+        }
+        </div>
+  
+      </mat-tab>
+    </mat-tab-group>
+  }
+  
+    <div class="applyButton w-100 d-flex justify-content-between mt-1 mb-1 p-2">
+      <button class="btn">
+        <span class="material-symbols-outlined" (click)="closeDialog()">
+          cancel
+          </span>
+      </button>
+      <button class="btn btn-dark " (click)="applyFilter()">Apply</button>
+    </div>
+  </div>
+  

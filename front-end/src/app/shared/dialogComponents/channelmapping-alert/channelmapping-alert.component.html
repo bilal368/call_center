@@ -1,0 +1,245 @@
+<div class="mainalertContainer">
+    <div class="alertHeader">
+        <label class="alertHeaderlabel" for="">
+            @if(data.didLabeling==true || data.didLabeling==false){
+                DID Labeling
+            }@else{Channel Mapping}
+         
+        </label>
+        <!-- <div class="closeIconstyle" (click)="closeDialog()">
+            <span  matTooltip="Close" style="color:var(--headingBg) ;" class="material-symbols-outlined">
+                close
+            </span>
+        </div> -->
+    </div>
+    <!-- add channel -->
+    @if(data.excel==true){
+    <form action="" [formGroup]="mappingForm" (ngSubmit)="savebutton()">
+        <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Channel</label>
+            <input type="text" class="form-control-username" required="required" name="channels" id="channels"
+                formControlName="channels" placeholder="Channel"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+            @if (mappingForm.controls['channels'].invalid && mappingForm.controls['channels'].touched)
+            {
+            <div style="min-height: 5px; display: flex; align-items: center;">
+                @if (mappingForm.controls['channels'].errors['required'])
+                {
+                <small class="text-danger">Channel is required</small>
+                }
+                @if (mappingForm.controls['channels'].errors['pattern'])
+                {
+                <small class="text-danger">Only numbers are allowed</small>
+                }
+            </div>
+            }
+
+
+        </div>
+        <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Extension</label>
+            <input type="text" class="form-control-username" required="required" name="Extension" id="Extension"
+                formControlName="Extension" placeholder="Enter Extension"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+            @if (mappingForm.controls['Extension'].invalid && mappingForm.controls['Extension'].touched)
+            {
+            <div style="min-height: 5px; display: flex; align-items: center;">
+                @if (mappingForm.controls['Extension'].errors['required'])
+                {
+                <small class="text-danger">Extension is required</small>
+                }
+                @if (mappingForm.controls['Extension'].errors['pattern'])
+                {
+                <small class="text-danger">Only numbers are allowed</small>
+                }
+            </div>
+            }
+        </div>
+        <!-- <div class="textFromfeild">
+            <label style="font-weight: bold;color: black;font-size: 16px;">Password</label>
+            <input type="text" class="form-control-username" required="required" name="Password" id="Password"
+                formControlName="Password" placeholder="Enter Password"
+                style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (mappingForm.controls['Password'].invalid && mappingForm.controls['Password'].touched)
+                {
+                <div style=" min-height: 5px; display: flex;
+                    align-items: center;">
+                    <small class="text-danger">Password is required</small>
+                </div>
+                }
+        </div> -->
+        <div class="textFromfeild">
+            <label style="font-weight: bold; color: black; font-size: 16px;">Password</label>
+            <div style="position: relative; width: 20vw;">
+                <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control-username" required="required"
+                    name="Password" id="Password" formControlName="Password" placeholder="Enter Password"
+                    style="border-color:#89AECF; border-style: solid; width: 100%; padding-right: 30px;" />
+                <span style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"
+                    (click)="showPassword = !showPassword">
+                    <i class="{{ showPassword ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>
+                </span>
+            </div>
+            <!-- Validation Message -->
+            @if (mappingForm.controls['Password'].invalid && mappingForm.controls['Password'].touched)
+            {
+            <div style="min-height: 5px; display: flex; align-items: center;">
+                <small class="text-danger">Password is required</small>
+            </div>
+            }
+        </div>
+
+     
+        <div style="justify-content: space-between;display: flex;">
+            <button id="usermangerSavebutton" mat-button  (click)="closeDialog()">
+                <span>Cancel</span>
+            </button>
+            @if (data.excel==true&&data.element==null) {
+            <button id="usermangerSavebutton" mat-button type="submit" matTooltip="Save channel mapping">
+                Save
+            </button>
+            }@else{
+            <button id="usermangerSavebutton" mat-button type="submit" matTooltip="Update channel mapping">
+                Update
+            </button>
+            }
+        </div>
+
+
+    </form>
+
+    }
+    <!-- add new DID -->
+    @if(data.didLabeling==true){
+        <form action="" [formGroup]="didLabelingForm" (ngSubmit)="saveDidLabel()">
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Did number</label>
+                <input type="number" class="form-control-username" required="required" name="channels" id="channels"
+                    formControlName="didNumber" placeholder="Enter DID number"
+                  
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (didLabelingForm.controls['didNumber'].invalid && didLabelingForm.controls['didNumber'].touched)
+                {
+                <div style="min-height: 5px; display: flex; align-items: center;">
+                    @if (didLabelingForm.controls['didNumber'].errors['required'])
+                    {
+                    <small class="text-danger">Did number is required</small>
+                    }
+                   
+                </div>
+                }
+    
+    
+            </div>
+            <div class="textFromfeild">
+                <label style="font-weight: bold;color: black;font-size: 16px;">Did label</label>
+                <input type="text" class="form-control-username" required="required" name="didLabel" id="didLabel"
+                    formControlName="didLabel" placeholder="Enter DID label"
+                    style="border-color:#89AECF; border-style: solid;width: 20vw;">
+                @if (didLabelingForm.controls['didLabel'].invalid && didLabelingForm.controls['didLabel'].touched)
+                {
+                <div style="min-height: 5px; display: flex; align-items: center;">
+                    @if (didLabelingForm.controls['didLabel'].errors['required'])
+                    {
+                    <small class="text-danger">Did label is required</small>
+                    }
+                    @if (didLabelingForm.controls['didLabel'].errors['pattern'])
+                    {
+                    <small class="text-danger">Only letters,numbers and spaces  are allowed</small>
+                    }
+                </div>
+                }
+            </div>
+   
+    
+
+            <div style="justify-content: space-between;display: flex;">
+                <button id="usermangerSavebutton" mat-button (click)="closeDialog()">
+                    <span>Cancel</span>
+                </button>
+                @if (data.excel==true&&data.element==null) {
+                <button id="usermangerSavebutton" mat-button type="submit" matTooltip="Save channel mapping">
+                    Save
+                </button>
+                }@else{
+                <button id="usermangerSavebutton" mat-button type="submit" matTooltip="Update channel mapping">
+                    Update
+                </button>
+                }
+            </div>
+    
+    
+        </form>
+    }
+    <!-- file upload for e-one DIDs -->
+
+    @if (data.didLabeling==false) {
+        <div>
+            <label class="selectlabel" for="">Select the file to upload</label>
+            <div style="display:  flex;">
+    
+                <input class="inputstyle" type="file" (change)="onFileChange($event,'did')">
+                <button class="uploadbuttonstl" mat-button type="submit" (click)="insertDataMappingMultiple('did')">
+                    <span matTooltip="Upload channel mapping">Upload</span> <!-- Text content -->
+                    <div style="padding-left: 5px;padding-top: 2px;">
+                        <span matTooltip="Upload channel mapping" class="material-symbols-outlined">
+                            cloud_upload
+                        </span>
+                    </div>
+                </button>
+    
+    
+            </div>
+            <div class="downloadclosedialouge">
+                <button class="closeDialoguebuttonstl" mat-button (click)="closeDialog()">
+                    <span>Cancel</span>
+                </button>
+    
+                <button matTooltip="Download template" class="downloadTemplatebutton" mat-button
+                    type="submit" (click)="generateTemplate('did')">
+                    <span>Download Template</span>
+                    <span class="material-symbols-outlined">
+                        system_update_alt
+                    </span>
+                </button>
+    
+            </div>
+    
+        </div>
+    
+        }
+<!-- file upload on channel mapping -->
+    @if (data.excel==false) {
+    <div>
+        <label class="selectlabel" for="">Select the file to upload</label>
+        <div style="display:  flex;">
+
+            <input class="inputstyle" type="file" (change)="onFileChange($event,'channel')">
+            <button class="uploadbuttonstl" mat-button type="submit" (click)="insertDataMappingMultiple('channel')">
+                <span matTooltip="Upload channel mapping">Upload</span> <!-- Text content -->
+                <div style="padding-left: 5px;padding-top: 2px;">
+                    <span matTooltip="Upload channel mapping" class="material-symbols-outlined">
+                        cloud_upload
+                    </span>
+                </div>
+            </button>
+
+
+        </div>
+        <div class="downloadclosedialouge">
+            <button class="closeDialoguebuttonstl" mat-button  (click)="closeDialog()">
+                <span>Cancel</span>
+            </button>
+
+            <button matTooltip="Download channel mapping template" class="downloadTemplatebutton" mat-button
+                type="submit" (click)="generateTemplate('channel')">
+                <span>Download Template</span>
+                <span class="material-symbols-outlined">
+                    system_update_alt
+                </span>
+            </button>
+
+        </div>
+
+    </div>
+
+    }

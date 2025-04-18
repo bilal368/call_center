@@ -1,0 +1,44 @@
+/* Style for the dialog title */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    padding: 16px;
+    color: var(--h3); 
+  }
+  
+  .mat-dialog-content {
+    padding: 16px;
+    text-align: center;
+  }
+  
+  audio {
+    outline: none;
+    border-radius: 4px;
+    /* margin-top: 16px; */
+  }
+  
+  /* Style for the dialog actions */
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 16px;
+  }
+  
+  button {
+    background-color: var(--h3); 
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: var(--h5); 
+  }
+  
+  .audio-container{
+    padding: 10px;
+  }

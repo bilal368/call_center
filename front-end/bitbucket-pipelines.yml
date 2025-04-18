@@ -1,0 +1,23 @@
+options:
+  docker: true
+  size: 2x
+definitions:
+  services:
+    docker:
+      memory: 7168
+pipelines:
+  branches:
+    'development':
+      - step:
+          name: Build and push Docker image
+          image: node:16.19.0-bullseye
+          services:
+            - docker
+          caches:
+            - docker
+          size: 2x
+          script:
+            - docker build -t dgvoxfrontend:development .
+            - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+            - docker tag dgvoxfrontend:development $DOCKERHUB_USERNAME/dgvoxfrontend:development
+            - docker push $DOCKERHUB_USERNAME/dgvoxfrontend:development

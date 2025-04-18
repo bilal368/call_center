@@ -1,0 +1,90 @@
+@if(clickedStatus=='unlockUser'){
+  <div class="header">
+    <h1 mat-dialog-title>
+      {{'alert.Confirm Unlock'| translate}}
+    </h1>
+  </div>
+  
+  <div mat-dialog-content class="dialog-content">
+    <p>{{data.message}}</p>
+  </div>
+  
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button class="action-button cancel-button btn" (click)="onCancel()">
+      {{'alert.Decline'| translate}}
+    </button>
+    <button mat-button class="action-button delete-button btn" (click)="onConfirm()">
+      {{'alert.Confirm'| translate}}
+    </button>
+  </div>
+  
+}
+@if(clickedStatus=='enterPW'){
+  <div class="header">
+    <h1 mat-dialog-title>
+      {{'alert.Enter password to continue'| translate}}
+    </h1>
+  </div>
+  
+  <!-- <div mat-dialog-content class="dialog-content">
+    <p>{{data.message}}</p>
+  </div> -->
+  <div class="p-3">
+    <div class="form-group w-70">
+      <input type="password" [(ngModel)]="this.password" class="form-control" placeholder>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button class="action-button cancel-button btn" (click)="onCancel()">
+      {{'alert.Decline'| translate}}
+    </button>
+    <button mat-button class="action-button delete-button btn" (click)="passwordConfirm()">
+      {{'alert.Confirm'| translate}}
+    </button>
+  </div>
+  
+}
+@else if(clickedStatus=='add'){
+  <div class="header">
+    <h1 mat-dialog-title>
+   Add Extension
+    </h1>
+  </div>
+  
+  <div mat-dialog-content class="dialog-content">
+    <p>{{data.message}}</p>
+  </div>
+  
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button class="action-button cancel-button btn" (click)="onCancel()">
+      {{'alert.Decline'| translate}}
+    </button>
+    <button mat-button class="action-button delete-button btn" (click)="onConfirm()">
+      {{'alert.Confirm'| translate}}
+    </button>
+  </div>
+  
+}
+@else if(clickedStatus=="deleteConfirmation") {
+
+  <div class="header">
+    <h1 mat-dialog-title>
+      {{'alert.Confirm Deletion'| translate}}
+    </h1>
+  </div>
+  
+  <div mat-dialog-content class="dialog-content">
+    <p>{{data.message}}</p>
+  </div>
+  
+  <div mat-dialog-actions class="dialog-actions">
+    <button mat-button class="action-button cancel-button btn" (click)="onCancel()">
+      {{'alert.Decline'| translate}}
+    </button>
+    <button mat-button class="action-button delete-button btn" (click)="onConfirm()">
+      {{'alert.Confirm'| translate}}
+    </button>
+  </div>
+  
+}
+

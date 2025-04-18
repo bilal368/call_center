@@ -1,0 +1,188 @@
+<div style="color: var(--tabColor);">
+    <form [formGroup]="myForm" (ngSubmit)="savebutton()">
+        <div style=" display: flex;">
+
+            <div class="leftFormstyle">
+                <div class="textFromfeild">
+                    <label class="headtext">Data Driver</label>
+                    <input type="text" class="form-control-username" required="required" name="DataPath" id="DataPath"
+                        formControlName="DataPath" placeholder="DataPath" id="placeholderstyle">
+                    @if (myForm.controls['DataPath'].invalid && myForm.controls['DataPath'].touched) {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Data driver is required</small>
+                    </div>
+                    }
+
+
+
+                </div>
+                <div class="textFromfeild">
+                    <label class="headtext">Session port</label>
+                    <input type="text" class="form-control-username" required="required" name="sessionport"
+                        id="sessionport" formControlName="sessionport" placeholder="Session port" id="placeholderstyle">
+                    @if (myForm.controls['sessionport'].invalid && myForm.controls['sessionport'].touched) {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Session port is required</small>
+                    </div>
+                    }
+                </div>
+                <div class="textFromfeild">
+                    <label class="headtext">Media forward IP</label>
+                    <input type="text" class="form-control-username" required="required" name="mediaforward"
+                        id="mediaforward" formControlName="mediaforward" placeholder="Media forward IP"
+                        id="placeholderstyle">
+                    @if (myForm.controls['mediaforward'].invalid && myForm.controls['mediaforward'].touched) {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Media forward IP is required</small>
+                    </div>
+                    }
+                </div>
+                <div class="textFromfeild">
+                    <label class="headtext">Local IP</label>
+                    <input type="text" class="form-control-username" required="required" name="localip" id="localip"
+                        formControlName="localip" placeholder="Local IP" id="placeholderstyle">
+                    @if (myForm.controls['localip'].invalid && myForm.controls['localip'].touched) {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Local IP is required</small>
+                    </div>
+                    }
+                </div>
+
+                <div class="textFromfeild">
+                    <label class="headtext">{{'RecorderSetting.IPCH'|translate}}</label>
+                    <input type="text" class="form-control-username" required="required" name="rtpip" id="ipch"
+                        formControlName="ipch" placeholder="{{'RecorderSetting.IPCH'|translate}}" id="placeholderstyle">
+                    @if (myForm.controls['ipch'].invalid && myForm.controls['ipch'].touched)
+                    {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Number of Channels is required</small>
+                    </div>
+                    }
+                </div>
+                <!-- <div class="textFromfeild">
+                    <label class="headtext">Avaya active</label>
+                    <input type="text" class="form-control-username" required="required" name="avayaactive"
+                        id="avayaactive" formControlName="avayaactive" placeholder="Avaya active" id="placeholderstyle">
+                    @if (myForm.controls['avayaactive'].invalid && myForm.controls['avayaactive'].touched)
+                    {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Avaya active is required</small>
+                    </div>
+                    }
+                </div> -->
+
+            </div>
+            <div class="rightForm">
+                <div class="textFromfeild">
+                    <label class="headtext">{{'RecorderSetting.LogStatus'|translate}}</label>
+                    <mat-select formControlName="logstatus" class="dropdowntext">
+                        <mat-option value="Off">OFF
+                        </mat-option>
+                        <mat-option value="0">FatalError
+                        </mat-option>
+                        <mat-option value="10">GENERAL-ERROR
+                        </mat-option>
+                        <mat-option value="20">Warning
+                        </mat-option>
+                        <mat-option value="30">Information
+                        </mat-option>
+                        <mat-option value="40">Debug
+                        </mat-option>
+                    </mat-select>
+                </div>
+
+                <div class="textFromfeild">
+                    <label class="headtext">Free swich port</label>
+                    <input type="text" class="form-control-username" required="required" name="freeswitchport"
+                        id="freeswitchport" formControlName="freeswitchport" placeholder="Free swich port"
+                        id="placeholderstyle">
+                    @if (myForm.controls['freeswitchport'].invalid && myForm.controls['freeswitchport'].touched)
+                    {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Free swich port</small>
+                    </div>
+                    }
+
+                </div>
+
+                <div class="textFromfeild">
+                    <label class="headtext">Free switch return port</label>
+                    <input type="text" class="form-control-username" required="required" name="freeswitchportreturn"
+                        id="freeswitchportreturn" formControlName="freeswitchportreturn" placeholder="Free swich port"
+                        id="placeholderstyle">
+                    @if (myForm.controls['freeswitchportreturn'].invalid &&
+                    myForm.controls['freeswitchportreturn'].touched)
+                    {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Free swich port</small>
+                    </div>
+                    }
+
+                </div>
+                <!-- <div class="textFromfeild">
+                    <label class="headtext">Set extension as agent</label>
+                    <input type="text" class="form-control-username" required="required" name="setasextesion"
+                        id="setasextesion" formControlName="setasextesion" placeholder="Set extension as agent"
+                        id="placeholderstyle">
+                    @if (myForm.controls['setasextesion'].invalid && myForm.controls['setasextesion'].touched)
+                    {
+                    <div class="validtionstyle">
+                        <small class="text-danger">Set extension as agent is requried</small>
+                    </div>
+                    }
+
+                </div> -->
+                <div style=" display: flex;
+                flex-direction: column;
+                height: 90px;
+                position: relative;">
+                    <label class="headtext">Set extension as agent</label>
+
+                    <div style="justify-content: space-around;font-weight: 500;color: black;font-size: 16px;">
+                        <label>
+                            <input type="radio" name="setasextesion" formControlName="setasextesion" value="1" checked>
+                            <span style="padding-left: 5px;">Yes</span>
+                        </label>
+                        <label style="padding-left: 10px;padding-right: 10px;">
+                            <input type="radio" name="setasextesion" formControlName="setasextesion" value="0">
+                            <span style="padding-left: 5px;">No</span>
+                        </label>
+
+
+                    </div>
+
+
+                </div>
+                <div style=" display: flex;
+                flex-direction: column;
+                height: 90px;
+                position: relative;">
+                    <label class="headtext">Avaya active</label>
+
+                    <div style="justify-content: space-around;font-weight: 500;color: black;font-size: 16px;">
+                        <label>
+                            <input type="radio" name="avayaactive" formControlName="avayaactive" value="1" checked>
+                            <span style="padding-left: 5px;">Yes</span>
+                        </label>
+                        <label style="padding-left: 10px;padding-right: 10px;">
+                            <input type="radio" name="avayaactive" formControlName="avayaactive" value="0">
+                            <span style="padding-left: 5px;">No</span>
+                        </label>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="example-button-row">
+                    <button matTooltip="Save Settings" matTooltip="Save settings" mat-button class="custom-button">
+                        {{'RecorderSetting.Save'|translate}}
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

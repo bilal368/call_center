@@ -1,0 +1,532 @@
+<div class="mainFrequentCallReport">
+    <div class="filters">
+        <div class="container">
+            <div class="row ">
+                <div class="col-9 d-flex p-0">
+                    <div mat-flat-button class="custom-button-date btn" [matMenuTriggerFor]="filterDate">
+                        <span class="material-symbols-outlined">
+                            schedule
+                        </span>
+                        {{ selectedDateRange }}
+                    </div>
+                    <mat-menu #filterDate="matMenu">
+                        <button mat-menu-item (click)="setDateRange('Today')">
+                            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.Today'| translate}}
+                        </button>
+                        <button mat-menu-item (click)="setDateRange('This Week')">
+                            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.This Week'| translate}}
+                        </button>
+                        <button mat-menu-item (click)="setDateRange('This Month')">
+                            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.This Month'| translate}}
+                        </button>
+                        <button mat-menu-item (click)="setDateRange('This Quarter')">
+                            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.This Quarter'| translate}}
+                        </button>
+                        <button mat-menu-item (click)="setDateRange('This Year')">
+                            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.This Year'| translate}}
+                        </button>
+                        <button mat-menu-item (click)="openCustomDateDialog(selectedDateRange)">
+                            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.Custom'| translate}}
+                        </button>
+
+                    </mat-menu>
+
+                    <button mat-flat-button class="custom-button-btn" [matMenuTriggerFor]="filterAgent">
+                        {{ 'Menu.REPORTS RECORDING.FREQUENT CALLS.Extension' | translate }}:
+                        {{ getAgentFilterText() | translate }}
+                    </button>
+
+                    <mat-menu #filterAgent="matMenu" class="agent-menu" style="padding-left: 1vw;">
+                        <!-- Search Input -->
+                         <div style="padding: 3px;">
+                            <input class="border w-80"
+                            placeholder="{{'Menu.REPORTS RECORDING.AGENTS.Search Agent' | translate}}"
+                            (input)="onAgentSearchChange($event)" (click)="$event.stopPropagation()">
+                         </div>
+                        
+
+                        <div class="agent-list d-flex justify-content-between me-1" (click)="$event.stopPropagation()">
+                            <!-- All Checkbox -->
+                            <mat-checkbox color="primary" (change)="toggleAgent('All', $event)"
+                                [checked]="selectedAgents.includes('All')">
+                                {{ 'All' | translate }}
+                            </mat-checkbox>
+
+                            
+                        </div>
+
+                        <div class="itemsDiv">
+                            @for(agent of filteredAgents;track $index){
+                            <div>
+                                <mat-checkbox color="primary" [checked]="isAgentSelected(agent.uniqueValue)"
+                                    (change)="toggleAgent(agent.uniqueValue, $event)"
+                                    (click)="$event.stopPropagation()">
+                                    {{ agent.uniqueValue }}
+                                </mat-checkbox>
+                            </div>
+                            }
+                        </div>
+                    </mat-menu>
+
+
+
+                    <div class="date-container" [matMenuTriggerFor]="filterDire">
+                        <button mat-flat-button class="custom-button-btn">{{'Menu.REPORTS RECORDING.FREQUENT
+                            CALLS.Direction'| translate}}: {{ selectedDirection }}</button>
+                    </div>
+                    <mat-menu #filterDire="matMenu">
+                        <button mat-menu-item (click)="setDirection('')">{{'Menu.REPORTS RECORDING.FREQUENT CALLS.All'|
+                            translate}}</button>
+                        <button mat-menu-item (click)="setDirection('0')">{{'Menu.REPORTS RECORDING.FREQUENT CALLS.Incoming'| translate}} </button>
+                        <button mat-menu-item (click)="setDirection('1')">{{'Menu.REPORTS RECORDING.FREQUENT CALLS.Outgoing'| translate}}
+                        </button>
+                    </mat-menu>
+                    <!-- 
+          
+
+      
+        <div class="radio-buttons" (click)="sortData()">
+            <mat-radio-group [(ngModel)]="selectedOption" (ngModelChange)="onRadioChange($event)">
+              <mat-radio-button value="callerId">
+                <span class="custom-label">
+                    {{'Menu.REPORTS RECORDING.FREQUENT CALLS.CallerID'| translate}} 
+                </span>
+              </mat-radio-button>
+              <mat-radio-button value="dialledNumber">
+                <span class="custom-label">{{'Menu.REPORTS RECORDING.FREQUENT CALLS.Dialled Number'| translate}} 
+                </span>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div> -->
+
+
+                    <div class="search-container">
+                        <!-- Dropdown -->
+                        <mat-select [(value)]="selectedOption" (selectionChange)="onDropdownChange()"
+                            class="dropdown-inside-bar"   disableRipple>
+                            
+                            <mat-option *ngFor="let option of searchOptions" [value]="option.value">
+                                {{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                        
+
+                        <!-- Search Input -->
+                        <input matInput placeholder="{{'Menu.REPORTS RECORDING.FREQUENT CALLS.Enter Phone Number' | translate}}" [(ngModel)]="numberTosearch" (input)="onSearch()"
+                            class="search-inside-bar" />
+                    </div>
+
+                    <div>
+                        <button  class="custom-apply-button btn" (click)="applyFilters()">{{'Menu.REPORTS
+                            RECORDING.FREQUENT CALLS.Apply'| translate}}
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Type -->
+                <div class="col-3 d-flex justify-content-end p-0">
+                    <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}"
+                        [matTooltip]="toolTips.download|translate" [matMenuTriggerFor]="menu4">
+                        <mat-icon class="icon">download_2</mat-icon>
+                        <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+                    </div>
+                    <!-- File Download -->
+                    <mat-menu #menu4="matMenu">
+                        <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+                            <div style="justify-content: space-around;display: flex;">
+                                <div>Excel</div>
+                                <div>
+                                    <span class="material-symbols-outlined">article</span>
+                                </div>
+                            </div>
+                        </button>
+                        <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+                            <div style="justify-content: space-around;display: flex;">
+                                <div>PDF</div>
+                                <div>
+                                    <span class="material-symbols-outlined">picture_as_pdf</span>
+                                </div>
+                            </div>
+                        </button>
+                        <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+                            <span>TIFF</span>
+                            <span class="material-symbols-outlined">perm_media</span>
+                        </button>
+                        <button hidden class="downloadBtn align-item" mat-menu-item
+                            (click)="exportToFile('Web Archive')">
+                            <span>Web Archive</span>
+                            <span class="material-symbols-outlined">install_desktop</span>
+                        </button>
+                    </mat-menu>
+
+
+                </div>
+
+            </div><!-- row -->
+
+        </div><!-- containers -->
+
+    </div> <!-- filters -->
+
+
+    <!-- Table Started -->
+
+    <div class="table-container">
+        @if(dataStatus){
+        <table mat-table [dataSource]="dataSource" class="tableData" matSort>
+
+            <!-- Agents Column -->
+            <ng-container matColumnDef="agents">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+                    <!-- <div class="header-cell-container" (click)="sortDataAgents()" class="tableHeader"> -->
+                    <div class="header-cell-container" class="tableHeader">
+
+                        <!-- <div  style="display: flex;">
+                            <div  >
+                                <label class="Agentlabel">{{'Menu.REPORTS RECORDING.FREQUENT CALLS.Agents'| translate}}</label>
+                            </div>
+                             <div class="icon">
+                                <span class="material-symbols-outlined" id="nameFilterUsergroup">
+                                    switch_left
+                                </span>
+                            </div>
+                        </div> -->
+
+                        <div class="label-column">
+                            <!-- Main header for Agent Name -->
+                            <label class="Agentlabel">
+                                {{ 'Menu.REPORTS RECORDING.FREQUENT CALLS.AgentName' | translate }}
+                            </label>
+                            <br>
+
+                            <!-- Additional header for Agent ID -->
+                            <label class="AgentIdlabel">
+                                {{ 'Menu.REPORTS RECORDING.FREQUENT CALLS.ExtensionNumber' | translate }}
+                            </label>
+                        </div>
+                        <!-- <div class="icon">
+                      <span class="material-symbols-outlined" id="nameFilterUsergroupagents">
+                          <mat-icon>switch_left</mat-icon>
+                      </span>
+                  </div> -->
+
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="agentElement">
+                    <div class="header-cell-container">
+                        <div >
+                            <!-- <label
+                                style="color: black; font-size: 12px; padding: 2px; width: 5vw;">{{element.agentName}}</label> -->
+                            <label>{{element.agentName}}</label>
+                        </div>
+                        <div style="color: white; font-size: 12px; padding: 2px; width: 3vw;">
+                            <label class="agentElementlabel">{{element.agents}}</label>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+
+
+            <!-- CallCount Column -->
+            <!-- <ng-container matColumnDef="phonenumber">
+                <th mat-header-cell *matHeaderCellDef style="background-color: var(--h3)">
+                    <div class="header-cell-container" (click)="sortphonenumber()" style="display: flex;">
+                        <div class="label-column">
+                            @if(selectedOption==='callerId'){
+                                <label class="callerIdlabel" >{{'Menu.REPORTS RECORDING.FREQUENT CALLS.CallerID'| translate}}</label>
+
+                            }@else{
+                                <label class="callerIdlabel">{{'Menu.REPORTS RECORDING.FREQUENT CALLS.Dialled Number'| translate}}</label>
+
+                            }
+
+                        </div>
+                        <div class="icon">
+                            <span class="material-symbols-outlined" id="nameFilterUsergroup">
+                                <mat-icon>switch_left</mat-icon>
+                            </span>
+                        </div>
+                    </div>
+                </th>
+
+                <td mat-cell *matCellDef="let element"  class="phonenumberElement">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label class="phonenumberElementLabel"
+                               >{{element.phonenumber}}</label>
+                        </div>
+                    </div>
+                </td>
+            </ng-container> -->
+
+
+            <ng-container matColumnDef="phonenumber">
+                <th mat-header-cell *matHeaderCellDef style="background-color: var(--h3)">
+                    <div class="header-cell-container" style="display: flex;">
+                        <div class="label-column">
+                            <!-- Dynamically display header based on selected option -->
+                            <label class="callerIdlabel">
+                                {{ selectedOption === 'callerId'? ('Menu.REPORTS RECORDING.FREQUENT CALLS.Caller ID' | translate)
+                                : ('Menu.REPORTS RECORDING.FREQUENT CALLS.Dialled Number' | translate) }}
+                                
+                            </label>
+                        </div>
+                        <!-- <div class="icon">
+                      <span class="material-symbols-outlined" id="nameFilterUsergroup">
+                        <mat-icon>switch_left</mat-icon>
+                      </span>
+                    </div> -->
+                    </div>
+                </th>
+
+                <td mat-cell *matCellDef="let element" class="phonenumberElement">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <!-- Dynamically bind the data based on selected option -->
+                            <label class="phonenumberElementLabel">
+                                {{ element.phonenumber }}
+                            </label>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+
+
+            <!-- Duration Column -->
+            <ng-container matColumnDef="attndcalls">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color:var(--h3)">
+                    <div class="header-cell-container" style="display: flex;">
+                        <div class="label-column">
+                            <label class="attndcalls"> {{'Menu.REPORTS RECORDING.FREQUENT CALLS.Attended Calls'|
+                                translate}}
+
+
+                            </label>
+                        </div>
+                        <!-- <div class="icon">
+                            <span class="material-symbols-outlined" id="nameFilterUsergroup">
+                                switch_left
+                            </span>
+                        </div> -->
+                    </div>
+                </th>
+
+                <td mat-cell *matCellDef="let element" class="attndcallsElement">
+                    <div class="header-cell-container">
+                        <div class="label-column" style="color: white;font-size:12px ;padding: 2px;;width: 3vw;">
+                            <label style="color: black;font-size:12px ;padding: 2px;;width: 5vw;">{{element.attndcalls}}
+                            </label>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Average Duration Column -->
+            <ng-container matColumnDef="missedcalls">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color:var(--h3)">
+                    <div class="header-cell-container" style="display: flex;">
+                        <div class="label-column">
+                            <label class="missedcalls">
+                                {{'Menu.REPORTS RECORDING.FREQUENT CALLS.Missed Calls'| translate}}
+
+                            </label>
+                        </div>
+                        <!-- <div class="icon">
+                            <span class="material-symbols-outlined" id="nameFilterUsergroup">
+                                switch_left
+                            </span>
+                        </div> -->
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="missedcallsElement">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label
+                                style="color: black;font-size:12px ;cursor:pointer ;padding: 2px;width: 110%;">{{element.missedcalls}}</label>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Total Working Days Column -->
+            <ng-container matColumnDef="zerotofivesecs">
+                <th mat-header-cell *matHeaderCellDef  mat-sort-header style="background-color:var(--h3)">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label class="zerotofivesecsLabel">
+                                {{'Menu.REPORTS RECORDING.FREQUENT CALLS.0-5 Secs'| translate}}
+                            </label>
+                        </div>
+
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="zerotofivesecsElement">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label
+                                style="color: black;font-size:12px ;cursor:pointer ;padding: 2px;width: 110%;">{{element.zerotofivesecs}}</label>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Avg.Calls / Working Days Column -->
+            <ng-container matColumnDef="sixtosixtysecs">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color:var(--h3)">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label class="sixtosixtysecsLabel">
+                                {{'Menu.REPORTS RECORDING.FREQUENT CALLS.6-60 Secs'| translate}}
+                            </label>
+                        </div>
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="sixtosixtysecsElement">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label
+                                style="color: black;font-size:12px ;cursor:pointer ;padding: 2px;width: 110%;">{{element.sixtosixtysecs}}</label>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+            <!-- one to three mins  -->
+            <ng-container matColumnDef="onetothreemins">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color:var(--h3)">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label class="onetothreeminsLabel">
+                                {{'Menu.REPORTS RECORDING.FREQUENT CALLS.1-3 Mins'| translate}}
+
+                            </label>
+                        </div>
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="onetothreeminsElement">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label
+                                style="color: black;font-size:12px ;cursor:pointer ;padding: 2px;width: 110%;">{{element.onetothreemins}}</label>
+                        </div>
+                    </div>
+
+
+                </td>
+            </ng-container>
+            <!--three plus mins  -->
+            <ng-container matColumnDef="threeplusmins">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color:var(--h3)">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label class="threeplusminsLabel">
+                                {{'Menu.REPORTS RECORDING.FREQUENT CALLS.3+ Mins'| translate}}
+                            </label>
+                        </div>
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" class="threeplusminsElement">
+                    <div class="header-cell-container">
+                        <div class="label-column">
+                            <label
+                                style="font-size:12px ;cursor:pointer ;padding: 2px;width: 110%;">{{element.threeplusmins}}</label>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+            <!--in out  -->
+
+            <ng-container matColumnDef="inout">
+                <th mat-header-cell *matHeaderCellDef style="background-color:var(--h3)">
+
+                    <div class="header-cell-container">
+                        <div class="label-call-out mb-1" matColumnDef="out">
+                            <mat-icon style="font-size: 18px;"><span>call_made</span></mat-icon>
+                            <label class="outLabel">
+                                {{'Menu.REPORTS RECORDING.FREQUENT CALLS.Out'| translate}}
+                            </label>
+                        </div>
+                        <div class="label-call-in" matColumnDef="in">
+                            <mat-icon style="font-size: 18px;"><span>call_received</span></mat-icon>
+                            <label class="Inlabel">
+                                {{'Menu.REPORTS RECORDING.FREQUENT CALLS.In'| translate}}
+                            </label>
+                        </div>
+                    </div>
+
+                </th>
+                <td mat-cell *matCellDef="let element" style="background-color: #ffffff;color: var(--h3);">
+                    <div class="header-cell-container">
+
+                        <div class="label-column">
+
+                            <div class="label-call-out mb-1">
+                                <mat-icon style="font-size: 18px;"><span>call_made</span></mat-icon>
+                                <label class="outLabelelement">{{element.out}}</label>
+                            </div>
+
+                            <div class="label-call-in">
+                                <mat-icon style="font-size: 18px;"><span>call_received</span></mat-icon>
+                                <label
+                                    style="color: black;font-size:12px; cursor:pointer; padding: 2px; width: 110%;">{{element.in}}</label>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>}
+    </div>
+
+    <!--pagination -->
+
+    <mat-toolbar class="pagination-toolbar">
+        <div class="page-info">
+            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.Total Records'| translate}}
+
+            : {{ TotalRecords }}</div>
+        <span class="example-spacer"></span>
+        <div class="page-info">
+            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.Records Per Page'| translate}}
+        </div>
+        <mat-select class="form-control me-4" [(ngModel)]="recordsPerPage"
+            (selectionChange)="onItemsPerPageChange($event)" style="width:5vw;">
+            <mat-option class="goto-check" [value]="10">10</mat-option>
+            <mat-option class="goto-check" value="25">25</mat-option>
+            <mat-option class="goto-check" value="50">50</mat-option>
+            <mat-option class="goto-check" value="100">100</mat-option>
+        </mat-select>
+
+        <div class="page-info">
+            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.Page'| translate}}
+
+            <mat-select class="form-control" style="width:5vw;" [(value)]="pageNumber"
+                (selectionChange)="goToPage($event)">
+                <mat-option *ngFor="let page of getPagesArray()" [value]="page" class="goto-check-pagination">
+                    {{ page }}
+                </mat-option>
+            </mat-select>
+            {{'Menu.REPORTS RECORDING.FREQUENT CALLS.of'| translate}}
+            {{ getTotalPages() }}
+        </div>
+
+        <div [dir]="'ltr'">
+            <button mat-mini-fab class="next-button me-2" (click)="previousPage()"
+                [matTooltip]="toolTips.Previous|translate">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button mat-mini-fab class="next-button me-2" (click)="nextPage()" [matTooltip]="toolTips.Next|translate">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+        </div>
+    </mat-toolbar>
+    <!--pagination -->
+</div>

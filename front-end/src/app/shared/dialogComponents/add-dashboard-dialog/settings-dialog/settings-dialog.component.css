@@ -1,0 +1,9 @@
+mat-tree{
+    min-height: 30vh;
+    max-height: 50vh;
+    overflow-y: scroll;
+    padding: 5%;
+}
+.applyButton{
+    background-color: rgb(193, 192, 192);
+}

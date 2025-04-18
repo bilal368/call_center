@@ -1,0 +1,139 @@
+<div>
+
+    <div style="display: flex;">
+        <div class="heading-container">
+            <label class="heading-label">
+                {{ 'Menu.CONFIGURE.USER MANAGER.USER GROUP' | translate }}
+            </label>
+            <div (click)="closeDialouge()" class="closeDialogIcon">
+                <span style="color:var(--headingBg) ;" class="material-symbols-outlined" matTooltip="Close">
+                    close
+                </span>
+            </div>
+
+        </div>
+    </div>
+    <div style="display: flex; margin-top: 2%;">
+       
+        <mat-checkbox color="primary" [(ngModel)]="selectAll" (change)="toggleSelectAll($event.checked)"
+            (click)="$event.stopPropagation()">
+        </mat-checkbox>
+        <label class="allbutton" for="">All</label>
+        <input type="text" placeholder="Search Groups" [(ngModel)]="searchTerm" (input)="filterGroups()"
+            class="searchstyle">
+        <div class="addbutton">
+            <span (click)="toogleFuntion(true)" class="material-symbols-outlined" [matTooltip]="toolTips.Add|translate">
+                group_add
+            </span>
+        </div>
+        <div class="deletbutton">
+            <!-- <mat-icon>delete</mat-icon> -->
+            <mat-icon (click)="deleteuserGroup()" [matTooltip]="toolTips.Delete|translate">
+                delete
+            </mat-icon>
+        </div>
+
+    </div>
+    <div #scrollMe style="height:55vh;overflow: auto;">
+        @for (group of grouname; track $index) {
+
+        @if (group.roleId!==indexupdate) {
+
+        <div id="userList">
+            <div style="width: 80%;" class="d-flex">
+                <mat-checkbox color="primary" [checked]="isRoleSelected(group.roleId)"
+                    (change)="toggleRoleSelection(group.roleId, $event.checked)" (click)="$event.stopPropagation()">
+                    {{group.roleName}}
+                </mat-checkbox>
+            </div>
+            <div style="width: 20%;padding-right: 5px;" class="d-flex justify-content-end">
+                <span id="userEditIcon" class="material-symbols-outlined"
+                    (click)="updateUserGroups(group.roleName,group.roleId,$index)"
+                    [matTooltip]="toolTips.Edit|translate">
+                    edit_square
+                </span>
+            </div>
+        </div>
+        }@else {
+        <form [formGroup]="UpdateFormm" (ngSubmit)="UpdateUserRolesGroup()">
+            <div class="UpdateUsersgroups">
+                <mat-checkbox color="primary" style="padding-right: 0px;"></mat-checkbox>
+                <input type="text" class="form-control-username" required="required" name="Usergroup"
+                    style="outline: none;border: none;width: 10vw;" id="userGroup" formControlName="roleName"
+                    placeholder="userGroup">
+                @if (update['roleName'].errors&& update['roleName'].touched) {
+                <div class="text-danger" style="position: absolute; bottom: -10px;">
+                    {{'Menu.CONFIGURE.USER MANAGER.Usergroup is required'| translate}}
+
+                </div>
+                }
+                <button class="saveButtonstyle" mat-button type="submit"
+                    [disabled]="UpdateFormm.pristine ||!UpdateFormm.valid">
+                    <span class="material-symbols-outlined" id="saveiconGroup"
+                        [matTooltip]="toolTips.saveuserGroup | translate">
+                        save
+                    </span>
+                </button>
+                <button class="saveButtonstyle" mat-button type="submit" (click)="updateFormClose()"
+                    [matTooltip]="toolTips.close|translate">
+                    <span class="material-symbols-outlined" id="saveiconGroup" matTooltip="Close">
+                        close
+                    </span>
+                </button>
+
+            </div>
+        </form>
+        }
+        }
+    </div>
+    @if (toogle===true) {
+
+    <form [formGroup]="myForm" (ngSubmit)="inserUserGroups()">
+        <div class="UpdateUsersgroups">
+            <mat-checkbox color="primary" style="padding-right: 0px;"></mat-checkbox>
+            <input type="text" class="form-control-username" required="required" name="Usergroup"
+                style="outline: none;border: none;width: 17vw;" id="userGroup" formControlName="roleName"
+                placeholder="{{'Menu.CONFIGURE.USER MANAGER.USER GROUP'| translate}}" autofocus>
+            @if (f['roleName'].touched) {
+            @if (f['roleName'].errors?.['required']) {
+            <div class="text-danger" style="position: absolute; bottom: 1vh;left:13px">
+                {{ 'Menu.CONFIGURE.USER MANAGER.Usergroup is required' | translate }}
+            </div>
+            }
+            @else if (f['roleName'].errors?.['minlength']) {
+            <div class="text-danger" style="position: absolute;  bottom: 1vh;left:13px">
+                Role name must be at least {{ myForm.controls['roleName'].errors?.['minlength'].requiredLength }}
+                characters long.
+            </div>
+            }
+            @else if (f['roleName'].errors?.['maxlength']) {
+            <div class="text-danger" style="position: absolute;  bottom: 1vh;left:13px">
+                Role name must be at least {{ myForm.controls['roleName'].errors?.['maxlength'].requiredLength }}
+                characters long.
+            </div>
+            }
+            }
+
+
+            <button class="saveButtonstyle" mat-button type="submit" [disabled]="myForm.pristine ||!myForm.valid">
+                <span class="material-symbols-outlined" id="saveiconGroup"
+                    [matTooltip]="toolTips.saveuserGroup | translate">
+                    save
+                </span>
+            </button>
+            <button class="saveButtonstyle" mat-button type="submit" (click)="toogleFuntion(false)">
+                <span class="material-symbols-outlined" id="saveiconGroup" matTooltip="Close">
+                    close
+                </span>
+            </button>
+        </div>
+    </form>
+
+    }
+
+    <div class="text-end p-2">
+        <button [matTooltip]="toolTips.Apply | translate" (click)="applyFuntion()" class="applybutton">Apply</button>
+
+    </div>
+    
+</div>

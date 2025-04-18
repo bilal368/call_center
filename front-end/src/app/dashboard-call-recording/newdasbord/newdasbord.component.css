@@ -1,0 +1,51 @@
+/* .chart-container {
+    width: 45%;
+    display: inline-block;
+    margin: 10px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  }
+  .add-button {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 15px;
+  padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .graphDiv {
+    height: 345px;
+    width: 100%;
+  } */
+
+  .chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two charts per row */
+  gap: 20px; /* Space between charts */
+  padding: 20px;
+}
+
+.chart-container {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.add-button {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 15px;
+  padding: 10px;
+    display: flex;
+    align-items: center;
+  }

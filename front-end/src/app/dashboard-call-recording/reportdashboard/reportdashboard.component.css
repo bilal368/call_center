@@ -1,0 +1,173 @@
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .graph-container {
+    width: 48%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: var(--currentwindow);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+  
+  }
+  
+  .graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--currentwindow);
+    padding: 10px;
+    border-bottom: 1px solid #145DA0;
+  }
+  
+  .graph-header span {
+    font-weight: bold;
+  }
+  
+  .close-button {
+    width: 28px;
+    height: 25px;
+    background: white;
+    border: 3px solid #145DA0;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--headingBg1);
+  }
+  
+  .graph-toolbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #EFF8FF;
+    border-bottom: 1px solid var(--headingBg1);
+    padding: 2px;
+  }
+  
+  .graph-toolbar button {
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .graph-content {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .dateButton {
+    background-color: #C9E1F5;
+    border-radius: 15px;
+    border: none;
+    color: var(--headingBg1);
+  
+  }
+  
+  .drop-down {
+    /* border-radius: 15px 15px 15px 15px; */
+    background-color: #C9E1F5;
+    border: none;
+    color: var(--headingBg1);
+    padding-left: 23px;
+  }
+  
+  .chart-icons {
+    background-color: var(--baseColor);
+    color: white;
+    /* border-radius: 15px; */
+    margin-right: -23px;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+  
+  .icon-container {
+    cursor: pointer;
+    color: var(--baseColor);
+  }
+  
+  .menu-bar {
+    padding: 0.4%;
+  }
+  
+  .add-button {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 15px;
+  
+    display: flex;
+    /* Aligns the icon and text in a row */
+    align-items: center;
+    /* Vertically centers the icon and text */
+  }
+  
+  .icon {
+    margin-left: -4px;
+  }
+  
+  .head-container {
+    /* margin-left: .5%; */
+    height: 90%;
+    overflow-y: auto;
+  }
+  
+  .sidenav-options {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    width: 99%;
+    height: 7%;
+    background-color: var(--tabColor);
+    align-items: center;
+    padding-bottom: 10px;
+    border-radius: 25px 25px 25px 25px;
+    margin-left: 6px;
+    margin-right: 6px;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .build-div {
+    width: 50%;
+    height: 40px;
+    background-color: var(--tabColor);
+    border-radius: 25px 25px 25px 25px;
+    color: var(--tabNameColor);
+    align-items: center;
+    /* padding-left: 2%;
+    padding-right: 2%; */
+    margin-left: .5%;
+    margin-right: .5%;
+    /* padding-top: 5px; */
+    letter-spacing: 1px;
+  }
+/* Full-screen container to center the spinner */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}
+
+/* Spinner styling */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top: 5px solid var( --headingBg); /* Spinner color */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+::ng-deep .mat-mdc-select-panel {
+  width: 90% !important;
+
+}

@@ -1,0 +1,595 @@
+.head-container {
+    height: 94vh;
+    padding-right: .2%;
+}
+
+.sidenav-options {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    /* background-color: var(--employeeDbg); */
+}
+
+.build-div {
+    width: 300px;
+    height: 40px;
+    background-color: var(--tabColor);
+    border-radius: 15px 15px 0px 0px;
+    color: var(--tabNameColor);
+    align-items: center;
+    padding-top: 5px;
+    letter-spacing: 1px;
+}
+
+.mainContainer {
+    height: 73vh;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.mat-toolbar {
+    margin-top: 3px;
+}
+
+.tab-text {
+    font-size: 16px;
+    align-items: center;
+
+}
+
+
+.employeeBtn {
+    color: #e0e0e0;
+}
+
+.employeeBtn-xls {
+    background-color: #5A9158;
+}
+
+.save-btn {
+    /* margin-left: 10px; */
+    padding-top: 9px;
+}
+
+.save-btn-location {
+    /* margin-left: 45px; */
+
+}
+
+.save-btn-division {
+    margin-bottom: 9px;
+}
+
+.save-btn-department {
+    margin-bottom: 9px;
+}
+
+
+table {
+    width: 100%;
+    /* margin-left: -12px; */
+    max-height: 45vh;
+    overflow-y: scroll;
+}
+
+th,
+td {
+    height: 6vh !important;
+}
+
+th.mat-sort-header-sorted {
+    color: var(--textColor);
+}
+
+.mdc-data-table__header-row {
+    color: var(--textColor);
+    background-color: var(--h3) !important;
+}
+
+.mat-mdc-table tbody,
+.mat-mdc-table tfoot,
+.mat-mdc-table thead,
+.mat-mdc-cell,
+.mat-mdc-footer-cell,
+.mat-mdc-header-row,
+.mat-mdc-row,
+.mat-mdc-footer-row {
+    background: inherit;
+
+}
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    /* Enable vertical scrolling if needed */
+    overflow-x: hidden;
+    /* Hide horizontal scrollbar */
+}
+
+th {
+    /* position: sticky; */
+    top: 0;
+    background-color: black;
+    z-index: 10;
+}
+
+.search {
+    margin-left: 20%;
+}
+
+.mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.search-field {
+    margin-right: 8px;
+}
+
+.menu-buttons {
+    /* display: flex; */
+    align-items: right;
+    justify-content: space-around;
+    gap: 10px;
+    flex-wrap: wrap;
+    /* width: 100%; */
+    margin: 0px;
+    align-items: right;
+    margin-left: auto;
+    /* margin-right:600px; */
+
+}
+
+.report-button {
+    margin-left: 10px;
+    /* Reset margin for smaller screens */
+}
+
+
+.xlclass {
+    color: var(--textColor);
+    font-size: 1rem;
+    margin-left: -8px;
+}
+
+
+.menu-filter {
+    padding-bottom: 1%;
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.toolbar-2 {
+    height: 50px;
+}
+
+.search-button {
+    background-color: var(--h3);
+    color: var(--textColor);
+}
+
+.Location-button {
+    background-color: var(--h3);
+    color: var(--textColor) !important;
+    border-radius: 20px;
+
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display: grid;
+    border: 4px solid #0000;
+    border-radius: 50%;
+    border-color: #f6f6f6 #0000;
+    animation: l16 1s infinite linear;
+    margin: 15% 45% 10% 45%;
+}
+
+.loader::before,
+.loader::after {
+    content: "";
+    grid-area: 1/1;
+    margin: 2px;
+    border: inherit;
+    border-radius: 50%;
+}
+
+.loader::before {
+    border-color: #75a28b #0000;
+    animation: inherit;
+    animation-duration: .5s;
+    animation-direction: reverse;
+}
+
+.loader::after {
+    margin: 8px;
+}
+
+@keyframes l16 {
+    100% {
+        transform: rotate(1turn)
+    }
+}
+
+.sidenav-container {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--textColor);
+    padding: 10px;
+}
+
+.table-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.mat-table {
+    width: 100%;
+}
+
+.mat-header-row,
+.mat-row {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.employeeBtn {
+    background-color: var(--h3) !important;
+    border-radius: 4px;
+    width: 50px;
+    /* Set width to make buttons square */
+    height: 42px;
+}
+
+
+.xlclass {
+    color: var(--textColor);
+    font-size: 1rem;
+    margin-left: -8px;
+}
+
+.tiffclass {
+    color: var(--textColor);
+    font-size: 1rem;
+}
+
+.tiffclassdiv {
+    margin-left: 5px;
+}
+
+.divFilter {
+    display: flex;
+    margin-left: -13px;
+    /* justify-content: flex-start; */
+    margin-right: 5px;
+}
+
+button.tiffbutton {
+    margin-left: 3px;
+}
+
+.mat-icon .xldownload {
+    color: var(--textColor);
+    font-size: 1rem;
+    margin-left: -7px;
+}
+
+.name-label {
+    font-size: 1rem;
+    color: var(--textColor) !important;
+
+}
+
+.custom-button-mapping{
+    align-items: center;
+    background-color: var(--h3) !important;
+    color: var(--textColor) !important;
+    border-radius: 4px;
+    width: 180px;
+    /* Set width to make buttons square */
+    height: 42px;
+  }
+/* Hierarchy */
+
+.container {
+    /* background-color: rgb(139, 29, 29); */
+    max-width: 100%;
+    height: 100%;
+    margin-top: 5px;
+
+}
+
+.row {
+    padding-top: 1%;
+    margin: 5px 0 5px 0;
+    height: 85%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+.col-4 {
+
+    width: calc(32.33%);
+    /* overflow-y: scroll;  */
+    height: 70vh;
+    overflow: auto;
+    border-radius: 4px;
+    box-shadow: #32325d40 0 6px 12px -2px, #0000004d 0 3px 7px -3px;
+    /* margin-right: 10px; */
+
+}
+
+.heading {
+    width: 100%;
+    margin: 0;
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--baseColor);
+    color: var(--baseColor1);
+    align-items: baseline;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 0px;
+}
+
+.heading .searchBox {
+    width: 90%;
+    border: 0px;
+    height: 100%;
+    margin-left: 2px;
+    margin-top: 0 !important;
+    background-color: var(--inputBg);
+
+}
+
+.searchBox::placeholder {
+    opacity: 0.5;
+}
+
+.input-container {
+    display: flex;
+    background-color: var(--inputBg);
+    display: flex;
+    width: 56%;
+    padding: 5px 2px 1px 5px !important;
+    height: 90%;
+    border: 1px var(--h3);
+    box-shadow: inset rgba(0, 0, 0, 0.4) 1.95px 1.95px 2.6px;
+}
+
+.input-container span {
+    margin-top: 1%;
+    margin-right: 0 !important;
+    color: var(--h3) !important;
+}
+
+.expansionHeader {
+    width: 100%;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.add_location_alt {
+    color: var(--textColor) !important;
+}
+
+.delete_location_alt {
+    color: var(--textColor) !important;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.alternate-color {
+    background-color: #f5f5f5;
+}
+
+li:hover {
+    background-color: #e0e0e0;
+}
+
+.saveButtonDiv {
+    height: 6vh;
+    padding: 0;
+    margin-right: 10px;
+    margin-top: 1vh;
+}
+
+.usergroupCancelbuttton {
+    margin-right: 7px;
+
+}
+
+
+
+.item-content {
+    display: inline-block;
+}
+
+.item-actions {
+    display: inline-block;
+}
+
+th {
+
+    height: 20px;
+}
+
+.locationDepartmentDivisionLabel {
+    color: var(--textColor) !important;
+    font-size: 1rem;
+    padding: 20px;
+    width:100px;
+}
+
+.custom-apply-button {
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #999999 0%, #CCCCCC 50%, #999999 100%);
+    color: #362f2f !important;
+    height: 5vh;
+}
+
+.unfold-less-double {
+    margin-right: 5px;
+    color: var(--textColor) !important;
+}
+
+/* pagination */
+
+.toolbar-4 {
+    background-color: var(--h3);
+    height: 3vh;
+    margin-top: 5%;
+}
+
+.pagination-toolbar {
+    background-color: var(--h3);
+    height: 8vh;
+    width: 100%;
+}
+
+.next-button {
+    background-color: var(--textColor) !important;
+    color: var(--textColorblack) !important;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.page-info {
+    font-size: 1rem;
+    margin-right:16px;
+    color: var(--textColor) !important;
+}
+
+.text-pagination {
+    font-size: 1rem;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 250px;
+
+    border: 1px solid #97A884;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 25%;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--h3);
+    border: none;
+    padding: 9px;
+    cursor: pointer;
+    border-radius: 2px 2px 2px 2px;
+}
+
+.search-button .material-icons {
+    color: white;
+    font-size: 18px;
+}
+.custom-white-checkbox.mat-mdc-checkbox.mat-accent {
+    --mdc-checkbox-selected-checkmark-color: #fff;
+    --mdc-checkbox-selected-focus-icon-color:var(--baseColor);
+    --mdc-checkbox-selected-hover-icon-color: var(--baseColor);
+    --mdc-checkbox-selected-icon-color:var(--baseColor);
+    --mdc-checkbox-selected-pressed-icon-color: var(--baseColor);
+    --mdc-checkbox-unselected-focus-icon-color: #ffffff;
+    --mdc-checkbox-unselected-hover-icon-color: #ffffff;
+    --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
+    --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
+    --mdc-checkbox-unselected-icon-color: rgb(255, 255, 255);
+    --mdc-checkbox-unselected-pressed-icon-color: rgb(255, 255, 255);
+  }
+
+  .label-icon-container {
+    display: flex;             
+    align-items: center;        
+    gap: 8px;  
+    font-size: small;                 
+  }
+  .label-status{
+    font-size:medium;
+  }
+.menu-buttons .employeeBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    background: transparent;
+  }
+  
+  .button-content {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Add spacing between icon and label */
+    text-align: center;
+  }
+  
+  .button-content .material-symbols-outlined {
+    font-size: 20px; /* Adjust icon size */
+    color: rgb(255, 255, 255); /* Icon color */
+  }
+  
+  .button-content label {
+    font-size: 15px; /* Font size for the label */
+    font-weight: normal; /* Adjust font weight */
+    color: rgb(255, 255, 255); /* Text color */
+    margin: 0; /* Remove default margins */
+  }
+  
+  .excelDiv {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    background-color: #5A9158;
+    font-size: 15px;
+    color: #fbf3f3;
+    padding: 3px;
+    cursor: pointer;
+    width: 80px;
+  }
+  ::ng-deep .goto-check .mat-pseudo-checkbox {
+    display: none !important;
+  }
+  ::ng-deep .goto-check-pagination .mat-pseudo-checkbox {
+    display: none !important;
+  }
+  
+  ::ng-deep .mat-sort-header-arrow, [dir=rtl] .mat-sort-header-position-before .mat-sort-header-arrow {
+    margin: 0px 0px 6px 6px !important;
+  }

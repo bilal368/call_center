@@ -1,0 +1,93 @@
+.chart-container {
+    display: flex;
+    justify-content: center;
+    /* Align horizontally */
+    align-items: center;
+    /* Align vertically */
+    height: 80vh;
+    /* Full viewport height */
+    width: 90%;
+    /* Full page width */
+}
+
+
+/* Container for the card layout */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Individual Card */
+.card {
+    width:16%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+/* Card Header */
+.card-header {
+    background-color: var(--h3);
+   
+    color: #ffffff;
+    
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Card Body */
+.card-body {
+    padding: 10px;
+    color: #333;
+}
+
+/* Individual detail row in the card */
+.card-detail {
+    margin-bottom: 5px;
+}
+
+/* Label for the card details */
+.label {
+    /* font-weight: 500; */
+    color: #555;
+}
+
+/* Value text in the card */
+.value {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #333;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .card {
+        width: 48%;
+        /* Two cards per row */
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 100%;
+        /* One card per row */
+    }
+}
+.no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Adjust based on your layout */
+    font-size: 20px;
+    color: #666;
+    text-align: center;
+  }

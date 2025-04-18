@@ -1,0 +1,274 @@
+<div [dir]="'align'|translate">
+    @if (!nextClick) {
+    <div>
+        @if(clickedStatus==='activeD'){<div class="dialogueContainer">
+            <label for="">{{data.message}}</label>
+            <button class="okButton" (click)="closedialogue()">OK</button>
+        </div>
+        }
+        @if(clickedStatus==='employeeUpdated'){
+        <div class="dialogueContainerHeader">
+            {{'Menu.ALERTS MANAGEMENT.Common.EMPLOYEE UPDATED'| translate}}
+            <!-- <button class="closeButton" (click)="closedialogue1()" [matTooltip]="toolTips.close|translate">X</button> -->
+        </div>
+        <div class="dialogueContainer1">
+            <label for="">{{data.message}}</label>
+            <button class="okButton-confirmationMsg" (click)="closedialogue1()">
+                {{'Menu.ALERTS MANAGEMENT.Common.OK'| translate}}</button>
+        </div>
+        }
+        @if(clickedStatus==='hierarchyUpdated'){
+        <div class="dialogueContainerHeader">
+            {{'Menu.ALERTS MANAGEMENT.Common.HEIRARCHY UPDATED'| translate}}
+            <!-- <button class="closeButton-hierarchy" (click)="closedialogue1()">X</button> -->
+        </div>
+        <div class="dialogueContainer1">
+            <label for="" style="padding-left: 45px;">{{data.message}}{{'Menu.ALERTS MANAGEMENT.Common.The heirarchy
+                details updated successfully'| translate}}</label>
+            <button class="okButton-confirmationMsg" (click)="closedialogue1()">{{'Menu.ALERTS MANAGEMENT.Common.OK'|
+                translate}}</button>
+        </div>
+        }
+        @if(clickedStatus==='deleteConfirmation'){
+
+        <h1 class="text-center" mat-dialog-title>{{'Menu.ALERTS MANAGEMENT.Common.Confirm Deletion'| translate}}</h1>
+        <div mat-dialog-content>
+            <p>{{data.message}}</p>
+        </div>
+        <div mat-dialog-actions class="w-100 justify-content-around">
+            <button class="bg-dark text-light" mat-button (click)="onNoClick()">{{'Menu.ALERTS MANAGEMENT.Common.No'|
+                translate}}</button>
+            <button class="bg-danger text-light" mat-button color="primary" (click)="onYesClick()">{{'Menu.ALERTS
+                MANAGEMENT.Common.Yes'| translate}}</button>
+        </div>
+
+        }
+        @if(clickedStatus==='unlockUser'){
+
+        <h1 class="text-center" mat-dialog-title>{{'Menu.CONFIGURE.USER MANAGER.unlockUser.Name'| translate}}</h1>
+        <div mat-dialog-content>
+            <p>{{data.message}}</p>
+        </div>
+        <div mat-dialog-actions class="w-100 justify-content-around">
+            <button class="bg-dark text-light" mat-button (click)="onNoClick()">{{'Menu.CONFIGURE.USER
+                MANAGER.unlockUser.No'| translate}}</button>
+            <button class="bg-danger text-light" mat-button color="primary" (click)="onConfirm()">{{'Menu.CONFIGURE.USER
+                MANAGER.unlockUser.Yes'| translate}}</button>
+        </div>
+
+        }
+
+        @if(clickedStatus==='locationalert'){
+        <div class="dialogueContainer1">
+            <label for="">Location Name already exist</label>
+            <button class="okButton-confirmationMsg" (click)="closedialogue1()">OK</button>
+        </div>
+        }
+
+        @if(clickedStatus==='employeeAdded'){
+        <div class="dialogueContainerHeader">
+            {{'Menu.ALERTS MANAGEMENT.Common.EMPLOYEE ADD'| translate}}
+            <button class="closeButton" (click)="closedialogue1()">X</button>
+        </div>
+        <div class="dialogueContainer1">
+            <label for="">{{data.message}}</label>
+            <button class="okButton-confirmationMsg" (click)="closedialogue1()">{{'Menu.ALERTS MANAGEMENT.Common.OK'|
+                translate}}</button>
+        </div>
+        }
+        @if(clickedStatus==='importEmployeeDetails'){
+
+        <div>
+            <div class="mainalertContainer">
+                <div class="alertHeader">
+                    <label class="alertHeaderlabel" for="">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.IMPORTEMPLOYEEDETAILS'|
+                        translate}}</label>
+
+                </div>
+                <label class="selectlabel" for="">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Select the file to
+                    upload'|translate}}</label>
+
+                <div style="display:flex;">
+                    <input class="inputstyle" type="file" (change)="onFileChange($event)">
+                    <button style="margin-top: 10px;" class="uploadbuttonstl" mat-button type="submit"
+                        (click)="insertDatafuntion()">
+                        {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Upload'|translate}}
+                        <mat-icon class="material-symbols-outlined">
+                            cloud_upload
+                        </mat-icon>
+                    </button>
+                </div>
+
+                <div class="downloadclosedialouge">
+
+                    <button (click)="closeDialog()" class="closeDialoguebuttonstl" mat-button type="submit"
+                        [matTooltip]="toolTips.cancel|translate">
+                        <span>{{'Menu.CONFIGURE.EMPLOYEE MANAGER.CANCEL'| translate}}</span>
+                    </button>
+
+                    <button class="downloadTemplatebutton" type="submit" (click)="generateTemplate()"
+                        matTooltip='Download Template'>
+                        <span>{{'Menu.CONFIGURE.USER MANAGER.DOWNLOAD TEMPLATE'| translate}}</span>
+                        <span class="material-symbols-outlined">
+                            system_update_alt
+                        </span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        }
+        @if(clickedStatus==='rolesAndPrivileagesSaved'){
+        <div class="dialogueContainerHeader">
+            {{'Menu.CONFIGURE.ROLES & PRIVILEGES.SUCCESS'|
+            translate}}
+            <!-- <button class="closeButton" (click)="closedialogue1()">X</button> -->
+            <!-- <button class="closeButton-hierarchy ms-1" (click)="closedialogue1()">X</button> -->
+
+        </div>
+        <div class="dialogueContainer1">
+            <label style="width: 100%;text-align: center;" for="">
+                {{data.message|translate}}
+            </label>
+            <button class="okButton-confirmationMsg text-light" (click)="closedialogue1()">
+                {{'Menu.CONFIGURE.ROLES & PRIVILEGES.OK'|
+                translate}}
+            </button>
+        </div>
+        }
+
+        @if(clickedStatus ==='AddNewExtensionConfirmation'){
+        <div class="alertHeader">
+            <label class="alertHeaderlabel" for=""> {{'Menu.CONFIGURE.EXTENSION MAPPING.ADD' | translate}}</label>
+            <!-- (click)="closeDialog()" -->
+            <div class="closeIconstyle">
+                <span style="color:var(--headingBg) ;" [matTooltip]="toolTips.close|translate"
+                    class="material-symbols-outlined" (click)="onCancel()">
+                    close
+                </span>
+            </div>
+        </div>
+
+        <div class="dialogueContainer1">
+            <label for="">Are you sure you want to add this extension.?</label>
+            <div mat-dialog-actions>
+                <button mat-button (click)="onCancel()">Decline</button>
+                <button mat-button (click)="onConfirm()">Confirm</button>
+            </div>
+        </div>
+        }
+        @if(clickedStatus === 'DeleteExtensionConfirmation'){
+
+        <div class="alertHeader">
+            <label class="alertHeaderlabel" for="">{{'Menu.CONFIGURE.EXTENSION MAPPING.DELETE' | translate}}</label>
+            <!-- (click)="closeDialog()" -->
+            <div class="closeIconstyle">
+                <span style="color:var(--headingBg);" [matTooltip]="toolTips.close|translate"
+                    class="material-symbols-outlined" (click)="onCancel()">
+                    close
+                </span>
+            </div>
+        </div>
+        <div class="dialogueContainer1">
+            <label for="">Are you sure you want to delete extension mapping?</label>
+            <div mat-dialog-actions>
+                <button mat-button (click)="onCancel()">Decline</button>
+                <button mat-button (click)="onConfirm()">Confirm</button>
+            </div>
+        </div>
+        }
+        @if(clickedStatus ==='extensionUpload'){
+  
+
+        <div>
+            <div class="mainalertContainer">
+                <div class="alertHeader">
+                    <label class="alertHeaderlabel" matTooltip="Import Extension Mapping"
+                        for="">{{'Menu.CONFIGURE.EXTENSION MAPPING.IMPORT' |
+                        translate}}</label>
+
+                </div>
+                <label class="selectlabel" for="">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Select the file to
+                    upload'|translate}}</label>
+
+                <div style="display:flex;">
+                    <input class="inputstyle" type="file" accept=".xlsx" (change)="onFileChange($event)">
+                    <button style="margin-top: 10px;" class="uploadbuttonstl" mat-button type="submit"
+                      (click)="insertExtDatafuntion()">
+                        {{'Menu.CONFIGURE.EMPLOYEE MANAGER.Upload'|translate}}
+                        <mat-icon class="material-symbols-outlined">
+                            cloud_upload
+                        </mat-icon>
+                    </button>
+                </div>
+
+                <div class="downloadclosedialouge">
+
+                    <button (click)="closeDialog()" class="closeDialoguebuttonstl" mat-button type="submit"
+                        [matTooltip]="toolTips.cancel|translate">
+                        <span>{{'Menu.CONFIGURE.EMPLOYEE MANAGER.CANCEL'| translate}}</span>
+                    </button>
+
+                    <button class="downloadTemplatebutton" type="submit" (click)="generateTemplate()"
+                        matTooltip='Download Template'>
+                        <span>{{'Menu.CONFIGURE.USER MANAGER.DOWNLOAD TEMPLATE'| translate}}</span>
+                        <span class="material-symbols-outlined">
+                            system_update_alt
+                        </span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+        }
+        @if(clickedStatus==='importStatus'){
+
+        }
+        @if(clickedStatus ==='View') {
+        <!-- <div>
+            <div class="mainalertContainer">
+                <p>{{data.userData.oldValue}}</p>
+                </div>
+                </div>
+
+                <div>
+                    <div class="mainalertContainer">
+                        <p>{{data.userData.newValue}}</p>
+                        </div>
+                        </div> -->
+        <div class="container">
+
+            <div class="left-section">
+                <h3>Old Value</h3>
+                {{data.userData.oldValue}}
+            </div>
+
+            <div class="right-section">
+                <h3>New Value</h3>
+                {{data.userData.newValue}}
+            </div>
+        </div>
+
+        }
+
+
+        @if (nextClick) {
+        <div class="spinner">
+            <mat-spinner></mat-spinner>
+            <label style="margin-left: 10px;">Please wait</label>
+        </div>
+        }
+
+        @if(clickedStatus==='employeeDeleted'){
+        <div class="dialogueContainerHeader">
+            DELETE
+            <button class="closeButton-delete" (click)="closedialogue1()">X</button>
+        </div>
+        <div class="dialogueContainer1">
+            <label for="">{{data.message}}</label>
+            <button class="okButton-delete" (click)="closedialogue1()">OK</button>
+        </div>
+        }
+    </div>
+    }
+</div>

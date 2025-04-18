@@ -1,0 +1,307 @@
+<div class="mainContainer">
+  <div class="filters ">
+    <div class="container  ">
+      <div class="row">
+        <div class="col-9 d-flex  p-0 justify-content-start">
+
+          <button class="custom-button-date btn" [matMenuTriggerFor]="filterDate">
+            <span class="material-symbols-outlined ">
+              schedule
+            </span>
+            <span class="">{{ selectedDate }}</span>
+          </button>
+          <mat-menu #filterDate="matMenu">
+
+            <button mat-menu-item (click)="setDateRange('Today')">
+              {{'Menu.REPORTS RECORDING.AUDITTRAIL.Today'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Week')">
+              {{'Menu.REPORTS RECORDING.AUDITTRAIL.This Week'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Month')">
+              {{'Menu.REPORTS RECORDING.AUDITTRAIL.This Month'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Quarter')">
+              {{'Menu.REPORTS RECORDING.EXTENSIONS.This Quarter'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Year')">
+              {{'Menu.REPORTS RECORDING.AUDITTRAIL.This Year'| translate}}
+            </button>
+            <button mat-menu-item (click)="openCustomDateDialog(selectedDate)">
+              {{'Menu.REPORTS RECORDING.AUDITTRAIL.Custom'| translate}}
+            </button>
+          </mat-menu>
+
+
+          <button  class="custom-button btn" [matMenuTriggerFor]="filterAction">
+            {{'Menu.REPORTS RECORDING.AUDITTRAIL.Action'| translate}}:{{selectedUserAction.length ? selectedAction:'All'
+            }}
+          </button>
+          <mat-menu  #filterAction="matMenu" style="padding-left: 1vw;width: 100%">
+            <div class="d-flex me-2 w-30" >
+              <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="selectedUserAction.length === actionList.length"
+              (change)="onActionChange('All','', $event.checked)">All
+            </mat-checkbox>
+            </div>
+              <div class="itemsDiv itemDiv1" style="width: 10vw;">
+              @for(item of actionList;track $index){
+                <ng-container>
+                  <div>
+                    <mat-checkbox color="primary"
+                      (click)="$event.stopPropagation()"
+                      [checked]="selectedUserAction.includes(item.moduleActionId)"
+                      (change)="onActionChange(item.moduleActionId,item.actionName, $event.checked)">
+                      {{item.actionName}}
+                    </mat-checkbox>
+                  </div>
+                </ng-container>
+              }
+            </div>
+            <button mat-menu-item >
+              Close
+          </button>
+      
+          </mat-menu>
+
+          <button  class="custom-button btn" [matMenuTriggerFor]="filterModule">
+            {{'Menu.REPORTS RECORDING.AUDITTRAIL.Module'| translate}}:  {{ selectedModule.length ? moduleName : 'All' }}
+          </button>
+          <mat-menu #filterModule="matMenu">
+            <div class="d-flex me-1">
+              <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="selectedModule.length === moduleList.length"
+                (change)="onModuleChange('All', $event.checked)">
+              </mat-checkbox>
+              <input class="ms-2 border w-80"
+               placeholder="{{'Menu.REPORTS RECORDING.AUDITTRAIL.Search Module Name' | translate}}"
+               (input)="onSearchChange($event,'Module')" (click)="$event.stopPropagation()">
+               
+            </div>
+         
+                
+         
+              <div class="itemsDiv">
+              @for(item of moduleList;track $index){
+              <ng-container>
+                <div>
+                  <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="selectedModule.includes(item.moduleName)"
+                    (change)="onModuleChange(item.moduleName, $event.checked)">
+                    {{item.moduleName}}
+                  </mat-checkbox>
+                </div>
+              </ng-container>
+            }
+            </div>
+            <button mat-menu-item >
+              Close
+          </button>
+          </mat-menu>
+          <button  [matTooltip]="toolTips.View|translate" class="custom-button btn"
+            [matMenuTriggerFor]="filterUser">
+            {{'Menu.REPORTS RECORDING.AUDITTRAIL.UserId'|translate}}:{{selectedUser.length ?selectedUserName :'All' }}
+          </button>
+          <mat-menu #filterUser="matMenu">
+            <div class="d-flex me-1">
+              <mat-checkbox color="primary" (click)="$event.stopPropagation()" [checked]="selectedUser.length === userList.length"
+                (change)="onUserNameChange('All','', $event.checked)">
+              
+              </mat-checkbox>
+              <input class="ms-2 border w-100" placeholder="{{'Menu.REPORTS RECORDING.AUDITTRAIL.Search User Name' | translate}}"
+               (input)="onSearchChange($event,'User')" (click)="$event.stopPropagation()">
+               </div>
+        
+              <div class="itemsDiv">
+              @for(item of userList;track $index){
+              <ng-container>
+                <div>
+                  <mat-checkbox color="primary"
+                    (click)="$event.stopPropagation()"
+                    [checked]="selectedUser.includes(item.userId)"
+                    (change)="onUserNameChange(item.userId,item.username ,$event.checked)">
+                    {{item.username}}
+                  </mat-checkbox>
+                </div>
+              </ng-container>
+            }
+          </div>
+          <button mat-menu-item >
+            Close
+        </button>
+          </mat-menu>
+
+          <button  class="custom-apply-button btn" [matTooltip]="toolTips.apply | translate" (click)="btnClick()">
+            {{'Menu.REPORTS RECORDING.AUDITTRAIL.Apply'| translate}} </button>
+
+        </div>
+        <div class="col-3 d-flex p-0 justify-content-end">
+          <div>
+            <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}" [matMenuTriggerFor]="menu4">
+              
+              @if (isLoading) {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                }@else {
+              <mat-icon class="icon">download_2</mat-icon>
+              <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+                }
+            </div>
+            <!-- File Download -->
+            <mat-menu #menu4="matMenu">
+              <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+                <div style="justify-content: space-around;display: flex;">
+                  <div>Excel</div>
+                  <div>
+                    <span class="material-symbols-outlined">article</span>
+                  </div>
+                </div>
+              </button>
+              <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+                <div style="justify-content: space-around;display: flex;">
+                  <div>PDF</div>
+                  <div>
+                    <span class="material-symbols-outlined">picture_as_pdf</span>
+                  </div>
+                </div>
+              </button>
+              <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+                <span>TIFF</span>
+                <span class="material-symbols-outlined">perm_media</span>
+              </button>
+              <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+                <span>Web Archive</span>
+                <span class="material-symbols-outlined">install_desktop</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+      <div class="table-container" style="overflow: auto;">
+  
+          <table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource" >
+            <!-- Selection Column -->
+      
+            <!-- Extension Label Column -->
+            <ng-container matColumnDef="UserId">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+                <!-- Extension Label <br> -->
+                <div  class="header-cell-container" class="tableHeader" style="padding-left: 10px;" >
+                  <div style="display: flex;" >
+                    {{'Menu.REPORTS RECORDING.AUDITTRAIL.UserId'| translate}}
+                    <br>
+                  </div>
+                </div>
+              </th>
+              <td mat-cell *matCellDef="let element" style="padding-left: 10px;">{{element.username}}</td>
+            </ng-container>
+      
+      
+      
+      
+            <ng-container matColumnDef="Module">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+      
+                <div class="header-cell-container" class="tableHeader">
+                  <div style="display: flex; ">
+                    {{'Menu.REPORTS RECORDING.AUDITTRAIL.Module'| translate}}
+                    <br>
+                  </div>
+                </div>
+              </th>
+              <td mat-cell *matCellDef="let element" class="columnCell">{{element.Module}} </td>
+      
+              <td mat-cell *matCellDef="let element"><br>
+                <label class="value-label"> </label>
+              </td>
+            </ng-container>
+            <!-- Extension Label Column -->
+      
+            <ng-container matColumnDef="Description">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+      
+                <div class="header-cell-container" class="tableHeader">
+                  <div style="display: flex;">
+                    {{'Menu.REPORTS RECORDING.AUDITTRAIL.Description'| translate}}
+                  </div>
+                </div>
+              </th>
+              <td mat-cell *matCellDef="let element" style="align-items: center;">
+                {{ capitalizeFirstLetter(element.Description) }}
+              </td>
+            </ng-container>
+      
+            <!-- Date Column -->
+            <ng-container matColumnDef="Action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+      
+                <div class="header-cell-container" class="tableHeader">
+                  <div style="display: flex;">
+                    {{'Menu.REPORTS RECORDING.AUDITTRAIL.Action'| translate}}
+                    <br>
+                  </div>
+                </div>
+              </th>
+              <td mat-cell *matCellDef="let element">{{element.Action}} </td>
+      
+              <td mat-cell *matCellDef="let element"><br>
+                <label class="value-label"> </label>
+              </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="Date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+                <!-- Dialed <br> -->
+                <div class="header-cell-container" class="tableHeader">
+                  <div style="display: flex;">
+                    {{'Menu.REPORTS RECORDING.AUDITTRAIL.Date'| translate}}
+                    <br>
+                  </div>
+                </div>
+              </th>
+              <td mat-cell *matCellDef="let element" class="columnCell">
+                {{ element.Date | date:'dd-MM-yyyy HH:mm:ss a' }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+  
+  
+    @if (noDataFound) {
+    <div class="no-data-found">
+      {{'Menu.REPORTS RECORDING.EXTENSIONS.No data found'| translate}}
+    </div>
+    }
+  </div>
+  <mat-toolbar class="pagination-toolbar">
+    <div class="page-info">{{'Menu.REPORTS RECORDING.AUDITTRAIL.Total Records'| translate}}: {{ totalLength }}</div>
+    <span class="example-spacer"></span>
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.AUDITTRAIL.Records Per Page'| translate}}
+    </div>
+    <mat-select class="form-control me-4" style="width:75px" [(ngModel)]="recordsPerPage" (selectionChange)="onItemsPerPageChange($event)">
+      <mat-option class="goto-check" [value]="10">10</mat-option>
+      <mat-option class="goto-check" value="25">25</mat-option>
+      <mat-option class="goto-check" value="50">50</mat-option>
+      <mat-option class="goto-check" value="100">100</mat-option>
+    </mat-select>
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.AUDITTRAIL.Page'| translate}}
+      <mat-select class="form-control"style="width: 6vw;"  [(value)]="pageNumber" (selectionChange)="goToPage($event)">
+        <mat-option *ngFor="let page of getPagesArray()" class="goto-check" [value]="page">
+          {{ page }}
+        </mat-option>
+      </mat-select>
+      {{'Menu.REPORTS RECORDING.AUDITTRAIL.of'| translate}} {{ getTotalPages() }}
+    </div>
+    <div [dir]="'ltr'">
+      <button mat-mini-fab class="next-button me-2" (click)="previousPage()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-mini-fab class="next-button me-2" (click)="nextPage()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+    </div>
+  </mat-toolbar>
+</div>

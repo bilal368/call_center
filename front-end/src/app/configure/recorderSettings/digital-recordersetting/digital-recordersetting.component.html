@@ -1,0 +1,453 @@
+<div class="head-container">
+    <div class="sidenav-options">
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('digitalrecoder')"
+                [ngStyle]="{'background-color': buildDiv === 'digitalrecoder' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'digitalrecoder' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">Digital Recoder Settings</label>
+            </div>
+        </ng-container>
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('digitalevent')"
+                [ngStyle]="{'background-color': buildDiv === 'digitalevent' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'digitalevent' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">Event Management</label>
+            </div>
+        </ng-container>
+    </div>
+    @if (buildDiv=='digitalrecoder') {
+    <div style="color: var(--tabColor);">
+        <form [formGroup]="myForm" (ngSubmit)="savebutton()">
+            <div style=" display: flex;">
+                <div class="leftFormstyle">
+                    <div class="textFromfeild">
+                        <label class="headtext">Data Driver</label>
+                        <input type="text" class="form-control-username" required="required" name="DataPath"
+                            id="DataPath" formControlName="DataPath" placeholder="Data Driver" id="placeholderstyle">
+                        @if (myForm.controls['DataPath'].invalid && myForm.controls['DataPath'].touched) {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Data Driver is required</small>
+                        </div>
+                        }
+
+
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">Maximum Filesize</label>
+                        <input type="text" class="form-control-username" required="required" name="Maxfilesize"
+                            id="Maxfilesize" formControlName="Maxfilesize" placeholder="Maxfilesize"
+                            id="placeholderstyle">
+
+                        @if (myForm.controls['Maxfilesize'].invalid &&
+                        myForm.controls['Maxfilesize'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Maximum Filesize required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">Missed Call</label>
+                        <input type="text" class="form-control-username" required="required" name="Misscall"
+                            id="Misscall" formControlName="Misscall" placeholder="Misscall" id="placeholderstyle">
+
+                        @if (myForm.controls['Misscall'].invalid &&
+                        myForm.controls['Misscall'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Missed Call required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">Voltage Capture</label>
+                        <input type="text" class="form-control-username" required="required" name="Voltage" id="Voltage"
+                            formControlName="Voltage" placeholder="Voltage capture" id="placeholderstyle">
+
+                        @if (myForm.controls['Voltage'].invalid &&
+                        myForm.controls['Voltage'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Voltage Capture required</small>
+                        </div>
+                        }
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headLable">Media Proxy IP</label>
+                        <input type="text" class="form-control-username" required="required" name="localipaddress"
+                            id="localipaddress" formControlName="mediaproxy" placeholder="Media Proxy IP"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['mediaproxy'].invalid && myForm.controls['mediaproxy'].touched)
+                        {
+                        <div style=" min-height: 5px; display: flex;
+                            align-items: center;">
+                            <small class="text-danger">Media Proxy IP is required</small>
+                        </div>
+                        }
+                    </div>
+                    <!-- <div style=" display: flex;
+                    flex-direction: column;
+                    height: 90px;
+                    position: relative;">
+                        <label class="headLable">Selection Mode</label>
+
+                        <div style="justify-content: space-around;font-weight: 500;color: black;font-size: 16px;">
+                            <label>
+                                <input type="radio" name="extension" formControlName="extension" value="All" checked>
+                                <span style="padding-left: 5px;">All</span>
+                            </label>
+                            <label style="padding-left: 10px;padding-right: 10px;">
+                                <input type="radio" name="extension" formControlName="extension" value="Individual">
+                                <span style="padding-left: 5px;">Individual</span>
+                            </label>
+
+
+                        </div>
+
+
+                    </div> -->
+                </div>
+                <div class="rightForm">
+                    <div class="textFromfeild">
+                        <label class="headtext">Log Status</label>
+                        <mat-select formControlName="logstatus" class="dropdowntext">
+                            <mat-option value="Off">OFF
+                            </mat-option>
+                            <mat-option value="0">FatalError
+                            </mat-option>
+                            <mat-option value="10">GENERAL-ERROR
+                            </mat-option>
+                            <mat-option value="20">Warning
+                            </mat-option>
+                            <mat-option value="30">Information
+                            </mat-option>
+                            <mat-option value="40">Debug
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">Channel Index</label>
+                        <input type="text" class="form-control-username" required="required" name="chindex" id="chindex"
+                            formControlName="chindex" placeholder="Channel Index" id="placeholderstyle">
+                        @if (myForm.controls['chindex'].invalid && myForm.controls['chindex'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Channel Index is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <div class="textFromfeild">
+                        <label class="headtext">Digital Channel</label>
+                        <input type="text" class="form-control-username" required="required" name="ACH" id="ACH"
+                            formControlName="ACH" placeholder="ACH" id="placeholderstyle">
+                        @if (myForm.controls['ACH'].invalid && myForm.controls['ACH'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Digital Channel is required</small>
+                        </div>
+                        }
+
+                    </div>
+                    <!-- <div class="textFromfeild">
+                        <label class="headtext">Enable voice files split</label>
+                        <input type="text" class="form-control-username" required="required" name="Enablevoice"
+                            id="Enablevoice" formControlName="Enablevoice" placeholder="Enable voice files split"
+                            id="placeholderstyle">
+                        @if (myForm.controls['Enablevoice'].invalid && myForm.controls['Enablevoice'].touched)
+                        {
+                        <div class="validtionstyle">
+                            <small class="text-danger">Enable voice files split is required</small>
+                        </div>
+                        }
+
+                    </div> -->
+                    <div class="textFromfeild">
+                        <label class="headLable">Media Forward IP</label>
+                        <input type="text" class="form-control-username" required="required" name="localipaddress"
+                            id="localipaddress" formControlName="mediafwdip" placeholder="Media Forward IP"
+                            style="border-color:#89AECF; border-style: solid;">
+                        @if (myForm.controls['mediafwdip'].invalid && myForm.controls['mediafwdip'].touched)
+                        {
+                        <div style=" min-height: 5px; display: flex;
+                            align-items: center;">
+                            <small class="text-danger">Media Forward IP is required</small>
+                        </div>
+                        }
+                    </div>
+                    <div style=" display: flex;
+                    flex-direction: column;
+                    height: 90px;
+                    position: relative;">
+                        <label class="headLable">Enable voicefile split</label>
+
+                        <div style="justify-content: space-around;font-weight: 500;color: black;font-size: 16px;">
+                            <label>
+                                <input type="radio" name="Enablevoice" formControlName="Enablevoice" value="1" checked>
+                                <span style="padding-left: 5px;">Yes</span>
+                            </label>
+                            <label style="padding-left: 10px;padding-right: 10px;">
+                                <input type="radio" name="Enablevoice" formControlName="Enablevoice" value="0">
+                                <span style="padding-left: 5px;">No</span>
+                            </label>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="example-button-row">
+                        <button mat-button class="custom-button"  matTooltip="Save settings">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    }
+    @if (buildDiv=='digitalevent') {
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+        <div class="left" style="flex: 1;">
+            <div class="headingstyleevent">Start Record</div>
+
+            <!-- First Dropdown with its Chips -->
+            <div class="form-container"
+                style="display: flex; align-items: center; width: 100%; padding-left: 10px; border: none;">
+                <mat-form-field style="flex: 1; margin: 0;">
+                    <mat-label>Select event type</mat-label>
+                    <mat-select [(value)]="selectedOption" (selectionChange)="addChip($event.value)">
+                        <div style="display: flex;
+                        align-items: center;
+                        width: 100%;">
+                            <mat-option>
+                                <input type="text" [(ngModel)]="searchTerm" (click)="$event.stopPropagation()"
+                                    placeholder="Search..." (ngModelChange)="filterOptions('startrecord')"
+                                    class="custom-input" />
+                            </mat-option>
+
+                            <div>
+                                <mat-icon matTooltip="Add new event" (click)="isInput = !isInput"
+                                    [innerText]="isInput ? 'close' : 'add'"></mat-icon>
+                            </div>
+
+
+
+                        </div>
+                        @if (isInput) {
+                        <div style="display: flex; padding: 10px;
+                        align-items: center;">
+                            <input type="text" #inputRef placeholder="Enter event..." class="custom-input"
+                                (click)="$event.stopPropagation()" />
+                            <button mat-button color="primary" class="save-btn"
+                                (click)="saveSearch(inputRef,'startrecord')">Save</button>
+                        </div>
+                        }
+                        <mat-option *ngFor="let option of filteredEventData" [value]="option">{{ option }}</mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <mat-chip-set aria-label="First Chip Selection">
+                <mat-chip *ngFor="let chip of chips" [removable]="true" (removed)="removeChip(chip)">
+                    {{ chip }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-set>
+            <div class="headingstyleevent">Cal Info</div>
+            <div class="form-container"
+                style="display: flex; align-items: center; width: 100%; padding-left: 10px; border: none;">
+                <mat-form-field style="flex: 1; margin: 0;">
+                    <mat-label>Select event type</mat-label>
+                    <mat-select [(value)]="selectedOptioncallinfo" (selectionChange)="addChipTothird($event.value)">
+                        <div style="display: flex;
+                        align-items: center;
+                        width: 100%;">
+                            <mat-option>
+                                <input type="text" [(ngModel)]="searchTerm" (click)="$event.stopPropagation()"
+                                    placeholder="Search..." (ngModelChange)="filterOptions('callinfo')"
+                                    class="custom-input" />
+                            </mat-option>
+
+                            <div>
+                                <mat-icon matTooltip="Add new event" (click)="isInput = !isInput"
+                                    [innerText]="isInput ? 'close' : 'add'"></mat-icon>
+                            </div>
+
+
+
+                        </div>
+                        @if (isInput) {
+                        <div style="display: flex; padding: 10px;
+                            align-items: center;">
+                            <input type="text" #inputRef placeholder="Enter event..." class="custom-input"
+                                (click)="$event.stopPropagation()" />
+                            <button mat-button color="primary" class="save-btn"
+                                (click)="saveSearch(inputRef,'callinfo')">Save</button>
+                        </div>
+                        }
+                        <mat-option *ngFor="let option of filteredDatacallinfo" [value]="option">{{ option
+                            }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <mat-chip-set aria-label="Second Chip Selection">
+                <mat-chip *ngFor="let chip of thirdChips" [removable]="true" (removed)="removethirdChip(chip)">
+                    {{ chip }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-set>
+            <div class="headingstyleevent">Ignore Events</div>
+            <div class="form-container"
+                style="display: flex; align-items: center; width: 100%; padding-left: 10px; border: none;">
+                <mat-form-field style="flex: 1; margin: 0;">
+                    <mat-label>Select event type</mat-label>
+                    <mat-select [(value)]="selectedOptionignore" (selectionChange)="addChipfive($event.value)">
+                        <div style="display: flex;
+                        align-items: center;
+                        width: 100%;">
+                            <mat-option>
+                                <input type="text" [(ngModel)]="searchTerm" (click)="$event.stopPropagation()"
+                                    placeholder="Search..." (ngModelChange)="filterOptions('ignoreevents')"
+                                    class="custom-input" />
+                            </mat-option>
+
+                            <div>
+                                <mat-icon matTooltip="Add new event" (click)="isInput = !isInput"
+                                    [innerText]="isInput ? 'close' : 'add'"></mat-icon>
+                            </div>
+
+
+
+                        </div>
+                        @if (isInput) {
+                        <div style="display: flex; padding: 10px;
+                            align-items: center;">
+                            <input type="text" #inputRef placeholder="Enter event..." class="custom-input"
+                                (click)="$event.stopPropagation()" />
+                            <button mat-button color="primary" class="save-btn"
+                                (click)="saveSearch(inputRef,'ignoreevents')">Save</button>
+                        </div>
+                        }
+                        <mat-option *ngFor="let option of filteredDataIgnoreEvents" [value]="option">{{ option
+                            }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <mat-chip-set aria-label="Second Chip Selection">
+                <mat-chip *ngFor="let chip of fiveChips" [removable]="true" (removed)="removefiveChip(chip)">
+                    {{ chip }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-set>
+
+        </div>
+        <!-- Left Section -->
+
+
+
+        <div class="right" style="flex: 1;">
+
+            <!-- Second Dropdown with its Chips -->
+            <div class="headingstyleevent">Stop Record</div>
+            <div class="form-container"
+                style="display: flex; align-items: center; width: 100%; padding-right: 10px; border: none;">
+                <mat-form-field style="flex: 1; margin: 0;">
+                    <mat-label>Select event type</mat-label>
+                    <mat-select [(value)]="selectedOptionstop" (selectionChange)="addChipToSecond($event.value)">
+                        <div style="display: flex;
+                        align-items: center;
+                        width: 100%;">
+                            <mat-option>
+                                <input type="text" [(ngModel)]="searchTerm" (click)="$event.stopPropagation()"
+                                    placeholder="Search..." (ngModelChange)="filterOptions('stoprecord')"
+                                    class="custom-input" />
+                            </mat-option>
+
+                            <div>
+                                <mat-icon matTooltip="Add new event" (click)="isInput = !isInput"
+                                    [innerText]="isInput ? 'close' : 'add'"></mat-icon>
+                            </div>
+
+
+
+                        </div>
+                        @if (isInput) {
+                        <div style="display: flex; padding: 10px;
+                            align-items: center;">
+                            <input type="text" #inputRef placeholder="Enter event..." class="custom-input"
+                                (click)="$event.stopPropagation()" />
+                            <button mat-button color="primary" class="save-btn"
+                                (click)="saveSearch(inputRef,'stoprecord')">Save</button>
+                        </div>
+                        }
+                        <mat-option *ngFor="let option of filteredDataStoprecord" [value]="option">{{ option }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <mat-chip-set aria-label="Second Chip Selection">
+                <mat-chip *ngFor="let chip of secondChips" [removable]="true" (removed)="removeSecondChip(chip)">
+                    {{ chip }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-set>
+
+            <div class="headingstyleevent">Direction</div>
+            <div class="form-container"
+                style="display: flex; align-items: center; width: 100%; padding-right: 10px; border: none;">
+                <mat-form-field style="flex: 1; margin: 0;">
+                    <mat-label>Select event type</mat-label>
+                    <mat-select [(value)]="selectedOptiondirection" (selectionChange)="addChipToforth($event.value)">
+                        <div style="display: flex;
+                        align-items: center;
+                        width: 100%;">
+                            <mat-option>
+                                <input type="text" [(ngModel)]="searchTerm" (click)="$event.stopPropagation()"
+                                    placeholder="Search..." (ngModelChange)="filterOptions('direction')"
+                                    class="custom-input" />
+                            </mat-option>
+
+                            <div>
+                                <mat-icon matTooltip="Add new event" (click)="isInput = !isInput"
+                                    [innerText]="isInput ? 'close' : 'add'"></mat-icon>
+                            </div>
+
+
+
+                        </div>
+                        @if (isInput) {
+                            <div style="display: flex; padding: 10px;
+                                align-items: center;">
+                                <input type="text" #inputRef placeholder="Enter event..." class="custom-input"
+                                    (click)="$event.stopPropagation()" />
+                                <button mat-button color="primary" class="save-btn"
+                                    (click)="saveSearch(inputRef,'direction')">Save</button>
+                            </div>
+                            }
+                        <mat-option *ngFor="let option of filteredDataDirection" [value]="option">{{ option }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <mat-chip-set aria-label="Second Chip Selection">
+                <mat-chip *ngFor="let chip of fourChips" [removable]="true" (removed)="removeforthChip(chip)">
+                    {{ chip }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-set>
+            <div class="example-button-row">
+                <button mat-button class="custom-button-even" (click)="SaveEvents()">
+                    Save
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    }
+</div>

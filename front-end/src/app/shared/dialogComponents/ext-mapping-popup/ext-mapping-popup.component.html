@@ -1,0 +1,373 @@
+
+
+    @if(this.data.clickedStatus ==='Map'){
+        <div class="fromMainContainer">
+            <div class="example-spacer ">
+         
+          
+                    <span style="padding-left: 20px;font-size: 20px;">{{'Menu.CONFIGURE.EXTENSION MAPPING.HeadingMapping' | translate}}</span>
+       
+                <div (click)="closeDialog()" class="closeDialogIcon" matTooltip="Close">
+                    <span style="color:var(--headingBg) ;" class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+            </div>
+            <div class="container " >
+                <form class="viewEmployeeDetails" [formGroup]="mappingForm" (ngSubmit)="onSubmitHeirarchy()">
+                    <div class="example-full-width">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name" class="name-right">{{'Menu.CONFIGURE.EXTENSION MAPPING.LOCATION' | translate}}</label>
+                                    <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectLoc' | translate}}" 
+                                        formControlName="location" (valueChange)="getDepartmentsByLocation($event)">
+                                        <mat-option (click)="$event.stopPropagation()">
+                                            <input placeholder="Search Location"  
+                                            style="width: 250vw; padding: 5px; "
+                                             (click)="$event.stopPropagation()"
+                                           
+                                              (input)="onSearchLocation($event)">
+                                        </mat-option>
+                                        @for(item of locationList; track item) {
+                                        <mat-option [value]="item.locationId">{{item.locationName}}</mat-option>
+                                        }
+                                    </mat-select>
+                                    @if (f1['location'].errors?.['required']&&f1['location'].touched) {
+                                        <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.location  is
+                                            required'|
+                                            translate}}</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name" class="name-left">{{'Menu.CONFIGURE.EXTENSION MAPPING.DEPARTMENT' | translate}}</label>
+                                    <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectDep' | translate}}" 
+                                        formControlName="department" (valueChange)="getDivisionByDept($event)">
+                                        <mat-option (click)="$event.stopPropagation()">
+                                            <input placeholder="Search Department"
+                                            style="width: 250vw; padding: 5px; "
+                       
+                                            (input)="onSearchDepartment($event)"
+                                                (click)="$event.stopPropagation()">
+                                        </mat-option>
+                                        @for(item of departmentList; track item) {
+                                        <mat-option [value]="item.departmentId">{{item.departmentName}}</mat-option>
+                                        }
+                                    </mat-select>
+                                    @if (f1['department'].errors?.['required']&&f1['department'].touched) {
+                                        <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.department  is
+                                            required'|
+                                            translate}}</div>
+                                    }
+                                </div>
+                            </div>
+                 
+                        </div>
+    
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name" class="name-right">{{'Menu.CONFIGURE.EXTENSION MAPPING.DIVISION' | translate}}</label>
+                                    <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectDiv' | translate}}" 
+                                        formControlName="division">
+                                        <mat-option (click)="$event.stopPropagation()">
+                                            <input placeholder="Search Division"
+                                            style="width: 250vw; padding: 5px; "
+                                          
+                                            (input)="onSearchDivision($event)"
+                                                (click)="$event.stopPropagation()">
+    
+                                            
+                                        </mat-option>
+                                        @for(item of divisiomList; track item) {
+                                        <mat-option [value]="item.divisionId">{{item.divisionName}}</mat-option>
+                                        }
+                                    </mat-select>
+                                    @if (f1['division'].errors?.['required']&&f1['division'].touched) {
+                                        <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.division  is
+                                            required'|
+                                            translate}}</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add and Update buttons -->
+                    <!-- <button class="usermangerSavebutton" mat-button type="submit" >
+                        {{ this.data.clickedStatus === 'add' ? 'Save' : 'Update' }}
+                    </button> -->
+                    <div class="saveButtonDiv">
+                            <button class="usergroupSavebuttton btn" mat-button type="submit" matTooltip="Save extension mapping" >
+                                {{'Menu.CONFIGURE.EXTENSION MAPPING.Apply'| translate}}    
+                         </button> 
+                     
+                    </div>
+             
+                </form>
+            </div>
+    
+        </div>
+    }
+     @if(this.data.clickedStatus ==='importStatus'){
+
+            <div class="example-spacer1">
+                    <!-- <span style="padding-left: 20px;font-size: 20px;">{{'Menu.CONFIGURE.EXTENSION MAPPING.importHeading' | translate}}</span> -->
+                    
+                <div (click)="closeDialog()" class="closeDialogIcon" matTooltip="Close">
+                    <span style="color:var(--headingBg) ;" class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <h6 style="color: red;font-size: medium;">{{this.data.heading }} ?</h6>
+                </div>               
+            </div>
+         
+  <div class="table-container">
+    <table mat-table class="mat-elevation-z8" [dataSource]="this.data.userData" matSort bg-dark>
+      <!-- Extension Column -->
+      <ng-container matColumnDef="Extension">
+        <th mat-header-cell *matHeaderCellDef class="header-cell" >
+          <div class="header-content">
+            <div class="header-text-icon">
+              {{'Menu.CONFIGURE.EXTENSION MAPPING.Extension' | translate}}
+              <span class="material-symbols-outlined" id="fitergroup">
+                switch_left
+              </span>
+              <br>
+            </div>
+          </div>
+        </th>
+        
+        <td mat-cell *matCellDef="let element" style="padding-left: 19px;" >
+          {{element.extension}}</td>
+      </ng-container>
+      <!-- EmployeeID Column -->
+      <ng-container matColumnDef="EmployeeID">
+        <th mat-header-cell *matHeaderCellDef>
+          <div class="header-content" >
+            <div class="header-text-icon">
+              {{'Menu.CONFIGURE.EXTENSION MAPPING.EmployeeID' | translate}}
+              <span class="material-symbols-outlined" id="fitergroup">
+                switch_left
+              </span>
+              <br>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element"  class="columnCell" style="padding-left: 19px;">{{element.employeeID}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+     <div class="saveButtonDiv">
+        @if(this.data.action=="Replace"){
+        <button class="usergroupSavebuttton btn btn" mat-button type="submit" matTooltip="replace extension" (click)="replace()" [disabled]="btnStatus">
+            Replace
+        </button> 
+        }
+        @else{
+            <button class="usergroupSavebuttton btn btn" mat-button type="submit" matTooltip="Skip extension creation" (click)="skip()">
+                Skip
+            </button> 
+        }
+ 
+
+     </div>
+    }
+    
+     @if(this.data.clickedStatus ==="add" ||this.data.clickedStatus ==="edit" ){
+        <div class="fromMainContainer">
+            <div class="example-spacer ">
+         
+                @if (this.data.clickedStatus==="add") {
+                    <span style="padding-left: 20px;font-size: 20px;">{{'Menu.CONFIGURE.EXTENSION MAPPING.HeadingAdd' | translate}}</span>
+                <!-- <label class="headerLabel" for="">{{'Menu.CONFIGURE.EXTENSION MAPPING.HeadingAdd' | translate}}</label> -->
+                }@else {
+                    <span style="padding-left: 20px;font-size: 20px;">{{'Menu.CONFIGURE.EXTENSION MAPPING.HeadingUpdate' | translate}}</span>
+                <!-- <label class="headerLabel" for="">{{'Menu.CONFIGURE.EXTENSION MAPPING.HeadingUpdate' | translate}}</label> -->
+                }
+                <!-- <div>
+                    <button mat-button [mat-dialog-close] class="closeButtonHover" [matTooltip]="toolTips.Close|translate">
+                        <mat-icon>close</mat-icon>
+                    </button>
+            
+                </div> -->
+                <div (click)="closeDialog()" class="closeDialogIcon" matTooltip="Close">
+                    <span style="color:var(--headingBg) ;" class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+            </div>
+            <div class="container " >
+                <form class="viewEmployeeDetails" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                    <div class="example-full-width">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group w-80">
+                                    <label for="name" class="name-left">{{'Menu.CONFIGURE.EXTENSION MAPPING.Extension' | translate}}</label>
+                                    @if (this.data.clickedStatus==="add") {
+                                    <mat-select class="form-control" placeholder= "{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectExt' | translate}}" 
+                                        formControlName="extension" >
+                                        <mat-option (click)="$event.stopPropagation()">
+                                     
+                                                <input
+                                                style="width: 250vw; padding: 5px; "
+                                                placeholder="Search Extension Numbers..."
+                                                formControlName="searchText"
+                                                (input)="onSearchExtension($event)"
+                                                (keydown.enter)="displayFun($event)"
+                                                (click)="$event.stopPropagation()"
+                                                class="search-input"
+                                              />
+                                      
+                                        </mat-option>
+                                        <div class="text-danger" id="waringText" style="padding-left:10px;">{{checkMessage}}</div>
+                                        @for(item of extensionList; track item) {
+                                        <mat-option [value]="item.extensionId">{{item.extensionNumber}}</mat-option>
+                                        }
+                                    </mat-select>
+                                }@else {
+                                    <input type="text"   formControlName="extension"  class="form-control"  readonly>
+                                }
+                                    @if (f['extension'].errors?.['required']&&f['extension'].touched) {
+                                        <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.Extension Number is
+                                            required'|
+                                            translate}}</div>
+                                    }
+    
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name" class="name-right">{{'Menu.CONFIGURE.EXTENSION MAPPING.LOCATION' | translate}}</label>
+                                    <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectLoc' | translate}}" 
+                                        formControlName="location" (valueChange)="getDepartmentsByLocation($event)">
+                                        <mat-option (click)="$event.stopPropagation()">
+                                            <input placeholder="Search Location"  
+                                            style="width: 250vw; padding: 5px; "
+                                             (click)="$event.stopPropagation()"
+
+                                              (input)="onSearchLocation($event)">
+                                        </mat-option>
+                                        @for(item of locationList; track item) {
+                                        <mat-option [value]="item.locationId">{{item.locationName}}</mat-option>
+                                        }
+                                    </mat-select>
+                                    @if (f['location'].errors?.['required']&&f['extension'].touched) {
+                                        <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.location  is
+                                            required'|
+                                            translate}}</div>
+                                    }
+                                   
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name" class="name-left">{{'Menu.CONFIGURE.EXTENSION MAPPING.DEPARTMENT' | translate}}</label>
+                                    <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectDep' | translate}}" 
+                                        formControlName="department" (valueChange)="getDivisionByDept($event)">
+                                        <mat-option (click)="$event.stopPropagation()">
+                                            <input placeholder="Search Department"
+                                            style="width: 250vw; padding: 5px; "
+                                   
+                                            (input)="onSearchDepartment($event)"
+                                                (click)="$event.stopPropagation()">
+                                        </mat-option>
+                                        @for(item of departmentList; track item) {
+                                        <mat-option [value]="item.departmentId">{{item.departmentName}}</mat-option>
+                                        }
+                                    </mat-select>
+                                    @if (f['department'].errors?.['required']&&f['extension'].touched) {
+                                        <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.department  is
+                                            required'|
+                                            translate}}</div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name" class="name-right">{{'Menu.CONFIGURE.EXTENSION MAPPING.DIVISION' | translate}}</label>
+                                    <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectDiv' | translate}}" 
+                                        formControlName="division">
+                                        <mat-option (click)="$event.stopPropagation()">
+                                            <input placeholder="Search Division"
+                                            style="width: 250vw; padding: 5px; "
+                                          
+                                            (input)="onSearchDivision($event)"
+                                                (click)="$event.stopPropagation()">
+    
+                                            
+                                        </mat-option>
+                                        @for(item of divisiomList; track item) {
+                                        <mat-option [value]="item.divisionId">{{item.divisionName}}</mat-option>
+                                        }
+                                    </mat-select>
+                                         @if (f['division'].errors?.['required']&&f['extension'].touched) {
+                                        <div class="text-danger" id="waringText">{{'Menu.CONFIGURE.EXTENSION MAPPING.division  is
+                                            required'|
+                                            translate}}</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name" class="name-left">{{'Menu.CONFIGURE.EXTENSION MAPPING.EmployeeID' | translate}}</label>
+                                    <mat-select class="form-control" placeholder="{{'Menu.CONFIGURE.EXTENSION MAPPING.SelectEmp' | translate}}" 
+                                        formControlName="employeeID" (valueChange)="getEmployeeByID($event)">
+                                        <mat-option (click)="$event.stopPropagation()">
+                                            <input placeholder="Search Employee ID " 
+                                              style="width: 250vw; padding: 5px; "
+                                                (click)="$event.stopPropagation()" 
+                                                formControlName="employeeText"
+                                                (input)="onSearchEmployee($event)">
+                                        </mat-option>
+                                        @for(item of employeeList; track item) {
+                                                <mat-option [value]="item.employeeID">{{item.employeeID}}</mat-option>
+                                        }
+                                    </mat-select>
+                          
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="name" class="name-right">{{'Menu.CONFIGURE.EXTENSION MAPPING.EmployeeName' | translate}}</label>
+                                    <input type="text" formControlName="employeeName" class="form-control" [value]="selectedEmployeeName" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add and Update buttons -->
+                    <!-- <button class="usermangerSavebutton" mat-button type="submit" >
+                        {{ this.data.clickedStatus === 'add' ? 'Save' : 'Update' }}
+                    </button> -->
+                    <div class="saveButtonDiv">
+                        @if(this.data.clickedStatus ==='add'){
+                            <button class="usergroupSavebuttton btn" mat-button type="submit" matTooltip="Save extension mapping" >
+                             Save
+                         </button> 
+                         }@else{
+                             <button class="usergroupSavebuttton btn" mat-button type="submit" matTooltip="Update extension mapping">
+                                 Update
+                             </button>  
+                         }
+                    </div>
+             
+                </form>
+            </div>
+    
+        </div>
+    }
+

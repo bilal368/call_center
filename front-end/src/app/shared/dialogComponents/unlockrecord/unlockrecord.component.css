@@ -1,0 +1,47 @@
+.header {
+  align-items: center;
+  background-color: var(--h3);
+  color: var(--h2);
+  padding: 16px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  font-size: 20px;
+}
+.header h1 {
+  margin: 0; 
+  font-size: 20px;
+  padding-left: 4px;
+}
+.dialog-content {
+  padding: 16px;
+  font-size: 16px;
+  color: #333;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px;
+  gap: 8px;
+}
+
+.action-button {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.delete-button {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #b71c1c;
+}

@@ -1,0 +1,42 @@
+@if(isEditable){
+    <mat-toolbar>
+    <p class="mt-2">Notes</p>
+    <span class="spacer"></span>
+    <button class="btn blueGreyButton" (click)="onCancel()">X</button>
+</mat-toolbar>
+<div class="m-3">
+    <textarea 
+    class="form-control textarea" 
+    [(ngModel)]="noteValue" 
+    [value]="noteValue" 
+    maxlength="250"
+    (input)="onInput($event)">
+  </textarea>
+  <small>{{ noteValue.length }}/250 characters</small>
+    <div style="display: flex;justify-content: space-between;" class="m-2">
+        <div>
+            <button class="blueGreyButton " mat-button (click)="clearButton()">Clear</button>
+        </div>
+        <div>
+            <button class="blueGreyButton " mat-button (click)="saveButton()">Save</button>
+        </div>
+    </div>
+</div>
+}@else {
+    <mat-toolbar>
+        <p class="mt-2">Notes</p>
+        <span class="spacer"></span>
+        <button class="btn blueGreyButton" (click)="onCancel()">X</button>
+    </mat-toolbar>
+    <div class="m-3">
+        <textarea 
+        class="form-control textarea" 
+        [(ngModel)]="noteValue" 
+        [value]="noteValue" 
+        maxlength="250"
+        (input)="onInput($event)">
+      </textarea>
+      <small>{{ noteValue.length }}/250 characters</small>
+       
+    </div>
+}

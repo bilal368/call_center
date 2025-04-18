@@ -1,0 +1,52 @@
+<div class="div">
+  <!-- Header -->
+  <div class="header d-flex justify-content-between align-items-center p-2">
+    <h4 class="m-0">{{'Menu.CONFIGURE.EMPLOYEE MANAGER.Hierarchy'|translate}}</h4>
+    <!-- <button class="btn" [matTooltip]="toolTips.CLOSE|translate">
+      <span class="material-symbols-outlined" class="closeButton" (click)="closeDialog()">X</span>
+    </button> -->
+
+    <button class="btn" mat-button [mat-dialog-close] class="closeButtonHover" [matTooltip]="toolTips.Close|translate">
+      <mat-icon>close</mat-icon>
+  </button>
+  </div>
+
+  
+
+  <!-- Tree Structure -->
+  <mat-tree [dataSource]="dataSourceTree" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      <mat-checkbox class="checklist-leaf-node" color="primary"
+        [checked]="checklistSelection.isSelected(node)||checkedStatus(node)"
+        (change)="checklistSelection.toggle(node);onCheckboxChange(node,$event)">
+        {{node.item}}
+      </mat-checkbox>
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+    </mat-tree-node>
+
+    <!-- Parent Nodes -->
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.item">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+      <mat-checkbox color="primary" [checked]="descendantsAllSelected(node)||checkedStatus(node)"
+        [indeterminate]="descendantsPartiallySelected(node)"
+        (change)="todoItemSelectionToggle(node);onCheckboxChange(node,$event)">
+        {{node.item}}
+      </mat-checkbox>
+    </mat-tree-node>
+  </mat-tree>
+
+  <!-- Action Buttons -->
+  <!-- <div class="applyButton w-100 d-flex justify-content-between mt-1 mb-1 p-2"> -->
+    <div class="applyButton p-2 ">
+
+    <button class="btn btn-dark" (click)="applyFilter()">Apply</button>
+  </div>
+</div>

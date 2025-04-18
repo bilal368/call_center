@@ -1,0 +1,314 @@
+<div class="head-container">
+    <div class="sidenav-options">
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('e-oneRecorder')"
+                [ngStyle]="{'background-color': buildDiv === 'e-oneRecorder' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'e-oneRecorder' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">
+                    E1 Settings
+                </label>
+            </div>
+        </ng-container>
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('didLabeling')"
+                [ngStyle]="{'background-color': buildDiv === 'didLabeling' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'didLabeling' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">
+                    DID Labeling
+                </label>
+            </div>
+        </ng-container>
+    </div>
+    @if (buildDiv=='e-oneRecorder') {
+        <div style="color: var(--tabColor);">
+            <form [formGroup]="myForm" (ngSubmit)="savebutton()">
+                <div style=" display: flex;">
+        
+                    <div class="leftFormstyle">
+                        <div class="textFromfeild">
+                            <label class="headtext">Data Driver</label>
+                            <input type="text" class="form-control-username" required="required" name="DataPath" id="DataPath"
+                                formControlName="DataPath" placeholder="Data Driver" id="placeholderstyle">
+                            @if (myForm.controls['DataPath'].invalid && myForm.controls['DataPath'].touched) {
+                            <div class="validtionstyle">
+                                <small class="text-danger">Datapath is required</small>
+                            </div>
+                            }
+        
+        
+        
+                        </div>
+                        <div class="textFromfeild">
+                            <label class="headtext">Maximum File Size</label>
+                            <input type="text" class="form-control-username" required="required" name="Maxfilesize"
+                                id="Maxfilesize" formControlName="Maxfilesize" placeholder="Maxfilesize" id="placeholderstyle">
+        
+                            @if (myForm.controls['Maxfilesize'].invalid &&
+                            myForm.controls['Maxfilesize'].touched)
+                            {
+                            <div class="validtionstyle">
+                                <small class="text-danger">Maximum File Size required</small>
+                            </div>
+                            }
+                        </div>
+                        <div class="textFromfeild">
+                            <label class="headLable">Media Forward IP</label>
+                            <input type="text" class="form-control-username" required="required" name="localipaddress"
+                                id="localipaddress" formControlName="mediafwdip" placeholder="Media Forward IP"
+                                style="border-color:#89AECF; border-style: solid;">
+                            @if (myForm.controls['mediafwdip'].invalid && myForm.controls['mediafwdip'].touched)
+                            {
+                            <div style=" min-height: 5px; display: flex;
+                                    align-items: center;">
+                                <small class="text-danger">Media Forward IP is required</small>
+                            </div>
+                            }
+                        </div>
+                        <div class="textFromfeild">
+                            <label class="headtext">No of channels for E1 Recorder</label>
+                            <input type="text" class="form-control-username" required="required" name="ACH" id="ACH"
+                                formControlName="ACH" placeholder="ECH" id="placeholderstyle">
+                            @if (myForm.controls['ACH'].invalid && myForm.controls['ACH'].touched)
+                            {
+                            <div class="validtionstyle">
+                                <small class="text-danger">channel is required</small>
+                            </div>
+                            }
+                        </div>
+                        <div style=" display: flex;
+                            flex-direction: column;
+                            height: 90px;
+                            position: relative;">
+                            <label class="headLable">Static channels</label>
+        
+                            <div style="justify-content: space-around;font-weight: 500;color: black;font-size: 16px;">
+                                <label>
+                                    <input type="radio" name="staticchannel" formControlName="staticchannel" value="1" checked
+                                        (change)="updateVisibility()">
+                                    <span style="padding-left: 5px;">Yes</span>
+                                </label>
+                                <label style="padding-left: 10px;padding-right: 10px;">
+                                    <input type="radio" name="staticchannel" formControlName="staticchannel" value="0"
+                                        (change)="updateVisibility()">
+                                    <span style="padding-left: 5px;">No</span>
+                                </label>
+        
+        
+                            </div>
+        
+        
+                        </div>
+        
+                      
+                    </div>
+                    <div class="rightForm">
+                        <div class="textFromfeild">
+                            <label class="headtext">Log Status</label>
+                            <mat-select formControlName="logstatus" class="dropdowntext">
+                                <mat-option value="Off">OFF
+                                </mat-option>
+                                <mat-option value="0">FatalError
+                                </mat-option>
+                                <mat-option value="10">GENERAL-ERROR
+                                </mat-option>
+                                <mat-option value="20">Warning
+                                </mat-option>
+                                <mat-option value="30">Information
+                                </mat-option>
+                                <mat-option value="40">Debug
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                        <div class="textFromfeild">
+                            <label class="headtext">Channel Index</label>
+                            <input type="text" class="form-control-username" required="required" name="chindex" id="chindex"
+                                formControlName="chindex" placeholder="Channel Index" id="placeholderstyle">
+                            @if (myForm.controls['chindex'].invalid && myForm.controls['chindex'].touched)
+                            {
+                            <div class="validtionstyle">
+                                <small class="text-danger">CH Index is required</small>
+                            </div>
+                            }
+        
+                        </div>
+                        <div class="textFromfeild">
+                            <label class="headLable">Media Proxy IP</label>
+                            <input type="text" class="form-control-username" required="required" name="mediaproxy"
+                                id="mediaproxy" formControlName="mediaproxy" placeholder="Media Proxy IP"
+                                style="border-color:#89AECF; border-style: solid;">
+                            @if (myForm.controls['mediaproxy'].invalid && myForm.controls['mediaproxy'].touched)
+                            {
+                            <div style=" min-height: 5px; display: flex;
+                                    align-items: center;">
+                                <small class="text-danger">Media Proxy IP is required</small>
+                            </div>
+                            }
+                        </div>
+                        @if (isStaticChannelEnabled) {
+                        <div class="textFromfeild">
+                            <label class="headLable">Base Number</label>
+                            <input type="text" class="form-control-username" required="required" name="localipaddress"
+                                id="localipaddress" formControlName="basenumber" placeholder="Base Number"
+                                style="border-color:#89AECF; border-style: solid;">
+        
+                        </div>
+                        <div class="textFromfeild">
+                            <label class="headLable">Base Number Start</label>
+                            <input type="text" class="form-control-username" required="required" name="localipaddress"
+                                id="localipaddress" formControlName="basenumberstart" placeholder="Base Number Start"
+                                style="border-color:#89AECF; border-style: solid;">
+        
+                        </div>
+        
+        
+                        }
+        
+                        <div class="example-button-row">
+                            <button mat-button class="custom-button"  matTooltip="Save settings">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        
+            </form>
+        </div>
+        }
+    @if(buildDiv=='didLabeling'){
+        <div style="color: var(--tabColor);height: 600px;">
+            <mat-toolbar style="justify-content: flex-end;">
+                <div style="display: flex; gap: 10px;justify-content: flex-end;margin-right: 10px;">
+                    <button mat-button mat-button class="map-channel-btn" (click)="newLabeling(true,null)">
+                        <mat-icon>add_call</mat-icon>
+                        DID Label</button>
+                
+                    <button mat-button mat-button class="map-channel-btn" (click)="newLabeling(false,null)">
+                        <mat-icon>upload_file</mat-icon>
+                        {{'Menu.CONFIGURE.EXTENSION MAPPING.Import' | translate}}</button>
+                    <button mat-button mat-button class="map-channel-btn"
+                        (click)="deleteFunction('Are you sure you want to delete DID labeling?',selectedIds)">
+                        <mat-icon>delete</mat-icon>
+                        Delete</button>
+    
+    
+        
+                    <div class="excelDiv  btn" matTooltip="{{'Menu.Download Reports'| translate}}" [matMenuTriggerFor]="menu4">
+                        @if (isLoading) {
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        }@else {
+                        <mat-icon class="icon">download_2</mat-icon>
+                        <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+                        }
+                      </div>
+    
+                    <mat-menu #menu4="matMenu">
+                        <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+                            <div style="justify-content: space-around;display: flex;">
+                                <div>Excel</div>
+                                <div>
+                                    <span class="material-symbols-outlined">article</span>
+                                </div>
+                            </div>
+                        </button>
+                        <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+                            <div style="justify-content: space-around;display: flex;">
+                                <div>PDF</div>
+                                <div>
+                                    <span class="material-symbols-outlined">picture_as_pdf</span>
+                                </div>
+                            </div>
+                        </button>
+                       
+                    </mat-menu>
+                    <!-- </div> -->
+    
+                </div>
+            </mat-toolbar>
+            <div class="mat-elevation-z8" style="top: 10%;overflow-y: auto;">
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox  class="custom-white-checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll($event.checked)"
+                                (click)="$event.stopPropagation()">
+                            </mat-checkbox>
+                           
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox color="primary" [checked]="isRoleSelected(element.didLabelingId)"
+                                (change)="toggleRoleSelection(element.didLabelingId, $event.checked)"
+                                (click)="$event.stopPropagation()">
+    
+                            </mat-checkbox>
+                          
+                        </td>
+                    </ng-container>
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="didNumber">
+                        <th mat-header-cell *matHeaderCellDef>DID Number</th>
+                        <td mat-cell *matCellDef="let element">{{element.didNumber}}</td>
+                    </ng-container>
+    
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="didLabel">
+                        <th mat-header-cell *matHeaderCellDef>DID Label</th>
+                        <td mat-cell *matCellDef="let element">{{element.didLabel}}</td>
+                    </ng-container>
+    
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-icon color="var(--h3)" style="cursor: pointer;"
+                                (click)="newLabeling(true,element)">edit</mat-icon>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+    
+                <mat-toolbar class="pagination-toolbar">
+                    <div class="page-info">
+                        {{'Menu.REPORTS RECORDING.AGENTS.Total Records'| translate}}
+                        :
+                        {{ TotalRecords }}
+                    </div>
+                    <span class="example-spacer"></span>
+                    <div class="page-info">
+                        {{'Menu.REPORTS RECORDING.AGENTS.Records Per Page'| translate}}
+                    </div>
+                    <mat-select class="form-control me-4" style="width:100px" [(ngModel)]="limit"
+                        (selectionChange)="onItemsPerPageChange($event)">
+    
+                        <mat-option class="goto-check" [value]="10">10</mat-option>
+                        <mat-option class="goto-check" value="25">25</mat-option>
+                        <mat-option class="goto-check" value="50">50</mat-option>
+                        <mat-option class="goto-check" value="100">100</mat-option>
+                    </mat-select>
+    
+                    <div class="page-info">
+                        Page
+                        <mat-select class="form-control" style="width: 72px;" [(ngModel)]="currentPage"
+                            (selectionChange)="goToPage($event)">
+                            @for (page of getPagesArray(); track $index) {
+                            <mat-option style="width: 80px;" [value]="page">
+                                {{ page }}
+                            </mat-option>
+                            }
+                        </mat-select>
+                        of {{ totalPages }}
+                    </div>
+    
+    
+                    <div [dir]="'ltr'">
+                        <button mat-mini-fab class="next-button me-2" (click)="previousPage()">
+                            <mat-icon>chevron_left</mat-icon>
+                        </button>
+                        <button mat-mini-fab class="next-button me-2" (click)=" nextPage()">
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+    
+                    </div>
+                </mat-toolbar>
+            </div>
+        </div>
+
+    }
+</div>

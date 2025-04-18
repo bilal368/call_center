@@ -1,0 +1,103 @@
+.container-fluid {
+  padding-top: 1.5vh;
+}
+
+.mat-elevation-z8 {
+  padding-bottom: 1vh;
+  max-height: 35vh;
+  height: 35vh;
+}
+
+.table-container {
+  max-height: 35vh;
+  overflow-y: auto;
+}
+
+.table-container table {
+  width: 100%;
+}
+
+.table-container thead th {
+  border-bottom: 2px solid;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #fff; /* add this to keep the header background color */
+}
+
+.table-container tbody {
+  overflow-y: auto;
+}
+
+.table-container td {
+  align-items: end;
+}
+
+.alert  {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: large;
+  z-index: 1;
+  width: max-content;
+  top: 0;
+  /* left: 50vw;
+  right: 20vw; */
+  transform: translate(-50%, -50%);
+  border:1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  padding: 1rem;
+  padding-top: 2rem;
+  background: #fff;
+  color: #21c66b;
+  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.5);
+  transition:  all 0.2s ease-in-out;
+  opacity: 0;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(1.25rem);
+}
+.alert  span{
+  color: rgb(12, 165, 114);
+}
+.is-active {
+  background-color: #3c3c3b;
+}
+  .alertTimeInterval{
+    /* position: fixed; */
+    display: block;
+    justify-content: space-between;
+    /* font-weight: 1000; */
+    /* font-size: larger; */
+    font-size: large;
+    /* z-index: 1; */
+    width: 20vw;
+    height: 100%;
+    /* top: 15vh; */
+    /* left: 42vw; */
+    /* right: 42vw; */
+      /* transform: translate(-50%, -50%); */
+    border:1px solid rgba(0, 0, 0, 0.2);
+    /* border-radius: 0.25rem; */
+    /* padding: 1rem; */
+    /* padding-top: 2rem; */
+    background: #fff;
+    color: var(--h1);
+    box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.5);
+    /* transition:  all 0.2s ease-in-out; */
+    /* opacity: 0; */
+  }
+  
+  .visible {
+    opacity: 1;
+    transform: translateY(1.25rem);
+  }
+  .alert  span{
+    color: rgb(12, 165, 114);
+  }
+  .is-active {
+    background-color: #3c3c3b;
+  }

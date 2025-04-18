@@ -1,0 +1,149 @@
+<div class="background" [dir]="'ltr'">
+
+  <mat-toolbar class="toolbar">
+    <div>
+      @if(logoUrl===''){
+        <img src="\assets\images\DGVoxNew.png" style="height: 4vh;" alt="Logo">
+      }@else {
+        <img src="{{logoUrl}}" style="height: 4vh;" alt="LogoFromServer">
+
+      }
+      <!-- <h1 style="color: white;">lll DGVox</h1> -->
+     
+    </div>
+
+  </mat-toolbar>
+
+  <div class="contentDiv">
+
+    <div>
+      <div class="card">
+        <div class="outerCard">
+
+          <div class="login">
+            @if (loginPage) {
+            <!-- <div > -->
+              <form [formGroup]="this.loginDetailsForm" (ngSubmit)="loginConnection()" class="login-form" #f="ngForm">
+
+                <div style="font-size: x-large;font-weight: 500;">Login</div>
+                <hr />
+                <label>Username</label>
+                <input type="text" class="form-control inputField" placeholder="Username(Email)" name="username" id="username"
+                  formControlName="userName"  required />
+                <div class="errDiv">
+                  @if (loginDetailsForm.controls['userName'].errors&& loginDetailsForm.controls['userName'].touched) {
+                    <div class="text-danger">Username is required</div>
+                    }       
+                </div>
+
+                <label class="mt-2">Password</label>
+                <div class="form-group input-group" style="position: relative; ">
+                  <input [type]="showPassword ? 'text' : 'password'" class="form-control" 
+                  (cut)="disableCut($event)" (copy)="disableCopy($event)" (paste)="disablePaste($event)"
+                  formControlName="password" placeholder="Password"
+                    required />
+                    <div [matTooltip]="showPassword ?'Hide password':'Show password'" class="btn"
+                     style="background-color: transparent;position: absolute;z-index:100 ;margin-left: 450px;"  (click)="showPassword=!showPassword">
+                      @if(!showPassword){
+                        <span class="material-symbols-outlined">
+                          visibility
+                          </span>
+                      }@else {
+                        <span class="material-symbols-outlined">
+                          visibility_off
+                          </span>
+                      }
+                    </div>
+                </div>
+               
+                <div class="errDiv">
+                  @if (loginDetailsForm.controls['password'].errors&& loginDetailsForm.controls['password'].touched||!loginDetailsForm.valid&&loginDetailsForm.controls['userName'].touched) {
+                    <div class="text-danger">Password is required</div>
+                    }
+                </div>
+                <div class="row mt-4">
+                  <div class="col d-flex justify-content-end">
+                    <!-- routerLink="/forgotPassword"  -->
+                    <!-- <a  style="color:black;text-decoration: underline;" (click)="set()" >Forgot password?</a> -->
+                    <!-- <a style="text-decoration: underline;" (click)="set()">Forgot password?</a> -->
+                    <div class="submit-container">
+                      @if (clickedStatus==true) {
+                      <button id="submit"  type="button" disabled mat-raised-button>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        
+                      </button>
+                      }@else{
+                      <button id="submit"  type="submit" [disabled]="!loginDetailsForm.valid" >Login</button>
+                      }
+                    </div>
+                  </div>
+                
+                </div>
+
+              </form>
+            <!-- </div> -->
+          }
+            <div>
+              @if (forgotPassword) {
+              <div >
+                <!-- *ngIf="!emailSentLoading" -->
+                <div >
+                  <form [formGroup]="this.resetForm" class="login-form" #reset="ngForm">
+
+                    <h4>Reset Password</h4>
+                    <hr />
+                    <label>E-mail</label>
+                    <div>
+                      <input type="text" class="form-control inputField mt-2" formControlName="mail" required />
+                      <div class="errDiv">
+                        @if (resetForm.controls['userName'].invalid &&(resetForm.controls['userName'].dirty ||
+                        resetForm.controls['userName'].touched)) {
+                        <div>Enter Valid E-mail</div>  
+                        }
+                      </div>
+                    </div>
+                    <div class="row mt-5">
+                      <div class="col">
+                        <a style="text-decoration: underline;" (click)="backToLogin() ">Back to Login</a>
+                      </div>
+                      <div class="col text-end">
+                        <button mat-raised-button class="submit-button" (click)="sendMail()" [disabled]="!reset.valid">
+                          Send
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- <div *ngIf="emailSentLoading">
+                  <h4>Request Password Reset</h4>
+                  <hr />
+                  <div class="row mt-2">
+                    <div class="col"></div>
+                    <div class="col">
+                      <mat-spinner></mat-spinner>
+                    </div>
+                    <div class="col"></div>
+                  </div>
+                </div> -->
+              </div>
+            }
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div>
+
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+
+</div>

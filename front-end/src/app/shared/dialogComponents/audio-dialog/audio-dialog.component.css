@@ -1,0 +1,142 @@
+/* h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    padding: 16px;
+    color: var(--h3); 
+  }
+  
+  .mat-dialog-content {
+    padding: 16px;
+    text-align: center;
+  }
+  
+  audio {
+    outline: none;
+    border-radius: 4px;
+    margin-top: 16px;
+  }
+  
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 16px;
+  }
+  
+  button {
+    background-color: var(--h3); 
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: var(--h5); 
+  }
+  
+  .action{
+    padding: 10px;
+    justify-content: space-between;
+    display: flex
+  }
+
+  .center-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .toolbar-3 {
+    display: flex;
+    justify-content: center;
+    height: 7vh;
+    background-color: var(--h3);
+  } */
+
+  /* Style for the dialog title */
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  padding: 16px;
+  color: var(--h3); 
+}
+
+/* Main content styling */
+.mat-dialog-content {
+  padding: 16px;
+  text-align: center;
+}
+
+/* Merged audio title */
+.merged-audio-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  display: block; /* Ensure it takes up space */
+}
+
+/* Show time styling */
+.show-time {
+  font-size: 16px;
+  margin-right: 12px;
+}
+
+/* Audio item container */
+.audio-item {
+  margin: 12px 0; 
+}
+
+/* Audio title */
+.audio-title {
+  font-size: 16px;
+  margin-right: 8px; 
+}
+
+/* WaveSurfer container */
+.wavesurfer-container {
+  width: 100%; 
+  background-color: #e0e0e0; 
+  border-radius: 4px;
+  margin: 8px 0; 
+}
+
+/* Style for the dialog actions */
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+}
+
+/* Button styling */
+button {
+  background-color: var(--h3);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--h5);
+}
+
+/* Centered content for toolbars */
+.center-content {
+  display: flex;
+  align-items: center;
+}
+
+/* Custom toolbar styles */
+.toolbar-3 {
+  display: flex;
+  justify-content: center;
+  height: 7vh; /* Fixed height for consistency */
+  background-color: var(--h3);
+  border-radius: 4px;
+  margin-bottom: 12px; /* Space below toolbars */
+}

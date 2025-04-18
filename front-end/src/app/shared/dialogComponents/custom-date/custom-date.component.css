@@ -1,0 +1,41 @@
+.color-code{
+    color: white;
+}
+
+.dialog-buttons {
+    justify-content: flex-end; 
+  }
+  
+  .cancel-button {
+    background-color: var(--h3);
+    color: white; 
+    margin-right: 10px; 
+  }
+  
+  .done-button {
+    background-color: var(--h3);
+    color: white;
+  }
+  .cancel-button:hover,.done-button:hover {
+    background-color: var(--h5); 
+    color: black;
+  }
+  .custom-date{
+    /* background-color: var(--baseColor); */
+    height: 100%;
+    padding: 8px;
+  }
+  .to label,
+  .from label{
+    color: white;
+  }
+
+  .dialog-buttons {
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 30px;
+}
+
+.cancel-button, .done-button {
+    margin-right: 10px; 
+}

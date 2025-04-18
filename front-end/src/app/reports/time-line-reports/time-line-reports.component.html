@@ -1,0 +1,318 @@
+<div class="mainContainer">
+  <div class="filters">
+    <div class="container">
+      <div class="row ">
+        <div class="col-9 d-flex p-0">
+
+          <button class="custom-button-date btn" [matMenuTriggerFor]="filterDate">
+            <span class="material-symbols-outlined ">
+              schedule
+            </span>
+            <span style="font-size: small;">{{ selectedDateRange }}</span>
+          </button>
+          <mat-menu #filterDate="matMenu">
+            <button mat-menu-item (click)="setDateRange('Today')">
+              {{'Menu.REPORTS RECORDING.AGENTS.Today'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Week')">
+              {{'Menu.REPORTS RECORDING.AGENTS.This Week'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Month')">
+              {{'Menu.REPORTS RECORDING.AGENTS.This Month'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Quarter')">
+              {{'Menu.REPORTS RECORDING.AGENTS.This Quarter'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDateRange('This Year')">
+              {{'Menu.REPORTS RECORDING.AGENTS.This Year'| translate}}
+            </button>
+            <button mat-menu-item (click)="openCustomDateDialog(selectedDateRange)">
+              {{'Menu.REPORTS RECORDING.AGENTS.Custom'| translate}}
+            </button>
+
+          </mat-menu>
+
+          <!-- Extension filter -->
+          <button mat-flat-button class="custom-button btn" [matMenuTriggerFor]="filterExtension">
+            {{ 'Menu.REPORTS RECORDING.AGENTS.Extension' | translate }}:
+            @if (selectedExtensions.length === 0) {
+            {{ 'All' | translate }}
+            }@else if(selectedExtensions.length === 1){
+            <label style="font-size: small;">{{selectedExtensions[0]}}</label>
+            }@else {
+
+            {{ 'Multiple' | translate }}
+            }
+          </button>
+          <mat-menu #filterExtension="matMenu" class="agent-menu" style="padding-left: 1vw;">
+            <div class="d-flex me-1">
+              <mat-checkbox color="primary" [(ngModel)]="selectAllExtensions"
+                (change)="toggleSelectAllExtensions($event.checked)" (click)="$event.stopPropagation()">
+
+              </mat-checkbox>
+              <input class="ms-2 border w-80"
+                placeholder="{{'Menu.REPORTS RECORDING.AGENTS.Search Extension' | translate}}"
+                (input)="onExtensionSearchChange($event)" (click)="$event.stopPropagation()">
+
+            </div>
+            <div class="itemsDiv">
+              @for(extension of filteredExtensions;track $index){
+              <div>
+                <mat-checkbox color="primary" [checked]="isExtensionSelected(extension.uniqueValue)"
+                  (change)="toggleExtension(extension.uniqueValue, $event)" (click)="$event.stopPropagation()">
+                  {{ extension.uniqueValue }}
+                </mat-checkbox>
+              </div>
+              }
+
+            </div>
+            <button mat-menu-item>
+              Close
+            </button>
+          </mat-menu>
+
+          <button mat-flat-button class="custom-button btn" [matMenuTriggerFor]="filterAgent">
+            {{ 'Menu.REPORTS RECORDING.AGENTS.Agent' | translate }}:
+            @if (selectedAgents.length === 0) {
+            {{ 'All' | translate }}
+            }@else if(selectedAgents.length === 1){
+            <label style="font-size: small;">{{selectedAgents[0]}}</label>
+            }@else {
+
+            {{ 'Multiple' | translate }}
+            }
+          </button>
+          <mat-menu #filterAgent="matMenu" class="agent-menu" style="padding-left: 1vw;">
+            <div class="d-flex me-1">
+              <mat-checkbox color="primary" [(ngModel)]="selectAllAgents"
+                (change)="toggleSelectAllAgents($event.checked)" (click)="$event.stopPropagation()">
+
+              </mat-checkbox>
+              <input class="ms-2 border w-80" placeholder="{{'Menu.REPORTS RECORDING.AGENTS.Search Agent' | translate}}"
+                (input)="onAgentSearchChange($event)" (click)="$event.stopPropagation()">
+
+            </div>
+            <div class="itemsDiv">
+              @for(agent of filteredAgents;track $index){
+              <div>
+                <mat-checkbox color="primary" [checked]="isAgentSelected(agent.uniqueValue)"
+                  (change)="toggleAgent(agent.uniqueValue, $event)" (click)="$event.stopPropagation()">
+                  {{ agent.uniqueValue }}
+                </mat-checkbox>
+              </div>
+              }
+
+            </div>
+            <button mat-menu-item>
+              Close
+            </button>
+          </mat-menu>
+
+          <button   class="custom-button-date btn"  [matMenuTriggerFor]="menu3">
+            <span class="material-symbols-outlined">
+              schedule
+            </span>
+            <span style="font-size: small;">{{reportBody.inTimelineCriteria}}</span>
+            
+          </button>
+          <mat-menu #menu3="matMenu">
+            <button mat-menu-item (click)="timelineCriteriaChange('Hourly')">
+              Hourly
+              <!-- {{'Menu.CONFIGURE.EXTENSION MAPPING.Active'| translate}}           -->
+            </button>
+            <button mat-menu-item (click)="timelineCriteriaChange('Daily')">
+              Daily
+              <!-- {{'Menu.CONFIGURE.EXTENSION MAPPING.InActive'| translate}}           -->
+            </button>
+            <button mat-menu-item (click)="timelineCriteriaChange('Monthly')">
+              Monthly
+              <!-- {{'Menu.CONFIGURE.EXTENSION MAPPING.Active'| translate}}           -->
+            </button>
+          </mat-menu>
+
+          <button  class="custom-apply-button btn" (click)="applyFilters()" [matTooltip]="toolTips.apply|translate">
+            {{'Menu.CONFIGURE.EXTENSION MAPPING.APPLY'| translate}}
+          </button>
+
+        </div>
+
+        <!-- Type -->
+        <div class="col-3 d-flex justify-content-end p-0">
+          <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}"[matTooltip]="toolTips.download|translate"
+           [matMenuTriggerFor]="menu4">
+            <mat-icon class="icon">download_2</mat-icon>
+            <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+          </div>
+          <!-- File Download -->
+          <mat-menu #menu4="matMenu">
+            <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+              <div style="justify-content: space-around;display: flex;">
+                <div>Excel</div>
+                <div>
+                  <span class="material-symbols-outlined">article</span>
+                </div>
+              </div>
+            </button>
+            <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+              <div style="justify-content: space-around;display: flex;">
+                <div>PDF</div>
+                <div>
+                  <span class="material-symbols-outlined">picture_as_pdf</span>
+                </div>
+              </div>
+            </button>
+            <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+              <span>TIFF</span>
+              <span class="material-symbols-outlined">perm_media</span>
+            </button>
+            <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+              <span>Web Archive</span>
+              <span class="material-symbols-outlined">install_desktop</span>
+            </button>
+          </mat-menu>
+
+          <!-- DON'T REMOVE -->
+          <!-- @if(reportBody.inTimelineCriteria=='Hourly'){
+        
+            <input matInput (dateInput)="dateChange( $event)" [matDatepicker]="picker" class="btn  datePicker" placeholder="Select date">
+         
+            <mat-datepicker-toggle matTooltip="{{'Menu.Select date'| translate}}" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        
+            }@else if(reportBody.inTimelineCriteria=='Daily') {
+          
+            <mat-date-range-input [formGroup]="range"  [rangePicker]="picker" class="btn btn-dark datePicker">
+              <input matStartDate formControlName="start" (dateChange)="onDateRangeChange()"  placeholder="Start date">
+              <input matEndDate formControlName="end" (dateChange)="onDateRangeChange()" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matTooltip="{{'Menu.Select date'| translate}}" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+      
+            }@else{
+            
+            <mat-date-range-input [rangePicker]="picker" class="btn btn-dark datePicker">
+              <input matStartDate placeholder="Start date">
+              <input matEndDate placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matTooltip="{{'Menu.Select date'| translate}}" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+       
+            } -->
+
+
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="table-container" style="overflow: auto;">
+    <table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource">
+      <!-- Day Column -->
+      <ng-container matColumnDef="CallDateTimeRange">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef mat-sort-header class="header-cell">
+
+          <div class="header-content" style="padding-left: 10px;">
+            <!-- <div class="header-text-icon"> -->
+            @if(reportBody.inTimelineCriteria=='Hourly'){
+            {{'Menu.REPORTS RECORDING.TIME LINE.Hours' | translate}}
+            }@else if (reportBody.inTimelineCriteria=='Daily') {
+            {{'Menu.REPORTS RECORDING.TIME LINE.Days' | translate}}
+            }@else{
+            {{'Menu.REPORTS RECORDING.TIME LINE.Months' | translate}}
+            }
+
+            <br>
+          </div>
+          <!-- </div> -->
+        </th>
+        @if(reportBody.inTimelineCriteria=='Hourly'){
+        <td mat-cell *matCellDef="let element">
+          {{element.CallDateTimeRange}}</td>
+        }@else if (reportBody.inTimelineCriteria=='Daily') {
+        <td mat-cell *matCellDef="let element">
+          {{element.CallDate}}</td>
+        }@else{
+        <td mat-cell *matCellDef="let element">
+          {{element.CallMonth}}</td>
+        }
+
+      </ng-container>
+
+      <!-- Call Count Column -->
+      <ng-container matColumnDef="CallCount">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-content">
+            {{'Menu.REPORTS RECORDING.TIME LINE.Call Count' | translate}}
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.CallCount}}<br></td>
+      </ng-container>
+
+      <!-- Duration Column -->
+      <ng-container matColumnDef="TotalDuration">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef mat-sort-header>
+          <div class="header-content">
+            {{'Menu.REPORTS RECORDING.TIME LINE.Duration(Hrs)' | translate}}
+            <br>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.TotalDuration}}<br></td>
+      </ng-container>
+
+      <!-- Avg Duration Column -->
+      <ng-container matColumnDef="AverageDuration">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-content">
+            {{'Menu.REPORTS RECORDING.TIME LINE.Avg Duration' | translate}}
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{element.AverageDuration}}</td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"
+        *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+
+
+  <mat-toolbar class="pagination-toolbar">
+    <div class="page-info">{{'Menu.CONFIGURE.EXTENSION MAPPING.TotalRecords' | translate}}: {{ totalRecord }}</div>
+    <span class="example-spacer"></span>
+    <div class="page-info">
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.RecordsPerPage' | translate}}
+    </div>
+    <mat-select class="form-control me-4" style="width:6vw" [(ngModel)]="recordsPerPage"
+      (selectionChange)="onItemsPerPageChange($event)">
+      <mat-option class="goto-check" [value]="10" selected>10</mat-option>
+      <mat-option class="goto-check" [value]="25">25</mat-option>
+      <mat-option class="goto-check" [value]="50">50</mat-option>
+      <mat-option class="goto-check" [value]="100">100</mat-option>
+    </mat-select>
+    <div class="page-info">
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.page' | translate}}
+      <mat-select class="form-control" style="width: 6vw;" [(value)]="pageNumber" (selectionChange)="goToPage($event)">
+        <mat-option class="goto-check-pagination" *ngFor="let page of getPagesArray()" [value]="page">
+          {{ page }}
+        </mat-option>
+      </mat-select>
+      {{'Menu.CONFIGURE.EXTENSION MAPPING.of' | translate}} {{ getTotalPages() }}
+    </div>
+    <div [dir]="'ltr'">
+      <button mat-mini-fab class="next-button me-2 " (click)="previousPage()"
+        [matTooltip]="toolTips.Previous|translate">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-mini-fab class="next-button me-2" (click)="nextPage()" [matTooltip]="toolTips.Next|translate">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+    </div>
+  </mat-toolbar>
+</div>

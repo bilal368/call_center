@@ -1,0 +1,370 @@
+<div class="mainagentReport">
+  <div class="filters">
+    <div class="container ">
+      <div class="row">
+        <div class="col-9 d-flex p-0">
+      <button class="custom-button-date btn" [matMenuTriggerFor]="filterDate">
+        <span class="material-symbols-outlined ">
+          schedule
+        </span>
+        <span class="">{{ selectedDateRange }}</span>
+      </button>
+      <mat-menu #filterDate="matMenu">
+        <button mat-menu-item (click)="setDateRange('Today')">
+          {{'Menu.REPORTS RECORDING.AGENTS.Today'| translate}}
+        </button>
+        <button mat-menu-item (click)="setDateRange('This Week')">
+          {{'Menu.REPORTS RECORDING.AGENTS.This Week'| translate}}
+        </button>
+        <button mat-menu-item (click)="setDateRange('This Month')">
+          {{'Menu.REPORTS RECORDING.AGENTS.This Month'| translate}}
+        </button>
+        <button mat-menu-item (click)="setDateRange('This Quarter')">
+          {{'Menu.REPORTS RECORDING.AGENTS.This Quarter'| translate}}
+        </button>
+        <button mat-menu-item (click)="setDateRange('This Year')">
+          {{'Menu.REPORTS RECORDING.AGENTS.This Year'| translate}}
+        </button>
+        <button mat-menu-item (click)="openCustomDateDialog(selectedDateRange)">
+          {{'Menu.REPORTS RECORDING.AGENTS.Custom'| translate}}
+        </button>
+          </mat-menu>
+ 
+
+          <button  class="custom-button  btn" [matMenuTriggerFor]="filterAgent">
+            {{ 'Menu.REPORTS RECORDING.AGENTS.Agent ID' | translate }}:
+            {{ getAgentFilterText() | translate }} <!-- Use the method to get the appropriate label -->
+          </button>
+    
+    
+          <mat-menu #filterAgent="matMenu" class="agent-menu" style="padding-left: 1vw;">
+            <div style="padding: 3px;">
+              <input class="border w-80" placeholder="{{'Menu.REPORTS RECORDING.AGENTS.Search Agent' | translate}}"
+              (input)="onAgentIDSearchChange($event)" (click)="$event.stopPropagation()">
+            </div>
+           
+          
+            <div class="agent-list d-flex me-1" (click)="$event.stopPropagation()">
+              <mat-checkbox color="primary" (change)="toggleAgent('All', $event)" [checked]="selectedAgents.includes('All')">
+            {{ 'All' | translate }}
+              </mat-checkbox>
+          
+              
+            </div>
+            <div class="itemsDiv">
+              @for(agent of filteredAgents;track $index){
+              <div>
+                <!-- <mat-checkbox color="primary" [checked]="isAgentSelected(agent.uniqueValue)"
+                  (change)="toggleAgent(agent.uniqueValue, $event)" (click)="$event.stopPropagation()">
+                  {{ agent.uniqueValue }}
+                </mat-checkbox> -->
+                <mat-checkbox color="primary"[checked]="selectedAgents.includes(agent.uniqueValue)"
+                 (change)="toggleAgent(agent.uniqueValue, $event)" (click)="$event.stopPropagation()">
+                     {{ agent.uniqueValue }}
+                </mat-checkbox>
+
+              </div>
+              }
+          
+            </div>
+          </mat-menu>
+
+
+          <button class="custom-button  btn" [matMenuTriggerFor]="filterAgentName">
+            {{ 'Menu.REPORTS RECORDING.AGENTS.Agent Name' | translate }}:
+            {{ getAgentNameFilterText() | translate }}
+          </button>
+
+
+          <mat-menu #filterAgentName="matMenu" class="agent-menu" style="padding-left: 1vw;">
+            <div style="padding: 3px;">
+              <input class="border w-80" placeholder="{{'Menu.REPORTS RECORDING.AGENTS.Search Agent' | translate}}"
+                     (input)="onAgentSearchChange($event)" (click)="$event.stopPropagation()">
+            </div>
+          
+            <div class="agent-list d-flex me-1" (click)="$event.stopPropagation()">
+              <mat-checkbox color="primary" (change)="toggleAgentName('All', $event)" [checked]="selectedAgentName.includes('All')">
+                {{ 'All' | translate }}
+              </mat-checkbox>
+            </div>
+          
+            <div class="itemsDiv">
+              <div *ngFor="let agent of validAgentNames">
+                <mat-checkbox color="primary" [checked]="selectedAgentName.includes(agent.uniqueValue)"
+                              (change)="toggleAgentName(agent.agentCode, $event)" (click)="$event.stopPropagation()">
+                  {{ agent.agentName }}
+                </mat-checkbox>
+              </div>
+            </div>
+          </mat-menu>
+          
+          
+          <div class="date-container" [matMenuTriggerFor]="filterDire">
+            <button class="custom-button btn">
+              {{'Menu.REPORTS RECORDING.AGENTS.Direction'| translate}}: {{ selectedDirection }}
+            </button>
+
+          </div>
+          <mat-menu #filterDire="matMenu">
+            <button mat-menu-item (click)="setDirection('')">
+              {{'Menu.REPORTS RECORDING.AGENTS.All'| translate}}
+            </button>
+            <button mat-menu-item (click)="setDirection('0')">
+
+              {{'Menu.REPORTS RECORDING.AGENTS.Incoming'| translate}}
+
+            </button>
+            <button mat-menu-item (click)="setDirection('1')">
+
+              {{'Menu.REPORTS RECORDING.AGENTS.Outgoing'| translate}}
+
+            </button>
+          </mat-menu>
+
+
+          <button class="custom-apply-button btn" (click)="applyFilters()">
+            {{'Menu.REPORTS RECORDING.AGENTS.APPLY'| translate}}
+
+          </button>
+        </div>
+
+
+        <!-- Type -->
+        <div class="col-3 d-flex justify-content-end p-0">
+          <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}"
+            [matTooltip]="toolTips.download|translate" [matMenuTriggerFor]="menu4">
+            <mat-icon class="icon">download_2</mat-icon>
+            <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+          </div>
+          <!-- File Download -->
+          <mat-menu #menu4="matMenu">
+            <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+              <div style="justify-content: space-around;display: flex;">
+                <div>Excel</div>
+                <div>
+                  <span class="material-symbols-outlined">article</span>
+                </div>
+              </div>
+            </button>
+            <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+              <div style="justify-content: space-around;display: flex;">
+                <div>PDF</div>
+                <div>
+                  <span class="material-symbols-outlined">picture_as_pdf</span>
+                </div>
+              </div>
+            </button>
+            <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+              <span>TIFF</span>
+              <span class="material-symbols-outlined">perm_media</span>
+            </button>
+            <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+              <span>Web Archive</span>
+              <span class="material-symbols-outlined">install_desktop</span>
+            </button>
+          </mat-menu>
+
+        </div>
+      </div><!-- row -->
+    </div><!-- containers -->
+  </div><!-- filters -->
+
+
+
+  <div class="table-container">
+    @if(dataStatus) {
+    <table mat-table [dataSource]="dataSource1" matSort class="mat-elevation-z8" style="background-color: var(--h3);">
+
+      <!-- Agents Column -->
+
+
+      <ng-container matColumnDef="agents">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color:var(--h3)">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <!-- Main header for Agent Name -->
+              <label class="label-column-agents">
+                {{ 'Menu.REPORTS RECORDING.CALLS.Agent Name' | translate }}
+              </label>
+              <br>
+              <!-- Additional header for Agent ID -->
+              <label class="label-column-agentsId">
+                {{ 'Menu.REPORTS RECORDING.CALLS.Agent ID' | translate }}
+              </label>
+            </div>
+
+          </div>
+        </th>
+
+        <td mat-cell *matCellDef="let element" class="element-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <!-- Display the agent name; show 'Not Set' if name is null -->
+              <label class="element-agentsname">
+                {{ element.agentName }}
+              </label>
+              <br>
+              <!-- Display the agent ID below the agent name -->
+              <label class="element-agents">
+                {{ element.agents }}
+              </label>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- CallCount Column -->
+      <ng-container matColumnDef="callcount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by call count"
+          class="table-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="label-column-callcount">
+                {{ 'Menu.REPORTS RECORDING.AGENTS.Call Count' | translate }}
+              </label>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="element-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="element-callcount">{{ element.callcount }}</label>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Duration Column -->
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by duration"
+          class="table-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="label-column-duration">
+                {{ 'Menu.REPORTS RECORDING.AGENTS.Duration(Hrs)' | translate }}
+              </label>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="element-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="element-duration">{{ element.duration }}</label>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Average Duration Column -->
+      <ng-container matColumnDef="avgduration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by average duration"
+          style="background-color: var(--h3)">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="label-column-avgduration">
+                {{ 'Menu.REPORTS RECORDING.AGENTS.Avg.Duration(Hrs)' | translate }}
+              </label>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="element-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="element-avgduration">{{ element.avgduration }}</label>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Total Working Days Column -->
+      <ng-container matColumnDef="TotalWorkingdays">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by total working days">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="label-column-TotalWorkingdays">
+                {{ 'Menu.REPORTS RECORDING.AGENTS.Total Working Days' | translate }}
+              </label>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="element-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="element-TotalWorkingdays">{{ element.TotalWorkingdays }}</label>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Avg. Calls / Working Days Column -->
+      <ng-container matColumnDef="avgcallsWorkingdays">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header
+          sortActionDescription="Sort by average calls per working day" class="table-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="label-column-avgcallsWorkingdays">
+                {{ 'Menu.REPORTS RECORDING.AGENTS.Avg.Calls/Working Days' | translate }}
+              </label>
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="element-header">
+          <div class="header-cell-container">
+            <div class="label-column">
+              <label class="element-avgcallsWorkingdays">{{ element.avgcallsWorkingdays }}</label>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"
+        *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    }
+  </div>
+
+
+  <!-- Pagination-->
+  <mat-toolbar class="pagination-toolbar">
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.AGENTS.Total Records'| translate}}
+      :
+      {{ TotalRecords }}
+    </div>
+    <span class="example-spacer"></span>
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.AGENTS.Records Per Page'| translate}}
+    </div>
+    <mat-select class="form-control me-4" [(ngModel)]="recordsPerPage" (selectionChange)="onItemsPerPageChange($event)"
+      style="width:5vw;">
+      <mat-option class="goto-check" [value]="10">10</mat-option>
+      <mat-option class="goto-check" value="25">25</mat-option>
+      <mat-option class="goto-check" value="50">50</mat-option>
+      <mat-option class="goto-check" value="100">100</mat-option>
+    </mat-select>
+
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.AGENTS.Page'| translate}}
+      <mat-select class="form-control" style="width:5vw;" [(value)]="pageNumber" (selectionChange)="goToPage($event)">
+        <mat-option *ngFor="let page of getPagesArray()" [value]="page" class="goto-check-pagination">
+          {{ page }}
+        </mat-option>
+      </mat-select>
+      {{'Menu.REPORTS RECORDING.AGENTS.of'| translate}}
+
+      {{ getTotalPages() }}
+    </div>
+
+    <div [dir]="'ltr'">
+      <button mat-mini-fab class="next-button me-2" (click)="previousPage()" [matTooltip]="toolTips.Previous|translate">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-mini-fab class="next-button me-2" (click)="nextPage()" [matTooltip]="toolTips.Next|translate">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+    </div>
+  </mat-toolbar>
+  <!-- Pagination-->
+</div>

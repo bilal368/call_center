@@ -1,0 +1,209 @@
+.head-container {
+    /* margin-left: .5%; */
+    height: 90%;
+    overflow-y: auto;
+  }
+  
+  .sidenav-options {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    /* height: 20px;
+    position: fixed; */
+  
+  }
+  
+  .build-div {
+    width: 300px;
+    height: 40px;
+    background-color: var(--tabColor);
+    border-radius: 15px 15px 0px 0px;
+    color: var(--tabNameColor);
+    align-items: center;
+    padding-top: 5px;
+    letter-spacing: 1px;
+  }
+  
+  .textFromfeild {
+    display: flex;
+    flex-direction: column;
+  
+    position: relative;
+    height: 90px;
+  }
+  
+  .leftFormstyle {
+    margin-left: 1%;
+    margin-top: 10px;
+    /* height: 100%; */
+    width: 47%;
+  
+  }
+  
+  .rightForm {
+    margin-left: 6%;
+    margin-top: 10px;
+    width: 43%;
+  
+  }
+  
+  .custom-button {
+    top: 1rem;
+    left: 85%;
+    background-color: var(--textColorblack);
+    color: white !important;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  
+  .custom-button:active {
+    background-color: #0B2D48;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .headLable {
+    font-weight: 500;
+    color: black;
+    font-size: 16px;
+  }
+  
+  .map-channel-btn {
+    background-color: var(--textColorblack);
+    color: white !important;
+  
+  }
+  
+  .import-btn {
+    margin: 10px;
+    background-color: var(--buttonColor);
+    color: white !important;
+  
+  }
+  
+  .upload-btn {
+    margin: 10px;
+    background-color: var(--baseColor1);
+    color: white !important;
+  }
+  
+  .headtext {
+    font-weight: 500;
+    color: black;
+    font-size: 16px;
+  }
+  
+  .dropdowntext {
+    border-color: #89AECF;
+    border-style: solid;
+    width: 300px;
+    height: 26px;
+    border-width: 2px;
+    padding-right: 10px;
+  }
+  
+  #placeholderstyle {
+    border-color: #89AECF;
+    border-style: solid;
+  }
+  
+  .subtext {
+    color: black;
+    display: block;
+    width: 500px;
+  }
+  
+  .validtionstyle {
+    min-height: 3px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .headpadding {
+    height: 90px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+    width: 100px;
+  }
+  
+  .importDiv {
+  
+    background-color: #290a9a;
+    border-radius: 0% 12px 0% 00%;
+    align-items: center;
+    color: #fff;
+    padding: 4px;
+    margin-top: 9px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    height: 5vh;
+    width: 6vw;
+    cursor: pointer;
+  }
+  
+  .excelDiv {
+    height: 42px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #5A9158;
+    font-size: 15px;
+    color: #fbf3f3;
+    padding: 3px;
+    cursor: pointer;
+    width: 80px;
+  }
+  
+  .mdc-data-table__header-row {
+    background-color: var(--h3) !important;
+    color: white;
+  }
+  .pagination-toolbar {
+    background-color: var(--h3);
+    height: 7vh;
+    position: absolute;
+    bottom: 0
+      /* margin-bottom: -100px; */
+      /* margin-top: 33px; */
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .next-button {
+    background-color: var(--textColor) !important;
+    color: var(--textColorblack) !important;
+  }
+  
+  .page-info {
+    font-size: 14px;
+    margin-right: 16px;
+    color: var(--textColor) !important;
+  }
+  
+  .pagination-toolbar {
+    background-color: var(--h3);
+    height: 7vh;
+    position: absolute;
+    bottom: 0
+      /* margin-bottom: -100px; */
+      /* margin-top: 33px; */
+  }
+  .custom-white-checkbox.mat-mdc-checkbox.mat-accent {
+    --mdc-checkbox-selected-checkmark-color: #fff;
+    --mdc-checkbox-selected-focus-icon-color:var(--baseColor);
+    --mdc-checkbox-selected-hover-icon-color: var(--baseColor);
+    --mdc-checkbox-selected-icon-color:var(--baseColor);
+    --mdc-checkbox-selected-pressed-icon-color: var(--baseColor);
+    --mdc-checkbox-unselected-focus-icon-color: #ffffff;
+    --mdc-checkbox-unselected-hover-icon-color: #ffffff;
+    --mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
+    --mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
+    --mdc-checkbox-unselected-icon-color: rgb(255, 255, 255);
+    --mdc-checkbox-unselected-pressed-icon-color: rgb(255, 255, 255);
+  }

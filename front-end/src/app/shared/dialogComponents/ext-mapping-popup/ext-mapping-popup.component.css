@@ -1,0 +1,356 @@
+.table-container {
+  margin: 0%;
+  height: 79vh;
+
+
+}
+.columnCell{
+  margin-left: 5%;
+
+  align-items: center;
+}
+.head-container {
+  margin-left: .5%;
+ 
+}
+.header-content {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin-left: 5%;
+}
+
+.tab-text {
+  font-size: 16px;
+  font-weight: bold;
+  align-items: center;
+}
+
+table {
+  width: 90%;
+  max-height: 45vh;
+  overflow-y: auto;
+  padding: 0;
+  background-color: white;
+}
+
+th, td {
+  height: 6vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* td {
+  width: 20px;
+  margin-left: 50px;
+} */
+
+th.mat-sort-header-sorted {
+  color: var(--textColor);
+}
+
+.mdc-data-table__header-row {
+  color: var(--textColor);
+  background-color: var(--h3) !important;
+}
+
+.mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead, 
+.mat-mdc-cell, .mat-mdc-footer-cell, .mat-mdc-header-row, .mat-mdc-row, 
+.mat-mdc-footer-row {
+  background-color: white;
+  padding-left: 12px;
+}
+
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Location-button {
+  background-color: var(--h3);
+  color: var(--textColor) !important;
+  border-radius: 20px;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  border: 4px solid transparent;
+  border-radius: 50%;
+  border-color: #f6f6f6 transparent;
+  animation: l16 1s infinite linear;
+  margin: 15% 45% 10% 45%;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 2px;
+  border: inherit;
+  border-radius: 50%;
+}
+
+.loader::before {
+  border-color: #75a28b transparent;
+  animation: inherit;
+  animation-duration: .5s;
+  animation-direction: reverse;
+}
+
+.loader::after {
+  margin: 8px;
+}
+
+@keyframes l16 {
+  100% {
+      transform: rotate(1turn);
+  }
+}
+
+.sidenav-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--textColor);
+  padding: 10px;
+}
+
+.heading {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--baseColor);
+  color: var(--baseColor1);
+  align-items: baseline;
+  padding-top: 1%;
+  padding-bottom: 0;
+}
+
+.input-container {
+  display: flex;
+  background-color: var(--inputBg);
+  width: 56%;
+  padding: 5px 2px 1px 5px !important;
+  height: 90%;
+  border: 1px var(--h3);
+  box-shadow: inset rgba(0, 0, 0, 0.4) 1.95px 1.95px 2.6px;
+}
+
+.input-container span {
+  margin-top: 1%;
+  color: var(--h3) !important;
+}
+
+
+
+.expansionHeader {
+  width: 100%;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 10px;
+  cursor: pointer;
+}
+.header-text-icon {
+  display: flex;
+  align-items: center;
+}
+
+.header-text-icon span {
+  margin-left: 4px; /* Adjust this value to ensure uniform spacing */
+}
+
+.alternate-color {
+  background-color: #f5f5f5;
+}
+
+li:hover {
+  background-color: #e0e0e0;
+}
+
+.saveButtonDiv
+{
+  border-radius: 15px;
+  
+}
+
+.saveButtonDiv {
+  height: 6vh;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.usermangerSavebutton {
+  background-color: rgb(8, 8, 8);
+  color: white !important;
+  width: 12%;
+  height: 5vh !important;
+  border-radius: 5px;
+  margin-top: 10vw;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  display: block; /* Centers the button horizontally */
+}
+.skip{
+  background-color: rgb(8, 8, 8);
+  color: white !important;
+  width: 12%;
+  height: 5vh !important;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  padding:1% ;
+}
+.replace{
+  background-color: rgb(8, 8, 8);
+  color: white !important;
+  width: 12%;
+  height: 5vh !important;
+  border-radius: 5px;
+
+  margin-right: auto;
+  justify-content: center;
+  padding:1% ;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.search-box {
+  padding: 8px 16px;
+  background: #f1f1f1;
+}
+
+input[matInput] {
+  width: 100%;
+}
+
+.fullForm {
+  margin: 0;
+}
+
+.form-group {
+  padding-right: 10px;
+}
+
+
+
+input {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  height: 100%;
+}
+
+
+.name-left {
+  margin-left: 2%;
+  margin-top: 2%;
+  width: 70%;
+  
+}
+
+.name-right {
+  width: 70%;
+  margin-left: auto;
+  margin-top: 2%;
+  
+}
+.headerLabel{
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+
+.closeDialogIcon {
+  position: absolute; /* Set the icon to be positioned absolutely */
+  top: 10px;           /* Position it at the top */
+  right: 5px;        /* Position it to the right */
+  height: 20px;
+  margin-right: 10px;
+  color: var(--textColor);
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--h5);
+
+  /* Remove margin-left, as it's not needed with absolute positioning */
+}
+.example-spacer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--textColor);
+  /* background-color: var(--headingBg); */
+  background-color: var(--h5);
+  padding: 10px;
+}
+.example-spacer1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--textColor);
+  /* background-color: var(--headingBg); */
+  background-color: var(--h5);
+  padding: 5px;
+}
+.closeButtonHover{
+  color:var(--textColor); 
+  }
+  
+  .closeButtonHover:hover {
+    background-color: transparent;
+  }
+  .saveButtonDiv {
+    background-color: transparent;
+    height: 9vh;
+    padding: 0;
+    /* background-color: var(--employeeDbg); */
+    background-color: white;
+    margin-top: 15%;
+
+  }
+  .usergroupSavebuttton {
+    background-color: var(--textColorblack);
+    /* background-color: rgb(60, 156, 89); */
+    color:var(--textColor) !important;
+    width: 10%;
+    height: 5vh !important;
+    /* border-radius: 1.5625vw; */
+    margin-left: 88%;
+
+  }
+  .usergroupSavebuttton2 {
+    background-color: var(--textColorblack);
+    /* background-color: rgb(60, 156, 89); */
+    color:var(--textColor) !important;
+    width: 10%;
+    height: 5vh !important;
+    /* border-radius: 1.5625vw; */
+    margin-left: 89%;
+
+  }

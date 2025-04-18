@@ -1,0 +1,256 @@
+.container{
+    /* background-color: var(--currentwindow); */
+    width: 100%;
+    height: 90%;
+    margin-top: 5px;
+    padding: 0;
+    max-width: 90vw;
+
+}
+.row{
+
+    padding: 1%;
+    /* margin: 5px 0 0px 0; */
+    height: 92%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.col-4{
+    /* width: 50vh; */
+    height: 70vh;
+    padding: 0;
+    width: calc(32.33% ); 
+    border-radius: 4px;
+    box-shadow: #32325d40 0 6px 12px -2px, #0000004d 0 3px 7px -3px;
+  
+}
+.heading{
+    width: 100%;
+    margin: 0;
+    height: 8%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--h3);
+    color: white;
+    align-items: baseline;
+    text-align: center;
+    padding-top: 1%;
+    /* padding-bottom: 0px; */
+    /* margin-left: -11px; */
+}
+.heading h3{
+    margin-left: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    /* margin-top: 10px; */
+}
+
+.heading .searchBox{
+    width: 90%;
+    border: 0px;
+    height: 100%;
+    margin-left: 2px;
+    margin-top: 0 !important;
+    /* background-color: var(--inputBg); */
+}
+.searchBox::placeholder{
+    opacity: 0.5;
+}
+.input-container{
+    display: flex;
+    margin-right: 5px;
+    /* align-items: baseline; */
+    background-color: white;
+    display: flex;
+    width: 56%;
+    padding: 5px 2px 1px 5px !important;
+    height: 90%;
+    border: 1px var(--headingBg);
+    border-radius: 2px;
+    box-shadow: inset rgba(0, 0, 0, 0.4) 1.95px 1.95px 2.6px;
+}
+.input-container .searchBox{
+  width: 90%;
+  border: 0px;
+  height: 100%;
+  margin-left: 2px;
+  margin-top: 0 !important;
+  background-color: var(--inputBg);
+
+}
+.input-container span{
+  background-color: #0a0a0a4d;
+  color: aliceblue;
+}
+.expansionHeader{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+mat-panel-title{
+  min-width: 80%!important;
+}
+.mat-content{
+  display: flex;
+  justify-content: space-between!important;
+}
+#dgUserAccessToggle{
+  padding-left: 5px;
+}
+/* privileage box */
+.PrivContentDiv{
+    height:92% ;
+    width: 100%;
+
+}
+.PrivContentDivRoles{
+  height:92% ;
+  width: 100%;
+  overflow-y: auto;
+  /* margin-left: -11px; */
+
+}
+.PrivContentDivRoles::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+.PrivContentDivRoles::-webkit-scrollbar-track {
+  background: rgb(215, 214, 211);        /* color of the tracking area */
+}
+
+.PrivContentDivRoles::-webkit-scrollbar-thumb {
+  background-color: rgb(122, 124, 124);    /* color of the scroll thumb */
+  border-radius: 5px;       /* roundness of the scroll thumb */
+  border: 3px solid rgb(147, 144, 139);  /* creates padding around scroll thumb */
+}
+.dataRestrictionDIv{
+  height: 92%;
+  width: 100%;
+  
+}
+mat-accordian mat-panel-title span{
+  width: 100%;
+}
+
+mat-expansion-panel {
+    overflow-y: hidden;
+    padding: 16px; /* Ensure even numbers for dimensions */
+}
+.hierarchyExpansion{
+  height: 100%;
+  overflow-y: auto ;
+}
+.hierarchyExpansion::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+.hierarchyExpansion::-webkit-scrollbar-track {
+  background: rgb(215, 214, 211);        /* color of the tracking area */
+}
+
+.hierarchyExpansion::-webkit-scrollbar-thumb {
+  background-color: rgb(122, 124, 124);    /* color of the scroll thumb */
+  border-radius: 5px;       /* roundness of the scroll thumb */
+  border: 3px solid rgb(147, 144, 139);  /* creates padding around scroll thumb */
+}
+mat-expansion-panel * {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+
+mat-tree{
+    max-height: 97%;
+    overflow-y: auto;
+}
+mat-tree button,mat-tree-node{
+    font-size: small;
+    border: 0px;
+    background-color: transparent;
+}
+mat-tree button{
+  padding: 0px;
+  min-width: 25px;
+}
+.example-tree-invisible {
+    display: none;
+  }
+  
+  .example-tree ul,
+  .example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+  .example-tree-node {
+    display: block;
+  }
+  
+  .example-tree-node .example-tree-node {
+    padding-left: 40px;
+  }
+  .buttonMainDiv{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1%;
+   
+  }
+  .buttonDiv{
+    width: 17%;
+    display: flex;
+    justify-content: space-between;
+    
+  }
+  .rolesAndPrivileagesSavebuttton {
+    background-color: var(--h3);
+    align-items: center;
+    text-align: center;
+    color: white !important;
+    width: 45%;
+    height: 5vh !important;
+    /* border-radius: 1.5625vw; */
+    border: 0px;
+    
+    /* margin-top: -150px; */
+    /* margin-bottom: 2vh; */
+  }
+  .rolesAndPrivileagesCancelbuttton {
+    background-color: var(--tabNameColor);
+    align-items: center;
+    text-align: center;
+    color: white !important;
+    width: 50%;
+    height: 5vh !important;
+    /* border-radius: 1.5625vw; */
+    border: 0px;
+    /* margin-top: -150px; */
+    /* margin-bottom: 2vh; */
+  }
+  .selected {
+    background-color: var(--h5);
+    color: white;
+    border-radius: 4px;
+  }
+  .alerts{
+    display: block;
+  }
+  
+
+  /* IF DIRECTION IN RTL  */
+  [dir="rtl"] .PrivContentDiv ,  
+  [dir="rtl"] .dataRestrictionDIv {
+    /* styles for child elements in rtl direction */
+    margin-left: auto;
+    padding-right: 2%;
+    margin-right: 0;
+  }
+  [dir="rtl"] .heading h3 {
+    padding-right: 2%;
+
+  }
+
+
+  /* **************** */
+  

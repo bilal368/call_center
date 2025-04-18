@@ -1,0 +1,753 @@
+<div>
+    <div class="sidenav-options">
+        @if(privileagedUI([18])){
+        <ng-container>
+            <div class="build-div me-2 mt-2 " (click)="divFunction('authentication')"
+                [ngStyle]="{'background-color': buildDiv === 'authentication' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'authentication' ? 'white' : 'var(--h3)'}">
+                <label class="tab-text mt-2">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.NAME'| translate}}
+                </label>
+            </div>
+        </ng-container>
+        }
+        @if(privileagedUI([19])){
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('hierarchy')"
+                [ngStyle]="{'background-color': buildDiv === 'hierarchy' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'hierarchy' ? 'white' : 'var(--tabNameColor)'}">
+                <label class="tab-text mt-2">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.HEIRARCHY MAPPING.NAME'| translate}}
+                </label>
+            </div>
+        </ng-container>
+        }
+        @if(privileagedUI([20])){
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('employeeDetails')"
+                [ngStyle]="{'background-color': buildDiv === 'employeeDetails' ? 'var(--h3)': '#CCCCCC','color': buildDiv === 'employeeDetails' ? 'white' : 'var(--tabNameColor)'}">
+                <label class="tab-text mt-2">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.NAME'| translate}}
+                </label>
+            </div>
+        </ng-container>
+        }
+        @if(privileagedUI([21])){
+        <ng-container>
+            <div class="build-div me-2 mt-2" (click)="divFunction('usergroupsroles');getUserRole()"
+                [ngStyle]="{'background-color': buildDiv === 'usergroupsroles' ? 'var(--h3)' : '#CCCCCC','color': buildDiv === 'usergroupsroles' ? 'white' : 'var(--tabNameColor)'}">
+                <label class="tab-text mt-2">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.USER GROUP/ROLES.NAME'| translate}}
+                </label>
+            </div>
+        </ng-container>
+        }
+    </div>
+    @if (buildDiv=='authentication') {
+    <div>
+        <form [formGroup]="this.authenticationForm" (ngSubmit)="openDialog()">
+            <div class="inputSession">
+                <div class="left-column">
+                    <div>
+                        <h2>
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.ServerIP'| translate}}
+                        </h2>
+                        <input type="text" autocomplete="url" placeholder="" class="username-input"
+                            formControlName="serverIp">
+                        @if (f['serverIp'].errors&& f['serverIp'].touched) {
+                        <div class="text-danger">
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.ServerIP is required'| translate}}
+                        </div>
+                        }
+                    </div>
+                    <div>
+                        <h2>
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.LDAP User Name'| translate}}
+                        </h2>
+                        <input type="text" autocomplete="username" placeholder="" class="username-input"
+                            formControlName="ldapUsername">
+                        @if (f['ldapUsername'].errors&& f['ldapUsername'].touched) {
+                        <div class="text-danger">
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.LDAP User Name is required'| translate}}
+                        </div>
+                        }
+                    </div>
+                    <div>
+                        <h2>
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.System Name'| translate}}
+                        </h2>
+                        <input type="text" placeholder="" class="username-input" [value]="'LDAP://'"
+                            style="color: #52674F;" formControlName="systemName">
+                        @if (f['systemName'].errors&& f['systemName'].touched) {
+                        <div class="text-danger">
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.System Name is required'| translate}}
+                        </div>
+                        }
+                    </div>
+
+
+                </div>
+
+
+                <div class="right-column">
+
+                    <div>
+                        <h2>
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.Domain Name'| translate}}
+                        </h2>
+                        <input type="text" placeholder="" class="username-input" formControlName="domainName">
+
+                        @if (f['domainName'].errors&& f['domainName'].touched) {
+                        <div class="text-danger">
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.Domain Name is required'| translate}}
+                        </div>
+                        }
+                    </div>
+                    <div>
+                        <h2>{{ 'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.LDAP Password' | translate }}</h2>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <!-- Input Field and Eye Icon Wrapper -->
+                            <div style="position: relative; width: 96%;">
+                                <input type="{{ hide ? 'password' : 'text' }}" placeholder="" class="username-input"
+                                    formControlName="password" style="width: 100%; padding-right: 30px;" />
+                                <span class="eye-icon me-2" (click)="togglePasswordVisibility()"
+                                    >
+                                    <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Validation Message Below the Input Container -->
+                        <div *ngIf="f['password'].errors && f['password'].touched" class="text-danger"
+                            style="margin-top: 5px;">
+                            {{ 'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.Password is required' | translate }}
+                        </div>
+                    </div>
+
+                    
+
+
+                </div>
+            </div>
+            <div class="buttonSession">
+
+                <div class="connectionStatus">
+                    <label>
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.LDAP Connection Status'| translate}}
+                    </label>
+                    <span class="material-symbols-outlined " [style.color]="isActive ? 'green' : 'red'">
+                        {{ isActive ? 'task_alt' :'emergency_home'}}
+                    </span>
+                    <label [style.color]="isActive ? 'green' : 'red'"
+                        [ngClass]="{ 'InactiveLable': !isActive, 'ActiveLabel': isActive }">{{ isActive
+                        ? 'Active' : 'Inactive' }}</label>
+
+                </div>
+                <div class="connectButton btn">
+
+                    <button mat-button class="btn" type="submit" [disabled]="authenticationForm.invalid">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.AUTHENTICATION.Connect'| translate}}
+
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    }
+    @if (buildDiv =='hierarchy') {
+    <div class="hierarchy-container">
+        <label class="hierarchy-text">
+            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.HEIRARCHY MAPPING.SELECT'| translate}}
+        </label>
+        <label class="hierarchy-assign">
+            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.HEIRARCHY MAPPING.HIERARCHY ASSIGNED'| translate}}
+        </label>
+    </div>
+
+    <div style="overflow: auto;height: 65vh;">
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let item of trialHierarchy; let i = index" [expanded]="expandedPanels[i]"
+                (opened)="togglePanel(i)" (closed)="togglePanel(i)">
+                <mat-expansion-panel-header (click)="sendHirechyData(item.name)">
+                    <div class="ms-2"
+                        style="border-radius: 50%; background-color: black; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center;margin-top: 5px;">
+                        <span class="material-symbols-outlined">{{ expandedPanels[i] ? 'remove' :
+                            'add'
+                            }}</span>
+                    </div>
+                    <div matTooltip={{item.name}} class="maintextHierachy"> {{item.name}}</div>
+                    <div style="padding-left: 30vw;">
+                        <button [matMenuTriggerFor]="menu4" class="dropdown ms-4" (click)="$event.stopPropagation()">
+                            <div class="mainIconLocation">
+                                <div class="itemSelection">
+                                    <mat-icon class="locationText">{{item.selection}}</mat-icon>
+                                    <label class="locationIcon">{{item.context}}</label>
+                                </div>
+                                <div>
+                                    <mat-icon class="expansionIcon">expand_more</mat-icon>
+                                </div>
+                            </div>
+                        </button>
+                        <mat-menu #menu4="matMenu">
+                            <button mat-menu-item *ngFor="let firstdropDown of dropdownLocation"
+                                [disabled]=firstdropDown.disabled (click)="locationSelectionData(firstdropDown,item)">
+                                <mat-icon
+                                    style="color: var(--h3);padding-top: 3px;">{{firstdropDown.selection}}</mat-icon>
+                                <label class="location_cityLable">{{firstdropDown.context}}</label>
+                            </button>
+                        </mat-menu>
+                    </div>
+                </mat-expansion-panel-header>
+                <hr style=" border-bottom: 1px solid black; width: 100%;" class="horizontal-line">
+                <div class="menuData" *ngFor="let main of hierarchall;">
+                    <div class="itemSelection">
+                        <div
+                            style="margin-left: 38px; border-radius: 50%; background-color: black; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center;cursor: pointer;">
+                            <span class="material-symbols-outlined" style="color: #CEDFCC;">remove</span>
+                        </div>
+
+                        <div (click)="sendHirechyData2(main.name)" matTooltip={{main.name}} class="maintextHierachy">
+                            {{main.name}}
+
+                        </div>
+                        <div style="width: 30vw;">
+                            <div style="margin-left: 28vw; width: 10vw;">
+                                <button [matMenuTriggerFor]="menu0" class="dropdown ms-4"
+                                    (click)="$event.stopPropagation()">
+                                    <div class="mainIconLocation">
+                                        <div class="itemSelection">
+                                            <mat-icon class="locationText">{{main.selection}}</mat-icon>
+                                            <label class="locationIcon">{{main.context}}</label>
+                                        </div>
+                                        <div>
+                                            <mat-icon class="expansionIcon">expand_more</mat-icon>
+                                        </div>
+                                    </div>
+                                </button>
+                                <mat-menu #menu0="matMenu">
+                                    <button mat-menu-item *ngFor="let firstdropDown of dropdownLocation"
+                                        [disabled]=firstdropDown.disabled
+                                        (click)="locationSelectionData(firstdropDown,main)">
+                                        <mat-icon
+                                            style="color: var(--h3);padding-top: 3px;">{{firstdropDown.selection}}</mat-icon>
+                                        <label class="location_cityLable">{{firstdropDown.context}}</label>
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style=" border-bottom: 1px solid black; width: 100%;" class="horizontal-line">
+
+                    <br>
+
+                </div>
+                <div class="menuData" *ngFor="let data of hierarchall2">
+
+                    <div class="itemSelection">
+                        <div
+                            style="margin-left: 58px; border-radius: 50%; background-color: black; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center;">
+                            <span class="material-symbols-outlined" style="color: #CEDFCC;">remove</span>
+                        </div>
+
+                        <div (click)="sendHirechyData3(data.name)" matTooltip={{data.name}} class="maintextHierachy">{{
+                            data.name }}
+                        </div>
+
+                        <div style="padding-left: 27vw;">
+                            <button [matMenuTriggerFor]="menu1" class="dropdown ms-4"
+                                (click)="$event.stopPropagation()">
+                                <div class="mainIconLocation">
+                                    <div class="itemSelection">
+                                        <mat-icon class="locationText">{{data.selection}}</mat-icon>
+                                        <label class="locationIcon">{{data.context}}</label>
+                                    </div>
+                                    <div>
+                                        <mat-icon class="expansionIcon">expand_more</mat-icon>
+                                    </div>
+                                </div>
+                            </button>
+
+
+                            <mat-menu #menu1="matMenu">
+                                <!-- <mat-menu #menu0="matMenu"> -->
+                                <button mat-menu-item *ngFor="let firstdropDown of dropdownLocation"
+                                    [disabled]=firstdropDown.disabled
+                                    (click)="locationSelectionData(firstdropDown,data)">
+                                    <mat-icon
+                                        style="color: var(--h3);padding-top: 3px;">{{firstdropDown.selection}}</mat-icon>
+                                    <label class="location_cityLable">{{firstdropDown.context}}</label>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <hr style=" border-bottom: 1px solid black; width: 100%;" class="horizontal-line">
+
+                    <br>
+                </div>
+                <div class="menuData" *ngFor="let itemthree of hierarchall3">
+                    <div class="itemSelection">
+                        <div
+                            style="margin-left: 72px; border-radius: 50%; background-color: black; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center;">
+                            <span class="material-symbols-outlined" style="color: #CEDFCC;">remove</span>
+                        </div>
+
+                        <div (click)="sendHirechyData4(itemthree.name)" matTooltip={{itemthree.name}}
+                            class="maintextHierachy">{{itemthree.name}}
+                        </div>
+
+                        <div style="padding-left: 26vw;">
+                            <button [matMenuTriggerFor]="menu2" class="dropdown ms-4"
+                                (click)="$event.stopPropagation()">
+                                <div class="mainIconLocation">
+                                    <div class="itemSelection">
+                                        <mat-icon class="locationText">{{itemthree.selection}}</mat-icon>
+                                        <label class="locationIcon">{{itemthree.context}}</label>
+                                    </div>
+                                    <div>
+                                        <mat-icon class="expansionIcon">expand_more</mat-icon>
+                                    </div>
+                                </div>
+                            </button>
+                            <mat-menu #menu2="matMenu">
+                                <button mat-menu-item *ngFor="let firstdropDown of dropdownLocation"
+                                    [disabled]=firstdropDown.disabled
+                                    (click)="locationSelectionData(firstdropDown,itemthree)">
+                                    <mat-icon
+                                        style="color: var(--h3);padding-top: 3px;">{{firstdropDown.selection}}</mat-icon>
+                                    <label class="location_cityLable">{{firstdropDown.context}}</label>
+                                </button>
+                            </mat-menu>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="menuData" *ngFor="let datafour of hierarchall4">
+                            <div *ngIf="itemthree.name===trialData">
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div
+                                            style="margin-left: 95px; border-radius: 50%; background-color: black; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center;">
+                                            <span class="material-symbols-outlined"
+                                                style="color: #CEDFCC;">remove</span>
+                                        </div>
+
+                                        <div (click)="sendHirechyData5(datafour.name)" matTooltip={{datafour.name}}
+                                            class="maintextHierachy">
+                                            {{datafour.name}}
+                                        </div>
+                                    </div>
+                                    <div style="padding-left: 24.5vw; padding-top: 5px;">
+                                        <button [matMenuTriggerFor]="menu3" class="dropdown ms-4"
+                                            (click)="$event.stopPropagation()">
+                                            <div class="mainIconLocation">
+                                                <div class="itemSelection">
+                                                    <mat-icon class="locationText">{{datafour.selection}}</mat-icon>
+                                                    <label class="locationIcon">{{datafour.context}}</label>
+                                                </div>
+                                                <div>
+                                                    <mat-icon class="expansionIcon">expand_more</mat-icon>
+                                                </div>
+                                            </div>
+                                        </button>
+                                        <mat-menu #menu3="matMenu">
+                                            <button mat-menu-item *ngFor="let firstdropDown of dropdownLocation"
+                                                [disabled]=firstdropDown.disabled
+                                                (click)="locationSelectionData(firstdropDown,datafour)">
+                                                <mat-icon
+                                                    style="color: var(--h3);padding-top: 3px;">{{firstdropDown.selection}}</mat-icon>
+                                                <label class="location_cityLable">{{firstdropDown.context}}</label>
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+
+                                <div *ngFor="let trial of hierarchall5">
+                                    @if (datafour.name==trialData2) {
+                                    <div class="itemSelection">
+                                        <div class="removeIcon">
+                                            <span class="material-symbols-outlined"
+                                                style="color: #CEDFCC;">remove</span>
+                                        </div>
+
+                                        <div (click)="sendHirechyData6(trial.name)" matTooltip={{trial.name}}
+                                            class="maintextHierachy">{{trial.name}}</div>
+
+                                    </div>
+                                    }
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <hr style=" border-bottom: 1px solid black; width: 100%;" class="horizontal-line">
+                    <br>
+                </div>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+
+
+    </div>
+    <div class="text-end">
+        <button class="hirechysavebutton btn" matTooltip="Save hierarchy mapping" mat-button type="submit" (click)="saveHierarchy()">
+            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.HEIRARCHY MAPPING.Save'| translate}}
+
+        </button>
+    </div>
+    }
+    <!-- form for employee data mapping -->
+    @if (buildDiv =='employeeDetails') {
+
+    <div class="employemappingmain" (click)="getEmployeeDataMapping()">
+        <form [formGroup]="dropdownvalidation" (ngSubmit)="saveEmployeeDateMapping()">
+            <div class="employemapping">
+                <div style="width: 15vw;"> <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.First Name'| translate}}
+                        <span style="color: red;">*</span></label></div>
+                <div style="padding-top: 25px;">
+                    <button [matMenuTriggerFor]="menu" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{FirstName}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu="matMenu">
+
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,1)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select first name'| translate}}
+                </div>
+                }
+            </div>
+
+            <div class="employemapping">
+                <div style="width: 15vw;"> <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Middle Name'| translate}}
+                    </label></div>
+                <div style="padding-top: 25px;">
+
+                    <button [matMenuTriggerFor]="menu2" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{Middlename}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu2="matMenu">
+
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,2)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select middle name'| translate}}
+                </div>
+                }
+            </div>
+            <div class="employemapping">
+                <div style="width: 15vw;"> <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Last Name'| translate}}
+                        <span style="color: red;">*</span></label></div>
+
+                <div style="padding-top: 25px;">
+                    <button [matMenuTriggerFor]="menu3" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{LastName}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu3="matMenu">
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,3)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select last name'| translate}}
+                </div>
+                }
+
+            </div>
+            <div class="employemapping">
+                <div style="width: 15vw;">
+                    <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Phone Number'| translate}}
+                        <span style="color: red;">*</span></label>
+                </div>
+                <div style="padding-top: 25px;">
+                    <button [matMenuTriggerFor]="menu4" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{PhoneNumber}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu4="matMenu">
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,4)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select phone number'| translate}}
+                </div>
+                }
+
+            </div>
+            <div class="employemapping">
+                <div style="width: 15vw;">
+                    <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Extension'| translate}}
+                        <span style="color: red;">*</span></label>
+                </div>
+                <div style="padding-top: 25px;">
+                    <button [matMenuTriggerFor]="menu5" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{Extension}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu5="matMenu">
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,5)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select extension'| translate}}
+                </div>
+                }
+            </div>
+
+            <div class="employemapping">
+                <div style="width: 15vw;">
+                    <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Email address'| translate}}
+                        <span style="color: red;">*</span></label>
+                </div>
+                <div style="padding-top: 25px;">
+                    <button [matMenuTriggerFor]="menu6" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{EmailAddress}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu6="matMenu">
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,6)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select email'| translate}}
+                </div>
+                }
+
+            </div>
+            <div class="employemapping">
+                <div style="width: 15vw;">
+                    <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Designation'| translate}}
+                    </label>
+                </div>
+                <div style="padding-top: 25px;">
+                    <button [matMenuTriggerFor]="menu7" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{Designation}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu7="matMenu">
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,7)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;" >
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select designation'| translate}}
+                </div>
+                }
+
+            </div>
+            <div class="employemapping" hidden>
+                <div style="width: 15vw;">
+                    <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Reporting Manager'| translate}}
+                    </label>
+                </div>
+                <div style="padding-top: 25px;">
+                    <button [matMenuTriggerFor]="menu8" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{ReportingManager}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu8="matMenu">
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,8)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select reporting manager'|
+                    translate}}
+                </div>
+                }
+
+            </div>
+            <div class="employemapping">
+                <div style="width: 15vw;">
+                    <label class="employemappinglable">
+                        {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Employee ID'| translate}}
+                        <span style="color: red;">*</span></label>
+                </div>
+                <div style="padding-top: 25px;">
+                    <button [matMenuTriggerFor]="menu9" class="dropdown ms-4">
+                        <div class="dropdownbutton">
+                            <label class="label">{{EmployeeID}}</label>
+                            <button mat-icon-button class="icon-button">
+                                <mat-icon>expand_more</mat-icon>
+                            </button>
+                        </div>
+                    </button>
+                    <mat-menu #menu9="matMenu">
+                        <button mat-menu-item *ngFor="let option of options1" (click)="selectOption(option,9)">
+                            <mat-icon class style="color: var(--h3);padding-top: 3px;">widgets</mat-icon>
+                            <label style="color:var(--h3);padding-left: 0px;">{{ option
+                                }}</label>
+
+                        </button>
+                    </mat-menu>
+                </div>
+                @if (!dropdownvalidation.valid) {
+                <div class="text-danger" style="padding-left: 20px;padding-top: 35px;">
+                    {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.*Please select employee id'| translate}}
+                </div>
+                }
+
+            </div>
+
+
+        </form>
+    </div>
+    <div class="text-end">
+        <button class="saveButtondatamapping btn"  [matTooltip]="toolTips.Saveemployeedata|translate" mat-button (click)="saveEmployeeDateMapping()"
+            [disabled]="!dropdownvalidation.valid" type="submit">
+            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.EMPLOYEE DATA MAPPING.Save'| translate}}
+
+        </button>
+    </div>
+    }
+    <!-- form for user groups AND roles -->
+    @if (buildDiv=='usergroupsroles') {
+    <div class="availablegroupcontainer">
+        <form [formGroup]="checkbox" (ngSubmit)="onSubmit()">
+            <div style="display: flex;justify-content: space-between;">
+                <div class="availablegroupmain">
+                    <div class="availablehead">
+                        <div class="checkbox-container">
+                            <mat-checkbox #checkboxElem (change)="toggleAllGroups($event)"></mat-checkbox>
+                            <label for="">
+                                {{'Menu.CONFIGURE.ACTIVE DIRECTORY.USER GROUP/ROLES.Available Groups'| translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="checkboxoptions bg-light" *ngFor="let group of availableGroup; let i = index">
+                        <div class="checkbox-container bg-light">
+                            <mat-checkbox [checked]="allGroupsChecked" #status (change)="arraypushmethod(group,status)">
+                                <span class="material-symbols-outlined"
+                                    style=" display: inline-block;vertical-align: middle;">groups_2</span>
+                                <label for=""
+                                    style=" display: inline-block;vertical-align: middle;">{{group.roleName}}</label>
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="toparrowContainer">
+                    <button class="toparrow" (click)="selectUserGroup()">
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                    <div class="bottomarrowContainer">
+                        <button class="bottomarrow" (click)="removeUserGroup()">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="selectedgroupmain">
+                    <div class="checkbox-container">
+                        <mat-checkbox #checkboxSelect (change)="toggleSelectedGroups($event)"></mat-checkbox>
+                        <label for="">
+                            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.USER GROUP/ROLES.Selected Groups'| translate}}
+                        </label>
+                    </div>
+                    <div class="checkboxoptions bg-light" *ngFor="let group of mainSelectedGroup">
+                        <div class="checkbox-container bg-light">
+                            <mat-checkbox [checked]="allSelectGroup" #status
+                                (change)="checkBoxActionSelected(group,status)">
+                                <span class="material-symbols-outlined"
+                                    style=" display: inline-block;vertical-align: middle;">groups_2</span>
+                                <label for=""
+                                    style=" display: inline-block;vertical-align: middle;">{{group.roleName}}</label></mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="text-end save-button ">
+        <button class="usergroupSavebuttton btn"   [matTooltip]="toolTips.saveUsergroups|translate" mat-button type="submit" (click)="saveUserRoles()">
+            {{'Menu.CONFIGURE.ACTIVE DIRECTORY.USER GROUP/ROLES.Save'| translate}}
+        </button>
+    </div>
+    }
+</div>

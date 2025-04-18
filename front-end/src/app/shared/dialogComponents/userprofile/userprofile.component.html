@@ -1,0 +1,30 @@
+<div [dir]="'align' | translate">
+    <mat-toolbar>
+      <span class="material-symbols-outlined">
+        translate
+        </span>
+      <p class="mt-2">{{'USERPROFILE.pageheader'|translate}}</p>
+      <button class="btn close-button" matDialogClose>
+        <span class="material-symbols-outlined">
+          close
+          </span>
+      </button>
+    </mat-toolbar>
+    <div class="outer-div">
+            <form class="m-2 p-2 d-flex justify-space-between" [formGroup]="languageForm" #language="ngForm">
+              <mat-form-field>
+                <mat-label>{{'USERPROFILE.Language'|translate}}</mat-label>
+                <mat-select formControlName="language" required>
+                    @for (data of languages; track $index) {
+                  <mat-option  [value]="data.languageId">
+                    {{data.languageLabel}}
+                  </mat-option>
+                }
+                </mat-select>
+              </mat-form-field>
+              <button  class="btn saveButton" (click)="saveLang()"
+                [disabled]="!language.valid">{{'USERPROFILE.save'|translate}}</button>
+            </form>
+    
+    </div>
+  </div>

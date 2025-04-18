@@ -1,0 +1,178 @@
+.example-spacer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--textColor);
+  /* background-color: var(--headingBg); */
+  background-color: var(--h5);
+  padding: 10px;
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  background-color: var(--headingBg);
+}
+
+.employemapping {
+  display: flex;
+}
+
+.selectLocation {
+  border-radius: 0px;
+}
+
+table {
+  /* background-color: var(--employeeDbg); */
+  background-color: white;
+
+}
+
+.locationDropdownicon {
+  background-color: var(--headingBg);
+}
+
+span {
+  width: 100%;
+  display: flex;
+}
+
+td {
+  width: 50%;
+}
+
+.usergroupSavebuttton {
+  background-color: var(--textColorblack);
+  /* background-color: rgb(60, 156, 89); */
+  text-align: end;
+  color:var(--textColor) !important;
+  width: 10%;
+  height: 5vh !important;
+  /* border-radius: 1.5625vw; */
+  margin-left: 85%;
+}
+
+.saveButtonDiv {
+  background-color: transparent;
+  height: 9vh;
+  padding: 0;
+  /* background-color: var(--employeeDbg); */
+  background-color: white;
+}
+
+.closeButtonHover{
+  color:var(--textColor); 
+}
+
+.container{
+  /* background-color: var(--employeeDbg); */
+  background-color: white;
+}
+.viewEmployeeDetails{
+  height: auto;
+}
+
+.col-6{
+  margin-top: 10px;
+}
+
+.labelName{
+  padding-left: 10px;
+}
+.row{
+  margin-top: 12px;
+}
+.line{
+  border-top: 1px solid black;
+  width: 100%;
+  margin: 10px 0; padding-left: 15px;
+}
+.hierarchymain{
+  display: flex;
+  /* background-color: var(--employeeDbg); */
+  background-color: white;
+  padding-top: 10px; 
+  padding-left:10px; 
+  padding-right: 10px;
+}
+.hierarchy{
+  padding-left: 35px; 
+  padding-right: 35px;
+}
+.editbutton{
+  color:var(--textColor); 
+  width: 20px; 
+  height: 20px;
+  background-color: transparent
+}
+.form-control{
+  width: 100%;
+  /* height:30px; */
+  /* top: 354px; */
+  /* left: 250px; */
+  border: 1px solid rgb(137, 132, 132);
+  /* margin-left: 2%; */
+}
+
+.userUpdateForm {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  background-color: white;
+}
+.addEmployeesForm{
+  width: 100%;
+  margin: 0px;
+  /* background-color: var(--employeeDbg); */
+  background-color: white;
+}
+
+.main-container {
+  height: 100vh;
+  /* background-color: var(--employeeDbg); */
+  background-color: white;
+  padding-right: 0;
+}
+
+.okButtons {
+  background-color: coral;
+  height: 30px;
+  width: 80px;
+  border-radius: 15px;
+  margin-right: 121px;
+}
+
+.mat-mdc-dialog-surface {
+  width: 75%;
+}
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+  height:539px;
+}
+
+.cdk-overlay-pane.mat-mdc-dialog-panel .your-element-class {
+  height:600px;
+}
+.mat-mdc-dialog-container{
+  padding-top: 80;
+}
+
+.is-invalid {
+  border-color: red !important;
+  /* box-shadow: 0 0 5px red; */
+}
+.disabled-button {
+  background-color: #e0e0e0;
+  color: #9e9e9e;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.enabled-button {
+  background-color: var(--h3);
+  color: white;
+  cursor: pointer;
+}
+
+#addValidation{
+ margin-left: 10px;
+}
+

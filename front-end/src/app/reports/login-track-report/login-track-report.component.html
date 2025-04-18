@@ -1,0 +1,256 @@
+<div class="mainContainer">
+  <div class="filters">
+    <div class="container">
+      <div class="row ">
+        <div class="col-9 d-flex p-0">
+
+          <button class="custom-button-date btn" [matMenuTriggerFor]="filterDate">
+            <span class="material-symbols-outlined ">
+              schedule
+            </span>
+            <span class="">{{ selectedDateRange }}</span>
+          </button>
+
+          <mat-menu #filterDate="matMenu">
+            <button mat-menu-item (click)="setDateRange('Today')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Today'|
+              translate}}</button>
+            <button mat-menu-item (click)="setDateRange('This Week')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.This
+              Week'| translate}}</button>
+            <button mat-menu-item (click)="setDateRange('This Month')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.This
+              Month'| translate}}</button>
+            <button mat-menu-item (click)="setDateRange('This Quarter')">{{'Menu.REPORTS RECORDING.COLOUR CODED
+              CALLS.This
+              Quarter'| translate}}</button>
+            <button mat-menu-item (click)="setDateRange('This Year')">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.This
+              Year'| translate}}</button>
+            <button mat-menu-item (click)="openCustomDateDialog(selectedDateRange)">{{'Menu.REPORTS RECORDING.COLOUR CODED CALLS.Custom'|
+              translate}}</button>
+          </mat-menu>
+
+
+            <button mat-button [matMenuTriggerFor]="menu" class="custom-button btn">
+              {{ 'Menu.REPORTS RECORDING.LOGIN TRACK.Status' | translate }}
+              @if (selectedLoginStatuses.length === 1) {
+              :{{ selectedLoginStatuses[0] }}
+              }
+              @if (selectedLoginStatuses.length >1){
+              :Multiple
+              }
+            </button>
+            <mat-menu #menu="matMenu">
+              <ng-container *ngFor="let item of authenticated; let i = index;">
+                <button mat-menu-item>
+                  <mat-checkbox [checked]="selectedLoginStatuses.includes(item.loginStatus)"
+                    (change)="toggleLoginStatus(item.loginStatus, $event)" (click)="$event.stopPropagation()">
+                    <!-- Prevent menu from closing -->
+                    {{ item.loginStatus }}
+                  </mat-checkbox>
+                </button>
+              </ng-container>
+            </mat-menu>
+
+          <!-- username filter-->
+
+
+          <button mat-flat-button class="custom-button btn" [matMenuTriggerFor]="filterLoginUsername">
+            {{ 'Menu.REPORTS RECORDING.LOGIN TRACK.username' | translate }}:
+            {{ getUsernameFilterText() | translate }}
+          </button>
+
+          <mat-menu #filterLoginUsername="matMenu" class="agent-menu" style="padding-left: 1vw;">
+            <!-- Search Input -->
+            <div style="padding: 3px;">
+            <input class=" border w-80"
+              placeholder="{{ 'Menu.REPORTS RECORDING.LOGIN TRACK.SearchLoginUser' | translate }}"
+              (input)="onLoginUsernameSearchChange($event)" (click)="$event.stopPropagation()" />
+              </div>
+
+            <!-- Select All Checkbox -->
+            <div class="d-flex me-1">
+              <mat-checkbox color="primary" [checked]="selectAllLoginUsernames()"
+                (change)="toggleSelectAllLoginUsernames($event.checked)" (click)="$event.stopPropagation()">
+                {{ 'All' | translate }}
+              </mat-checkbox>
+            </div>
+
+            <!-- List of Usernames -->
+            <!-- List of Usernames -->
+          <div class="itemsDiv">
+            <ng-container *ngFor="let loginUser of filteredLoginUsernames; trackBy: trackByLoginUser">
+              <div>
+                <mat-checkbox color="primary" 
+                  [checked]="selectedLoginUserIDs.includes(loginUser.userId)"
+                  (change)="toggleLoginUsername(loginUser, $event)" 
+                  (click)="$event.stopPropagation()">
+                  {{ loginUser.username }}
+                </mat-checkbox>
+              </div>
+            </ng-container>
+          </div>
+
+          </mat-menu>
+
+          <!-- Apply Button -->
+
+          <button class="custom-apply-button btn" (click)="applyFilters()">
+            {{'Menu.REPORTS RECORDING.LOGIN TRACK.APPLY'| translate}}
+          </button>
+        </div><!-- "col-9 d-flex p-0" -->
+
+        <!-- Type -->
+        <div class="col-3 d-flex justify-content-end p-0">
+          <div class="excelDiv btn" matTooltip="{{'Menu.Download Reports'| translate}}"
+            [matTooltip]="toolTips.download|translate" [matMenuTriggerFor]="menu4">
+            <mat-icon class="icon">download_2</mat-icon>
+            <span class="text">{{'Menu.REPORTS RECORDING.CALLS.Report' | translate}}</span>
+          </div>
+          <!-- File Download -->
+          <mat-menu #menu4="matMenu">
+            <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Excel')">
+              <div style="justify-content: space-around;display: flex;">
+                <div>Excel</div>
+                <div>
+                  <span class="material-symbols-outlined">article</span>
+                </div>
+              </div>
+            </button>
+            <button class="downloadBtn align-item" mat-menu-item (click)="exportToFile('PDF')">
+              <div style="justify-content: space-around;display: flex;">
+                <div>PDF</div>
+                <div>
+                  <span class="material-symbols-outlined">picture_as_pdf</span>
+                </div>
+              </div>
+            </button>
+            <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('TIFF')">
+              <span>TIFF</span>
+              <span class="material-symbols-outlined">perm_media</span>
+            </button>
+            <button hidden class="downloadBtn align-item" mat-menu-item (click)="exportToFile('Web Archive')">
+              <span>Web Archive</span>
+              <span class="material-symbols-outlined">install_desktop</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div> <!-- row -->
+    </div><!-- container -->
+
+  </div><!-- filter -->
+
+
+  <div class="table-container">
+    <!-- <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort> -->
+    <table mat-table matSort class="mat-elevation-z8 demo-table" [dataSource]="dataSource" matSort>
+
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-content">
+            <div class="header-text-icon">
+              {{ 'Menu.REPORTS RECORDING.LOGIN TRACK.name' | translate }}
+              <!-- <span class="material-symbols-outlined" id="fitergroup">switch_left</span> -->
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- Login Status Column -->
+      <ng-container matColumnDef="loginStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div class="header-content">
+            {{ 'Menu.REPORTS RECORDING.LOGIN TRACK.Login Status' | translate }}
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{ element.loginStatus }}</td>
+      </ng-container>
+
+      <!-- Login Time Column -->
+      <ng-container matColumnDef="loginTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-content">
+            <div class="header-text-icon">
+              {{ 'Menu.REPORTS RECORDING.LOGIN TRACK.Login Time' | translate }}
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">
+          {{ element.loginTime | date: 'dd-MM-yyyy' }}
+          {{ formatTableTime(element.loginTime | date: 'hh:mm:ss') }}
+        </td>
+      </ng-container>
+
+      <!-- Logout Time Column -->
+      <ng-container matColumnDef="logoutTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+          <div class="header-content">
+            <div class="header-text-icon">
+              {{ 'Menu.REPORTS RECORDING.LOGIN TRACK.Logout Time' | translate }}
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">
+          @if (element.logoutTime) {
+          {{ element.logoutTime | date: 'dd-MM-yyyy' }}
+          {{ formatTableTime(element.logoutTime | date: 'hh:mm:ss') }}
+          }
+
+        </td>
+      </ng-container>
+
+      <!-- iP address Column -->
+      <ng-container matColumnDef="ipaddress">
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header="ipAddress" class="header-cell" (click)="sortIPAddresses()">
+          <div class="header-content">
+            <div class="header-text-icon">
+              {{ 'Menu.REPORTS RECORDING.LOGIN TRACK.IP Address' | translate }}
+            </div>
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="columnCell">{{ element.ipAddress }}</td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+
+
+
+  <!--pagination-->
+  <mat-toolbar class="pagination-toolbar">
+    <div class="page-info">{{'Menu.REPORTS RECORDING.LOGIN TRACK.Total Records' | translate}}: {{ TotalRecords }}</div>
+    <span class="example-spacer"></span>
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.LOGIN TRACK.Records Per Page' | translate}}
+    </div>
+    <mat-select class="form-control me-4" style="width:5vw" [(ngModel)]="recordsPerPage" [(ngModel)]="recordsPerPage"
+      (selectionChange)="onItemsPerPageChange($event)">
+      <mat-option class="goto-check" [value]="10" selected>10</mat-option>
+      <mat-option class="goto-check" [value]="25">25</mat-option>
+      <mat-option class="goto-check" [value]="50">50</mat-option>
+      <mat-option class="goto-check" [value]="100">100</mat-option>
+    </mat-select>
+    <div class="page-info">
+      {{'Menu.REPORTS RECORDING.LOGIN TRACK.Page' | translate}}
+      <mat-select class="form-control" style="width:5vw;" [(value)]="pageNumber" (selectionChange)="goToPage($event)">
+        <mat-option *ngFor="let page of getPagesArray()" [value]="page" class="goto-check-pagination">
+          {{ page }}
+        </mat-option>
+      </mat-select>
+      {{'Menu.REPORTS RECORDING.LOGIN TRACK.of' | translate}} {{ getTotalPages() }}
+    </div>
+    <div [dir]="'ltr'">
+      <button mat-mini-fab class="next-button me-2 " (click)="previousPage()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-mini-fab class="next-button me-2" (click)="nextPage()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+
+    </div>
+  </mat-toolbar>
+</div>

@@ -1,0 +1,38 @@
+@if (clickedType=='logOut') {
+    <div  mat-dialog-container class="logout-spinner-popup">
+        <h2  class="h2">{{logoutMessage}}</h2>
+          <span class="loader"></span>
+        </div>
+          
+}
+@else if (clickedType=='logIn'){
+    <div  mat-dialog-container class="logIn-spinner-popup">
+        <h2  class="h2">{{logoutMessage}}</h2>
+          <span class="loader"></span>
+        </div>
+}
+@else if (clickedType=='logOutManually'){
+  <div  mat-dialog-container class="logout-spinner-popup">
+      <h2  class="h2">{{logoutMessage}}</h2>
+        <span class="loader"></span>
+      </div>
+}
+@else if (clickedType=='logOutFrontend'){
+  <div  mat-dialog-container class="logout-spinner-popup">
+      <h2  class="h2">{{logoutMessage}}</h2>
+        <span class="loader"></span>
+      </div>
+}
+@else if (clickedType=='confirmLogin'){
+  <div mat-dialog-content class="p-5">
+    <h1 class="text-center" mat-dialog-title>The user has logged in from another device. Click 'Yes' to enforce the login</h1>
+  </div>
+ <div class="w-100 d-flex justify-content-around">
+    <div mat-dialog-actions class="w-50 pb-3 d-flex justify-content-around">
+        <button class="btn bg-dark text-light"  (click)="postforceloginWithPassword(false)">No</button>
+        <button class="btn bg-danger text-light"  color="primary" (click)="postforceloginWithPassword(true)">Yes</button>
+    </div>
+  
+ </div>
+  
+}
